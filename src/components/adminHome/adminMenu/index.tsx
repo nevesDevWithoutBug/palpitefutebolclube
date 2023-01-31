@@ -1,11 +1,11 @@
 import style from "./style.module.css"
 
-function MenuComponent() {
+function MenuComponent({setMenu}:any) {
     return (
-        <aside className={style.menu}>                                   
-        <a > Início </a>
-        <a href="/admin/jogos"> Jogos </a>
-        <a > Ajuda </a>
+        <aside className={style.menu}>      
+            <a onClick={() => setMenu('home')}>Home</a>            
+            <a onClick={() => setMenu('jogo')}>Jogos</a>            
+            <a onClick={() => setMenu('user')}>Usuarios</a>                         
        </aside>
     )
 }

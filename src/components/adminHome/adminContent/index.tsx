@@ -1,12 +1,14 @@
 import Jogos from "src/pages/admin/jogos"
-import Home from "src/pages/teste"
+import Usuarios from "src/pages/admin/usuarios"
 import style from "./style.module.css"
 
-function ContentComponent() {
+function ContentComponent(props: any) {
+    const page = props.page
+
     return (
         <div className={style.content}>
-            <Home />
-            <Jogos />
+            {page === 'user' && <Usuarios />}
+            {page === 'jogo' && <Jogos />}
         </div>
     )
 }

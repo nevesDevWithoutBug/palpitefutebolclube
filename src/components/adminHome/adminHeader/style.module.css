@@ -1,7 +1,29 @@
 .header {
     grid-area: header;
-    background: linear-gradient(to right, #171718, #646468);
+    background: linear-gradient(to right, #126e51, #24a57c);
+}
+
+.Header1{
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
+    height: 100%;
+}
+
+.Header1 span {
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #e4e4e4;
+    border-radius: 8px;
+}
+
+.Header1 span:hover {
+    background: #24a57c;
+    transition: all 0.5s 0s ease;
+}
+
+
+.Header1 img{
+    width: 26rem;
 }

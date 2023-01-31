@@ -1,11 +1,12 @@
 import { NextPage } from "next";
+import AdminHomeComponent from "src/components/adminHome";
 
-const Home: NextPage = () => {
+const index: NextPage = () => {
     return (
         <>
-           <div>Home</div> 
+           <AdminHomeComponent /> 
         </>
     );
 }
 
-export default Home
+export default index
