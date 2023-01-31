@@ -5,7 +5,8 @@ import PatchLigue1 from "../../../public/assets/assets/ligue1.svg"
 import PatchBundesliga from "../../../public/assets/assets/bundesliga.svg"
 import PatchBrasileirao from "../../../public/assets/assets/brasileiro.svg"
 import PatchLaliga from "../../../public/assets/assets/laLiga.png"
-import "./style.css"
+import style from "./style.module.css"
+import Image from "next/image"
 
 function HeaderPrincipal() {
     const leagues = [
@@ -17,16 +18,20 @@ function HeaderPrincipal() {
         { nome: 'Mundial de Clubes', pais: 'Mundo', imagem: PatchBundesliga },
     ]
     return (
-        <header>
-            <div className="Header1">
+        <header className={style.headerPai}>
+            <div className={style.Header1}>
                 <span>Palpitar</span>
                 <span>Resultados</span>
-                <img src={Logo as any} alt="palpite.com" />
+                <Image src={Logo} height={50} width={500} alt="palpite.com" />
                 <span>Cadastre-se</span>
                 <span>Login</span>
             </div>
-            <ul className="subHeader">
-                {leagues.map((league, key) => <li key={key}> <img src={league.imagem} alt="" /> <span> {league.nome}</span></li>)}
+            <ul className={style.subHeader}>
+                {leagues.map((league, key) =>
+                    <li key={key}>
+                        <Image className="imgHeader" src={league.imagem} alt="" />
+                        <span> {league.nome}</span>
+                    </li>)}
             </ul>
         </header>
     )

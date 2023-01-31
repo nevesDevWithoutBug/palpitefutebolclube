@@ -1,4 +1,4 @@
-footer {
+.footerSite {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -6,19 +6,19 @@ footer {
     padding: 1rem;
 }
 
-footer span {
+.spanFooter {
     color: white;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-size: 1.2rem;
 }
 
-footer ul {
+.footerSite ul {
     display: flex;
     flex-direction: column;
 }
 
-footer ul div {
+.footerSite ul div {
     display: flex;
     flex-direction: row;
     gap: 1rem;

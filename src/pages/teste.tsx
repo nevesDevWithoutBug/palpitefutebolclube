@@ -8,11 +8,11 @@ const Home: NextPage = () => {
     return (
         <>
             <HeaderPrincipal />
-            <body style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ display: "flex", flexDirection: "row", width: '100vw' }}>
                 <Aside />
                 <CardPalpite />
                 <Aside />
-            </body>
+            </div>
             <Footer />
         </>
     );
