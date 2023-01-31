@@ -1,0 +1,9 @@
+.homeAdmin{
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 100px 1fr;
+    grid-template-areas:
+        "header header"
+        "menu content" ;
+}

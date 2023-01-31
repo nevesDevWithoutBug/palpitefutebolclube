@@ -1,0 +1,7 @@
+.header {
+    grid-area: header;
+    background: linear-gradient(to right, #171718, #646468);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
