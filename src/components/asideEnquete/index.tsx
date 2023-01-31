@@ -52,17 +52,6 @@ function AsideEnquete() {
                     </div>
                     <Image src={cruzeiro} width={100} height={100} alt="Cruzeiro" />
                 </section>
-                <section>
-                    <div className={style.contentNoticias}>
-                        <h1>Lionel Messi</h1>
-                        <article>
-                            Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Minus nisi, voluptatibus
-                            quos atque porro blanditiis totam.
-                        </article>
-                    </div>
-                    <Image src={atletico} width={100} height={100} alt="Atletico" />
-                </section>
             </div>
         </aside>
     )
