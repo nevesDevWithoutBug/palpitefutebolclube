@@ -1,0 +1,38 @@
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: #126e51;
+    padding: 1rem;
+}
+
+footer span {
+    color: white;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: column;
+}
+
+footer ul div {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+
+.titlePalpite {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.gitHub {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

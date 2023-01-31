@@ -1,14 +1,21 @@
 import { NextPage } from "next";
-import CardPalpite from "src/components/cardPalpite/cardPalpite";
-
-
+import Aside from "src/components/aside";
+import CardPalpite from "src/components/cardPalpite/index";
+import Footer from "src/components/footer/index";
+import HeaderPrincipal from "../components/header/index"
 
 const Home: NextPage = () => {
     return (
         <>
-            <CardPalpite/>
+            <HeaderPrincipal />
+            <body style={{ display: "flex", flexDirection: "row" }}>
+                <Aside />
+                <CardPalpite />
+                <Aside />
+            </body>
+            <Footer />
         </>
-    ); 
+    );
 }
 
-  export default Home
+export default Home

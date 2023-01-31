@@ -25,7 +25,8 @@
 }
 
 .ulPalpite {
- transition:all 0.5s 0s ease;
+    transition:all 0.5s 0s ease;
+    width: 100%;
 }
 
 .liPalpite {
@@ -59,7 +60,6 @@
     height: 100%;
 }
 .pPalpite {
-    /* padding-top: 15px; */
     font-size: 0.9rem;
 }
 .spanPalpiteTime{
@@ -76,8 +76,8 @@
 .ulPalpiteMult {
     padding: 1rem;
     display: flex;
+    justify-content: center;
     transition:all 0.5s 0s ease;
-    background: red;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
@@ -85,7 +85,7 @@
 
 .liPalpiteMult {
     padding: 1rem;
-    min-width: 32rem; 
+    max-width: 26rem; 
     height: 12rem;
     display: flex;
     flex-direction: column;
