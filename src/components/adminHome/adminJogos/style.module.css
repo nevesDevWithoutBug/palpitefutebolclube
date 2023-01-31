@@ -1,0 +1,124 @@
+.jogo {
+    height: 100%;
+}
+
+.jogoHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 5rem;
+    text-align: start;
+    height: 10%;
+    background: white;
+}
+
+.svgHeader {
+    padding-right: 10px;
+    width: 10%;
+}
+
+.selectHeader {
+    width: 130px;
+    height: 30px;
+    font-family: Verdana, Trebuchet, sans-serif;
+    font-size: 14px;
+    padding: 5px;
+    background-color: white;
+    padding-left: 20px;
+
+}
+
+.jogoContent {
+    padding: 5px 3rem;
+    margin-top: 1rem;
+    height: 90%;
+    background: white;
+}
+.tituloContent {
+    display: flex;
+    font-size: 1.3rem;
+    justify-content: end;
+    align-items: center;
+}
+.newRound {
+    display: flex;
+    justify-content: end;
+    width: 50%;
+}
+.buttonAdd {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: linear-gradient(to right, #126e51, #24a57c);
+    color: white;
+}
+
+.ulPalpite {
+    transition:all 0.5s 0s ease;
+    width: 100%;
+}
+
+.liPalpite {
+    display: flex;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;
+    
+}
+
+.contentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 3rem;
+    align-items: center;
+}
+
+.inputPalpite {
+    border: 1px solid  rgb(231, 226, 226);
+    width: 3rem;
+    height: 3rem;
+    background-color: #e4e4e4; 
+    text-align: center;
+    font-size: 1.5rem;
+}
+.spanPalpiteX {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.pPalpite {
+    font-size: 0.9rem;
+}
+.spanPalpiteTime{
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+    align-items: center;
+}
+.imgPalpite {
+    padding-bottom: 5px;
+    height: 5rem;
+}
+.acao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.acaoEditar {
+    height: 1.5rem;
+}
+.buttonEditar {
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 10px;
+}
+.buttonExcluir {
+    background-color: red;
+    padding: 10px;
+    border-radius: 10px;
+}

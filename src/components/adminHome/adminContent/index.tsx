@@ -1,5 +1,5 @@
-import Jogos from "src/pages/admin/jogos"
 import Usuarios from "src/pages/admin/usuarios"
+import JogoComponent from "../adminJogos"
 import style from "./style.module.css"
 
 function ContentComponent(props: any) {
@@ -8,7 +8,7 @@ function ContentComponent(props: any) {
     return (
         <div className={style.content}>
             {page === 'user' && <Usuarios />}
-            {page === 'jogo' && <Jogos />}
+            {page === 'jogo' && <JogoComponent />}
         </div>
     )
 }
