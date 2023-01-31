@@ -8,7 +8,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background: #126e51;
+    background: linear-gradient(to right, #126e51, #24a57c);
     height: 50%;
 }
 
@@ -37,6 +37,7 @@
     justify-content: space-around;
     align-items: center;
     background: #383838;
+    background: linear-gradient(to right, #383838, #7c6e6e);
     height: 50%;
     padding-bottom: 0.5rem;
 }

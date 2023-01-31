@@ -27,6 +27,8 @@
 .ulPalpite {
     transition:all 0.5s 0s ease;
     width: 100%;
+    max-height: 58rem;
+    overflow-y: scroll;
 }
 
 .liPalpite {
@@ -87,7 +89,7 @@
 
 .liPalpiteMult {
     padding: 1rem;
-    max-width: 26rem; 
+    max-width: 27rem; 
     height: 12rem;
     display: flex;
     flex-direction: column;
