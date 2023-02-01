@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { NextPage } from "next";
 import AsideBlog from "src/components/asideBlog";
 import AsideEnquete from "src/components/asideEnquete";
@@ -9,11 +10,15 @@ const Home: NextPage = () => {
     return (
         <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowX: 'hidden' }}>
             <HeaderPrincipal />
-            <div style={{ display: "flex", flexDirection: "row", width: '100vw', justifyContent: 'space-evenly' }}>
+            <motion.div
+                animate={{ x: 0, opacity: 1 }}
+                initial={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+                style={{ display: "flex", flexDirection: "row", width: '100vw', gap: '1rem', padding: '2rem', paddingRight: '1rem' }}>
                 <AsideEnquete />
                 <CardPalpite />
                 <AsideBlog />
-            </div>
+            </motion.div>
             <Footer />
         </div>
     );

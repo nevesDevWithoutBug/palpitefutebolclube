@@ -1,6 +1,25 @@
 .headerPai {
     width: 100vw;
-    height: 10rem;
+}
+
+.banner {
+    height: 8rem;
+    background-image: url('../../../public/assets/assets/estadio.jpg');
+    background-size: auto;
+    background-position: center;
+    display: flex;
+    justify-content: end;
+    padding: 1.5rem;
+}
+
+.closeBanner {
+    padding: 0.5rem;
+    background: white;
+    border-radius: 100%;
+}
+
+.close {
+    display: none;
 }
 
 .Header1{
@@ -9,7 +28,7 @@
     justify-content: space-around;
     align-items: center;
     background: linear-gradient(to right, #126e51, #24a57c);
-    height: 50%;
+    height: 5rem;
 }
 
 .Header1 span {
@@ -38,7 +57,7 @@
     align-items: center;
     background: #383838;
     background: linear-gradient(to right, #383838, #7c6e6e);
-    height: 50%;
+    height: 5rem;
     padding-bottom: 0.5rem;
 }
 
