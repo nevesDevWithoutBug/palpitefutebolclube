@@ -37,13 +37,16 @@
 .tituloContent {
     display: flex;
     font-size: 1.3rem;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
+    padding-right: 44px;
+    position: relative;
+    height: 50px;
 }
 .newRound {
-    display: flex;
-    justify-content: end;
-    width: 50%;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
 }
 .buttonAdd {
     padding: 0.5rem 1rem;
@@ -119,6 +122,11 @@
 }
 .buttonExcluir {
     background-color: red;
+    padding: 10px;
+    border-radius: 10px;
+}
+.buttonSalvar {
+    background-color: green;
     padding: 10px;
     border-radius: 10px;
 }
