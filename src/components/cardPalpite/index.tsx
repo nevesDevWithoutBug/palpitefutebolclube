@@ -1,5 +1,5 @@
 import Ball from "../../../public/assets/ball.svg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import bayern from "../../../public/assets/assets/bayern.png"
 import psg from "../../../public/assets/assets/psg.png"
 import liverpool from "../../../public/assets/assets/liverpool.png"
@@ -12,6 +12,7 @@ import milan from "../../../public/assets/assets/milan.png"
 import tottenham from "../../../public/assets/assets/tottenham.png"
 import style from "./style.module.css"
 import Image from "next/image"
+import CardSkeleton from "../skeleton"
 
 function CardPalpite() {
     const games = [
@@ -38,6 +39,14 @@ function CardPalpite() {
         { nome: 'Mundial de Clubes', pais: 'Mundo' },
     ]
 
+    const [isLoading, setLoading] = useState<boolean>(true)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
+
     const [unique, setUnique] = useState<boolean>(true)
     return (
         <div className={style.bodyPalpite} style={!unique ? { maxWidth: '110rem' } : { width: '110rem' }}>
@@ -60,35 +69,35 @@ function CardPalpite() {
                 </div>
             </div>
             <ul className={!unique ? style.ulPalpiteMult : style.ulPalpite}>
-                {games.map((game, key) => {
-                    return (
-                        <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite}>
-                            {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><img src={Ball} alt="" />Campeonato Teste</span> <span>{game.hora}</span></div>}
-                            <div className={!unique ? style.contentContainerMult : style.contentContainer}>
-                                <span className={style.spanPalpiteTime}>
-                                    <Image className={style.imgPalpite} src={game.imgTimeCasa} width={45} height={45} alt="" />
-                                    <p className={style.nomeTimeCard}>
-                                        {game.timeCasa}
-                                    </p>
-                                </span>
-                                <input className={style.inputPalpite} value={game.votoFora}></input>
-                                <div className={style.spanPalpiteX}>
-                                    <p>X</p>
-                                    {unique && <p className={style.pPalpite}>
-                                        {game.hora}
-                                    </p>}
-                                </div>
-                                <input className={style.inputPalpite} value={game.votoFora}></input>
-                                <span className={style.spanPalpiteTime}>
-                                    <Image className={style.imgPalpite} src={game.imgTimeFora} width={45} height={45} alt="" />
-                                    <p className={style.nomeTimeCard}>
-                                        {game.timeFora}
-                                    </p>
-                                </span>
+                {isLoading && <li> <CardSkeleton blog={false} cards={games.length} enquete={false} /> </li>}
+                {!isLoading && games.map((game, key) => (
+                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite}>
+                        {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><img src={Ball} alt="" />Campeonato Teste</span> <span>{game.hora}</span></div>}
+                        <div className={!unique ? style.contentContainerMult : style.contentContainer}>
+                            <span className={style.spanPalpiteTime}>
+                                <Image className={style.imgPalpite} src={game.imgTimeCasa} width={45} height={45} alt="" />
+                                <p className={style.nomeTimeCard}>
+                                    {game.timeCasa}
+                                </p>
+                            </span>
+                            <input className={style.inputPalpite} value={game.votoFora}></input>
+                            <div className={style.spanPalpiteX}>
+                                <p>X</p>
+                                {unique && <p className={style.pPalpite}>
+                                    {game.hora}
+                                </p>}
                             </div>
-                        </li>
-                    )
-                })}
+                            <input className={style.inputPalpite} value={game.votoFora}></input>
+                            <span className={style.spanPalpiteTime}>
+                                <Image className={style.imgPalpite} src={game.imgTimeFora} width={45} height={45} alt="" />
+                                <p className={style.nomeTimeCard}>
+                                    {game.timeFora}
+                                </p>
+                            </span>
+                        </div>
+                    </li>
+                )
+                )}
             </ul>
         </div>
     )
