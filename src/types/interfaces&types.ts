@@ -7,4 +7,5 @@ export interface PropsSkeleton {
     cards: number | null;
     blog: boolean;
     enquete: boolean;
+    video: boolean;
 }

@@ -51,3 +51,16 @@
     border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;;
     cursor: pointer;
 }
+
+.video{
+    display: flex;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;;
+    cursor: pointer;
+}
+
+.iframeV{
+    width: 100% !important;
+    height: 13.8rem !important;
+}

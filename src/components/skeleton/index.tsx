@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { PropsSkeleton } from "src/types/interfaces&types";
 import style from "./style.module.css"
 
-const CardSkeleton = ({ cards, blog, enquete }: PropsSkeleton): ReactElement<any, any> => {
+const CardSkeleton = ({ cards, blog, enquete, video }: PropsSkeleton): ReactElement<any, any> => {
     return (
         <>
             {cards && Array(cards)
@@ -20,6 +20,9 @@ const CardSkeleton = ({ cards, blog, enquete }: PropsSkeleton): ReactElement<any
                 <Skeleton height={200} width={300} />
             </div>}
             {enquete && <div className={style.blogContainer}>
+                <Skeleton height={200} width={300} />
+            </div>}
+            {video && <div className={style.blogContainer}>
                 <Skeleton height={200} width={300} />
             </div>}
         </>

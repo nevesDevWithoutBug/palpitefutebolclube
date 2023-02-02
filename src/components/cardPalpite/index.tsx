@@ -69,7 +69,7 @@ function CardPalpite() {
                 </div>
             </div>
             <ul className={!unique ? style.ulPalpiteMult : style.ulPalpite}>
-                {isLoading && <li> <CardSkeleton blog={false} cards={games.length} enquete={false} /> </li>}
+                {isLoading && <li> <CardSkeleton video={false} blog={false} cards={games.length} enquete={false} /> </li>}
                 {!isLoading && games.map((game, key) => (
                     <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite}>
                         {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><img src={Ball} alt="" />Campeonato Teste</span> <span>{game.hora}</span></div>}
