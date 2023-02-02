@@ -6,9 +6,9 @@ function HeaderComponent() {
     return (
         <header className={style.header}>
             <div className={style.Header1}>
-                <span>Site</span>
-                <Image src={Logo} height={50} width={500} alt="palpite.com" />
-                <span>Sair</span>
+                {/* <span>Site</span> */}
+                <Image className={style.logo} src={Logo} alt="palpite.com" />
+                {/* <span>Sair</span> */}
             </div>
         </header>
     )

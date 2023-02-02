@@ -6,26 +6,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 5rem;
+    padding: 1% 5%;
     text-align: start;
-    height: 10%;
     background: white;
 }
 
 .svgHeader {
-    padding-right: 10px;
-    width: 10%;
-}
-
-.selectHeader {
-    width: 130px;
-    height: 30px;
-    font-family: Verdana, Trebuchet, sans-serif;
-    font-size: 14px;
-    padding: 5px;
-    background-color: white;
-    padding-left: 20px;
-
+    padding-right: 1%;
+    max-width: 2rem;
 }
 
 .jogoContent {
@@ -64,8 +52,7 @@
     display: flex;
     border-width: 1px;
     border-bottom-style: solid;
-    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;
-    
+    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;   
 }
 
 .contentContainer {
@@ -73,7 +60,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    padding: 3rem;
+    padding: 3rem 0;
     align-items: center;
 }
 
@@ -104,6 +91,7 @@
 .imgPalpite {
     padding-bottom: 5px;
     height: 5rem;
+    width: auto;
 }
 .acao {
     display: flex;
@@ -121,12 +109,12 @@
     border-radius: 10px;
 }
 .buttonExcluir {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
     padding: 10px;
     border-radius: 10px;
 }
 .buttonSalvar {
-    background-color: green;
+    background-color: rgb(92, 231, 92);
     padding: 10px;
     border-radius: 10px;
 }

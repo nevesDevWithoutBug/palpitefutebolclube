@@ -18,19 +18,14 @@
 }
 .buttonMenu {
     height: 2rem;
-    position: absolute;
-    top: 5rem;
-    left: 8.5rem;
-    cursor: pointer;
 }
-.buttonMenuHide {
-    fill: #24a57c;
-    height: 2rem;
+.divIconMenu{
     position: absolute;
-    top: 80px;
-    left: 5px;
+    top: 1rem;
+    left: 5%;
+    background: #24a57c;
     cursor: pointer;
-}
-.buttonMenu:hover{
-    /* height: 3rem; */
+    transition: all 0.5s 0s ease;   
+    padding: 7px 10px;
+    border-radius: 10%;
 }

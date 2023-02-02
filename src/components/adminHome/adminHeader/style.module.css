@@ -27,3 +27,6 @@
 .Header1 img{
     width: 26rem;
 }
+.logo {
+    max-width: 60%;
+}

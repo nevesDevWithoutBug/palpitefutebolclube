@@ -65,7 +65,7 @@ function JogoComponent() {
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={game.imgTimeCasa} width={75} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={game.imgTimeCasa} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
@@ -94,7 +94,7 @@ function JogoComponent() {
                                             }
                                         </div>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={game.imgTimeFora} width={75} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={game.imgTimeFora} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
