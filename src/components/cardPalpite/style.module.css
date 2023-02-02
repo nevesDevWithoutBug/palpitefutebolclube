@@ -79,9 +79,12 @@
     font-size: 1.5rem;
 }
 .spanPalpiteX {
+    display: flex;
     gap: 10px;
     text-align: center;
     height: 100%;
+    flex-direction: column;
+    justify-content: center;
 }
 .pPalpite {
     font-size: 0.9rem;

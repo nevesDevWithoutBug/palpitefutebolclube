@@ -24,7 +24,7 @@ function AsideBlog() {
                     Notícias
                 </div>
                 <section>
-                    {isLoading && <CardSkeleton blog={true} cards={0} enquete={false} />}
+                    {isLoading && <CardSkeleton blog={true} cards={null} enquete={false} />}
                     {!isLoading && <>
                         <div className={style.contentNoticias}>
                             <h1>Cristiano Ronaldo</h1>
@@ -37,7 +37,7 @@ function AsideBlog() {
                         <Image src={cruzeiro} width={100} height={100} alt="Cruzeiro" /></>}
                 </section>
                 <section>
-                    {isLoading && <CardSkeleton blog={false} cards={0} enquete={true} />}
+                    {isLoading && <CardSkeleton blog={false} cards={null} enquete={true} />}
                     {!isLoading &&
                         <> <div className={style.contentNoticias}>
                             <h1>Lionel Messi</h1>

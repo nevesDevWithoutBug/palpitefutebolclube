@@ -4,7 +4,7 @@ export interface TesteType {
 }
 
 export interface PropsSkeleton {
-    cards: number;
+    cards: number | null;
     blog: boolean;
     enquete: boolean;
 }

@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { PropsSkeleton } from "src/types/testeType";
+import { PropsSkeleton } from "src/types/interfaces&types";
 import style from "./style.module.css"
 
 const CardSkeleton = ({ cards, blog, enquete }: PropsSkeleton): ReactElement<any, any> => {
     return (
         <>
-            {cards > 0 && Array(cards)
+            {cards && Array(cards)
                 .fill(0)
                 .map((_, i) => (
                     <ul className={style.ulPalpite} key={i}>

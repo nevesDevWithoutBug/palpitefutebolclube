@@ -80,14 +80,14 @@ function CardPalpite() {
                                     {game.timeCasa}
                                 </p>
                             </span>
-                            <input className={style.inputPalpite} value={game.votoFora}></input>
+                            <input className={style.inputPalpite}></input>
                             <div className={style.spanPalpiteX}>
                                 <p>X</p>
                                 {unique && <p className={style.pPalpite}>
                                     {game.hora}
                                 </p>}
                             </div>
-                            <input className={style.inputPalpite} value={game.votoFora}></input>
+                            <input className={style.inputPalpite}></input>
                             <span className={style.spanPalpiteTime}>
                                 <Image className={style.imgPalpite} src={game.imgTimeFora} width={45} height={45} alt="" />
                                 <p className={style.nomeTimeCard}>
