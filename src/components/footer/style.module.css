@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background: #126e51;
+    background: linear-gradient(to right, #126e51, #24a57c);
     padding: 1rem;
 }
 

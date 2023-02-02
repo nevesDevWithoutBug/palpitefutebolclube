@@ -7,8 +7,12 @@ import PatchBrasileirao from "../../../public/assets/assets/brasileiro.svg"
 import PatchLaliga from "../../../public/assets/assets/laLiga.png"
 import style from "./style.module.css"
 import Image from "next/image"
+import { useState } from "react"
 
 function HeaderPrincipal() {
+
+    const [closeBan, setCloseBan] = useState<boolean>(false)
+
     const leagues = [
         { nome: 'Premier League', pais: 'Inglaterra', imagem: PatchPremier },
         { nome: 'Brasileirão', pais: 'Brasil', imagem: PatchBrasileirao },
@@ -19,6 +23,11 @@ function HeaderPrincipal() {
     ]
     return (
         <header className={style.headerPai}>
+            <div className={!closeBan ? style.banner : style.close}>
+                <div>
+                    <span className={style.closeBanner} onClick={() => setCloseBan(true)}>X</span>
+                </div>
+            </div>
             <div className={style.Header1}>
                 <span>Palpitar</span>
                 <span>Resultados</span>
@@ -26,13 +35,13 @@ function HeaderPrincipal() {
                 <span>Cadastre-se</span>
                 <span>Login</span>
             </div>
-            <ul className={style.subHeader}>
+            {/* <ul className={style.subHeader}>
                 {leagues.map((league, key) =>
                     <li key={key}>
                         <Image className="imgHeader" src={league.imagem} alt="" />
                         <span> {league.nome}</span>
                     </li>)}
-            </ul>
+            </ul> */}
         </header>
     )
 }
