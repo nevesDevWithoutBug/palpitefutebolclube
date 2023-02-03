@@ -1,11 +1,82 @@
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// npx prisma generate 
+// npx prisma migrate dev --name  init    ** atualizar migrate
+// npx prisma migrate dev --name migrate's name    ** atualizar migrate
+// npx prisma db push    
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id           Int @id @default(autoincrement())
+  name         String
+  email        String  @unique
+  password     String
+  role         Int // 100 = adm // 200 = sample user // 300 any
+  @@map("users")
+}
+
+model Championships {
+  id           Int @id @default(autoincrement())
+  name         String
+  games        Games[] @relation("ChampioshipGames")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("championships")
+}
+
+model Games {
+  id           Int @id @default(autoincrement())
+  name         String
+
+  teamsGame    TeamsGame[] @relation("GameByTeams")
+
+  championship         Championships? @relation("ChampioshipGames", fields: [championshipId], references: [id])
+  championshipId       Int?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("games")
+}
+
+model TeamsGame {
+  id           Int @id @default(autoincrement())
+  gol          Int @default(0)
+
+  team         Teams? @relation("TeamGames", fields: [teamId], references: [id])
+  teamId       Int?
+
+  
+  game        Games? @relation("GameByTeams",  fields: [gameId], references: [id])
+  gameId      Int?
+
+  expire       DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("teamsGame")
+}
+
+model Teams {
+  id           Int @id @default(autoincrement())
+  name         String
+  image        String?
+
+  games        TeamsGame[] @relation("TeamGames")
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("teams")
+}
+
+
+
+
