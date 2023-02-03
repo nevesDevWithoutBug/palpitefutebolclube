@@ -2,11 +2,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "db": "npx prisma db push",
+    "prisma": "npx prisma studio",
     "turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"**/*.{js,ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
+    "postinstall": "prisma generate"
   },
   "prettier": {
     "arrowParens": "always",
@@ -16,11 +19,14 @@
   },
   "dependencies": {
     "@prisma/client": "4.9.0",
+    "jose": "^4.9.0",
     "clsx": "1.2.1",
+    "framer-motion": "9.0.0",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.7.1",
+    "react-loading-skeleton": "3.1.0",
     "styled-components": "6.0.0-beta.2",
     "styled-jsx": "5.1.0",
     "use-count-up": "3.0.1"

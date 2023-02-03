@@ -1,3 +1,7 @@
+.jogo {
+    height: 100%;
+}
+
 .jogoHeader {
     display: flex;
     align-items: center;
@@ -27,6 +31,18 @@
     position: relative;
     height: 50px;
 }
+.newRound {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+.buttonAdd {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: linear-gradient(to right, #126e51, #24a57c);
+    color: white;
+}
+
 .ulPalpite {
     transition:all 0.5s 0s ease;
     width: 100%;
@@ -96,14 +112,9 @@
     background-color: rgb(255, 0, 0);
     padding: 10px;
     border-radius: 10px;
-    color: white;
-    white-space: nowrap;
 }
 .buttonSalvar {
     background-color: rgb(92, 231, 92);
     padding: 10px;
     border-radius: 10px;
-}
-.menuHidden {
-    opacity: 0;
 }
