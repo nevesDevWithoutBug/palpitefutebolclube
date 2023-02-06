@@ -11,21 +11,6 @@ import Api from "src/providers/http/api";
 
 const Home: NextPage = () => {
 
-
-
-
-    useEffect(()=>{
-        (async()=>{
-
-            const championships = await Api.post('/api/auth/championship', { championship: { name: 'Guilerme é gay campeonato!' } } )
-
-            console.log('championships', championships)
-
-        })()
-    },[])
-
-
-
     return (
         <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowX: 'hidden' }}>
             <HeaderPrincipal />
