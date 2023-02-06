@@ -22,7 +22,7 @@ function AsideEnquete() {
                             quos atque porro blanditiis totam.
                         </article>
                     </div>
-                    <Image src={cruzeiro} width={100} height={100} alt="Cruzeiro" />
+                    <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" />
                 </section>
             </div>
             <div className={style.cardInfo}>
@@ -41,7 +41,7 @@ function AsideEnquete() {
                             quos atque porro blanditiis totam.
                         </article>
                     </div>
-                    <Image src={cruzeiro} width={100} height={100} alt="Cruzeiro" />
+                    <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" />
                 </section>
                 <section>
                     <div className={style.contentNoticias}>
@@ -52,7 +52,7 @@ function AsideEnquete() {
                             quos atque porro blanditiis totam.
                         </article>
                     </div>
-                    <Image src={atletico} width={100} height={100} alt="Atletico" />
+                    <Image src={atletico} width={70} height={70} alt="Atletico" />
                 </section>
             </div>
         </aside>

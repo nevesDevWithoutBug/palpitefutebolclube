@@ -1,5 +1,5 @@
 .headerPai {
-    width: 100vw;
+    width: 100%;
 }
 
 .banner {
@@ -50,7 +50,7 @@
 
 .subHeader{
     margin-top: 0;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
