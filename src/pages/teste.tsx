@@ -11,6 +11,21 @@ import Api from "src/providers/http/api";
 
 const Home: NextPage = () => {
 
+
+
+
+    useEffect(()=>{
+        (async()=>{
+
+            const championships = await Api.get('/api/auth/game')
+
+            console.log('games', championships)
+
+        })()
+    },[])
+
+
+
     return (
         <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowX: 'hidden' }}>
             <HeaderPrincipal />
