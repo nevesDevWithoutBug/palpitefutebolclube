@@ -6,7 +6,26 @@ import CardPalpite from "src/components/cardPalpite/index";
 import Footer from "src/components/footer/index";
 import HeaderPrincipal from "../components/header/index"
 
+import { useEffect, useState } from 'react'
+import Api from "src/providers/http/api";
+
 const Home: NextPage = () => {
+
+
+
+
+    useEffect(()=>{
+        (async()=>{
+
+            const championships = await Api.get('/api/auth/game')
+
+            console.log('games', championships)
+
+        })()
+    },[])
+
+
+
     return (
         <div style={{ height: '100vh', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <HeaderPrincipal />
