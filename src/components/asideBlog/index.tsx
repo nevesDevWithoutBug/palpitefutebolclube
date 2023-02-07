@@ -34,7 +34,7 @@ function AsideBlog() {
                                 quos atque porro blanditiis totam.
                             </article>
                         </div>
-                        <Image src={cruzeiro} width={100} height={100} alt="Cruzeiro" /></>}
+                        <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" /></>}
                 </section>
                 <section>
                     {isLoading && <CardSkeleton video={false} blog={false} cards={null} enquete={true} />}
@@ -47,7 +47,7 @@ function AsideBlog() {
                                 quos atque porro blanditiis totam.
                             </article>
                         </div>
-                            <Image src={atletico} width={100} height={100} alt="Atletico" /></>}
+                            <Image src={atletico} width={70} height={70} alt="Atletico" /></>}
                 </section>
             </div>
             <div className={style.cardInfo}>

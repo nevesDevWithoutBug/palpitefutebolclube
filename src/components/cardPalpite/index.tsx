@@ -49,8 +49,9 @@ function CardPalpite() {
 
     const [unique, setUnique] = useState<boolean>(true)
     return (
-        <div className={style.bodyPalpite} style={!unique ? { maxWidth: '110rem' } : { width: '110rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '1rem 1rem 0rem 1rem', boxSizing: 'border-box' }}>
+        <div className={style.bodyPalpite}>
+            {/* style={!unique ? { maxWidth: '110rem' } : { width: '110rem' }} */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '1rem 1rem 0rem 1rem', boxSizing: 'border-box' }}>
                 <ul className={style.listaLigas}>
                     {
                         leagues.map((liga, index) => (

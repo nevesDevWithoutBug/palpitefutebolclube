@@ -15,7 +15,7 @@
     padding: 0.3rem;
     white-space: nowrap;                  
     overflow: hidden;
-    text-overflow:    ellipsis;
+    text-overflow: ellipsis;
 }
 
 .listaLigaLI:hover {
@@ -29,6 +29,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: end;
 }
 
 .visaoJogos span {
@@ -49,8 +50,7 @@
 .ulPalpite {
     transition:all 0.5s 0s ease;
     padding-top: 1rem;
-    width: 100%;
-    max-height: 54.1rem;
+    max-height: 46.1rem;
     overflow-y: scroll;
 }
 
@@ -65,15 +65,15 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    padding: 3rem;
+    padding: 1.5rem;
+    gap: 2rem;
     align-items: center;
 }
 
 .inputPalpite {
     border: 1px solid  rgb(231, 226, 226);
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2.5rem;
     background-color: #e4e4e4; 
     text-align: center;
     font-size: 1.5rem;
@@ -113,8 +113,8 @@
 .liPalpiteMult {
     transition:all 0.3s 0s linear;
     padding: 1rem;
-    max-width: 26rem; 
-    height: 12rem;
+    max-width: 22rem; 
+    height: 10rem;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -141,6 +141,7 @@
 
 .nomeTimeCard {
     text-align: center;
+    font-size: 0.8rem;
 }
 
 .contentContainerMult {
