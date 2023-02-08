@@ -13,7 +13,7 @@
 
 .svgHeader {
     padding-right: 1%;
-    max-width: 2rem;
+    width: 2rem;
 }
 
 .jogoContent {
@@ -35,9 +35,10 @@
     position: absolute;
     right: 0;
     bottom: 5px;
+    font-size: 1.2rem;
 }
 .buttonAdd {
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 0.7rem;
     border-radius: 20px;
     background: linear-gradient(to right, #126e51, #24a57c);
     color: white;
@@ -90,7 +91,7 @@
 }
 .imgPalpite {
     padding-bottom: 5px;
-    height: 5rem;
+    height: 4rem;
     width: auto;
 }
 .acao {
@@ -101,7 +102,7 @@
     gap: 1.5rem;
 }
 .acaoEditar {
-    height: 1.5rem;
+    height: 1.2rem;
 }
 .buttonEditar {
     background-color: yellow;

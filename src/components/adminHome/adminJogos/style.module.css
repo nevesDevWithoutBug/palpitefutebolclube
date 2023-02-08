@@ -9,7 +9,7 @@
 
 .svgHeader {
     padding-right: 1%;
-    max-width: 2rem;
+    width: 2rem;
 }
 
 .jogoContent {
@@ -48,7 +48,7 @@
     align-items: center;
 }
 
-.inputPalpite {
+.inputPalpiteDisabled {
     border: 1px solid  rgb(231, 226, 226);
     width: 3rem;
     height: 3rem;
@@ -56,6 +56,16 @@
     text-align: center;
     font-size: 1.5rem;
 }
+
+.inputPalpite {
+    border-bottom: 1px solid  black;
+    width: 3rem;
+    height: 3rem;
+    /* background-color: #e4e4e4;  */
+    text-align: center;
+    font-size: 1.5rem;
+}
+
 .spanPalpiteX {
     text-align: center;
     height: 100%;
@@ -74,7 +84,7 @@
 }
 .imgPalpite {
     padding-bottom: 5px;
-    height: 5rem;
+    height: 4rem;
     width: auto;
 }
 .acao {
@@ -85,7 +95,7 @@
     gap: 1.5rem;
 }
 .acaoEditar {
-    height: 1.5rem;
+    height: 1.2rem;
 }
 .buttonEditar {
     background-color: yellow;

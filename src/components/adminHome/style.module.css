@@ -1,19 +1,20 @@
-.homeAdmin, .homeAdminHideMenu {
+.homeAdmin{
     height: 100vh;
     display: grid;
     grid-template-rows: 5rem 1fr;
     grid-template-columns: 10rem 1fr;
-    transition: all 0.5s ease-in-out;
-}
-.homeAdmin {
     grid-template-areas:
-        "header header"
-        "menu content" ;
+    "header header"
+    "menu content" ;
 }
 .homeAdminHideMenu {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 5rem 1fr;
+    grid-template-columns: 10rem 1fr;
     grid-template-areas:
-        "header header"
-        "content content" ;
+    "header header"
+    "content content" ;
 }
 .buttonMenu {
     height: 2rem;
