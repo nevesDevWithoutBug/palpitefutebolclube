@@ -8,6 +8,7 @@ import PatchLaliga from "../../../public/assets/assets/laLiga.png"
 import style from "./style.module.css"
 import Image from "next/image"
 import { useState } from "react"
+import Modal from '../modal'
 
 function HeaderPrincipal() {
 
@@ -21,6 +22,15 @@ function HeaderPrincipal() {
         { nome: 'Sulamericana', pais: 'America do Sul', imagem: PatchLigue1 },
         { nome: 'Mundial de Clubes', pais: 'Mundo', imagem: PatchBundesliga },
     ]
+
+    const [displayModal, setDisplayModal] = useState(false)
+    const [open, setOpen] = useState('')
+
+    const toggle = () => {
+        setDisplayModal(!displayModal)
+    }
+
+
     return (
         <header className={style.headerPai}>
             <div className={!closeBan ? style.banner : style.close}>
@@ -32,9 +42,10 @@ function HeaderPrincipal() {
                 <span>Palpitar</span>
                 <span>Resultados</span>
                 <Image src={Logo} height={50} width={500} alt="palpite.com" />
-                <span>Cadastre-se</span>
-                <span>Login</span>
+                <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
+                <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
             </div>
+            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} />}
             {/* <ul className={style.subHeader}>
                 {leagues.map((league, key) =>
                     <li key={key}>
