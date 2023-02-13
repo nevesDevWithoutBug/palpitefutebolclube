@@ -14,26 +14,26 @@ const Home: NextPage = () => {
 
 
 
-    useEffect(()=>{
-        (async()=>{
+    useEffect(() => {
+        (async () => {
 
             const championships = await Api.get('/api/auth/game')
 
             console.log('games', championships)
 
         })()
-    },[])
+    }, [])
 
 
 
     return (
-        <div style={{ height: '100vh', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <HeaderPrincipal />
             <motion.div
                 animate={{ x: 0, opacity: 1 }}
                 initial={{ opacity: 0 }}
                 transition={{ duration: 1 }}
-                style={{ display: "flex", flexDirection: "row", width: '100%', gap: '1rem', padding: '2rem' }}>
+                style={{ display: "flex", justifyContent: "space-evenly", flexDirection: "row", gap: '1rem', padding: '2rem' }}>
                 <AsideEnquete />
                 <CardPalpite />
                 <AsideBlog />
