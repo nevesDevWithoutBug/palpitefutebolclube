@@ -4,6 +4,28 @@
     grid-template-rows: 5rem 1fr;
     grid-template-columns: 10rem 1fr;
     grid-template-areas:
-        "header header"
-        "menu content" ;
+    "header header"
+    "menu content" ;
+}
+.homeAdminHideMenu {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 5rem 1fr;
+    grid-template-columns: 10rem 1fr;
+    grid-template-areas:
+    "header header"
+    "content content" ;
+}
+.buttonMenu {
+    height: 2rem;
+}
+.divIconMenu{
+    position: absolute;
+    top: 1rem;
+    left: 5%;
+    background: #24a57c;
+    cursor: pointer;
+    transition: all 0.5s 0s ease;   
+    padding: 7px 10px;
+    border-radius: 10%;
 }

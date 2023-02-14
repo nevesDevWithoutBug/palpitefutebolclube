@@ -1,7 +1,7 @@
 
 
 export interface GameType {
-    id: number;
+    id?: number;
     name: string;
     championshipId?: number;
 }

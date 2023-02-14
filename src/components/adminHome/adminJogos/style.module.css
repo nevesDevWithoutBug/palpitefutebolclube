@@ -1,0 +1,119 @@
+.jogoHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1% 5%;
+    text-align: start;
+    background: white;
+}
+
+.svgHeader {
+    padding-right: 1%;
+    width: 2rem;
+}
+
+.jogoContent {
+    padding: 5px 3rem;
+    margin-top: 1rem;
+    height: 90%;
+    background: white;
+}
+.tituloContent {
+    display: flex;
+    font-size: 1.3rem;
+    justify-content: center;
+    align-items: center;
+    padding-right: 44px;
+    position: relative;
+    height: 50px;
+}
+.ulPalpite {
+    transition:all 0.5s 0s ease;
+    width: 100%;
+}
+
+.liPalpite {
+    display: flex;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;   
+}
+
+.contentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 3rem 0;
+    align-items: center;
+}
+
+.inputPalpiteDisabled {
+    border: 1px solid  rgb(231, 226, 226);
+    width: 3rem;
+    height: 3rem;
+    background-color: #e4e4e4; 
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.inputPalpite {
+    border-bottom: 1px solid  black;
+    width: 3rem;
+    height: 3rem;
+    /* background-color: #e4e4e4;  */
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.spanPalpiteX {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.pPalpite {
+    font-size: 0.9rem;
+}
+.spanPalpiteTime{
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+    align-items: center;
+}
+.imgPalpite {
+    padding-bottom: 5px;
+    height: 4rem;
+    width: auto;
+}
+.acao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.acaoEditar {
+    height: 1.2rem;
+}
+.buttonEditar {
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 10px;
+}
+.buttonExcluir {
+    background-color: rgb(255, 0, 0);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    white-space: nowrap;
+}
+.buttonSalvar {
+    background-color: rgb(92, 231, 92);
+    padding: 10px;
+    border-radius: 10px;
+}
+.menuHidden {
+    opacity: 0;
+}
