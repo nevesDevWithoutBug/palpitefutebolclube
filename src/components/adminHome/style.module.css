@@ -2,10 +2,12 @@
     height: 100vh;
     display: grid;
     grid-template-rows: 5rem 1fr;
-    grid-template-columns: 10rem 1fr;
+    grid-template-columns: 0rem 1fr;
     grid-template-areas:
     "header header"
     "menu content" ;
+    transition: grid-template-columns 1s ease;
+    grid-template-columns: 10rem 1fr;
 }
 .homeAdminHideMenu {
     height: 100vh;
@@ -14,7 +16,9 @@
     grid-template-columns: 10rem 1fr;
     grid-template-areas:
     "header header"
-    "content content" ;
+    "menu content" ;
+    transition: grid-template-columns 1s ease;
+    grid-template-columns: 0rem 1fr;
 }
 .buttonMenu {
     height: 2rem;
