@@ -1,26 +1,53 @@
 import style from "./style.module.css"
-import bayern from "/public/assets/assets/bayern.png"
-import psg from "/public/assets/assets/psg.png"
-import branco from '/public/assets/assets/branco.png'
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Api from "src/providers/http/api"
+import { TeamType } from "src/types/TeamType"
+import { GameType} from "src/types/GameType"
+import { TeamsGameType} from "src/types/TeamsGameType"
+import { ChampionshipType} from "src/types/ChampionshipType"
+import Spinner from "src/components/spinner"
 
 function RodadaComponent() {
 
-    const [ligas, setLigas] = useState([{ nome: 'Brasileirão' }, { nome: 'Libertadores' }, { nome: 'Mineiro' },])
+    const [ligas, setLigas] = useState<ChampionshipType[]>([])
 
-    const [ligaSelecionada, setLiga] = useState('Selecione uma liga')
+    const [ligaSelecionada, setLiga] = useState({id: 0, name:'Selecione uma liga'})
+    
+    const [teams, setTeams] = useState<TeamType[]>([])
 
-    const [games, setJogos] = useState([
-        { imgTimeCasa: psg, timeCasa: 'PSG', votoCasa: '1', votoFora: '1', imgTimeFora: bayern, timeFora: 'Bayern de Munique', hora: 'Hoje 17:00' },
-    ])
+    const [teste, setteste] = useState<any[]>([])
+    
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [games, setJogos] = useState<any[]>([])
+
+    useEffect(() => {
+        (async () => {
+            setIsLoading(true)
+            const teams = await Api.get('/api/auth/team')
+            setTeams(teams)
+            const championship = await Api.get('/api/auth/championship')
+            setLigas(championship);
+            const games = await Api.get('/api/auth/game')
+            setteste(games)
+            setJogos(games.map((item: any) => item.teamsGame))
+            setIsLoading(false)
+        })()
+    }, [])
 
     const [editar, setEdit] = useState(NaN)
 
-    const adicionaObjeto = () => {
-        setJogos([...games,
-        { imgTimeCasa: branco, timeCasa: 'Time casa', votoCasa: '1', votoFora: '1', imgTimeFora: branco, timeFora: 'Time fora', hora: 'Hoje 17:00' },
-        ]);
+    const adicionaObjeto = async () => {
+       
+        const body = {
+            game: {
+                name: 'teste',
+                championshipId : 1
+            }
+        }
+        const volta = await Api.post('/api/auth/game', body)
+        console.log(volta)
     };
 
     const removeObjeto = (key: number) => {
@@ -30,8 +57,16 @@ function RodadaComponent() {
         }
     };
 
+    const save = async (id: number) => {
+        const body = {
+            TeamsGameType: games[id]
+        }
+        const volta = await Api.post('/api/auth/teamsGame', body)
+    }
+
     return (
         <div className={style.jogo}>
+             {isLoading && <Spinner></Spinner>}
             <div className={style.jogoHeader}>
                 <div style={{ display: 'flex', textAlign: 'center', alignItems: 'center' }}>
                     <svg className={style.svgHeader} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -44,7 +79,7 @@ function RodadaComponent() {
                         <option>Selecione uma liga</option>
                         {ligas.map((liga, key) => {
                             return (
-                                <option onClick={() => setLiga(liga.nome)} key={key}>{liga.nome}</option>
+                                <option onClick={() => setLiga({id: Number(liga.id), name: liga.name})} key={key}>{liga.name}</option>
                             )
                         })}
                     </select>
@@ -52,7 +87,7 @@ function RodadaComponent() {
             </div>
             <div className={style.jogoContent}>
                 <div className={style.tituloContent}>
-                    {ligaSelecionada}
+                    {ligaSelecionada.name}
                     <div className={style.newRound}>
                         <button className={style.buttonAdd} onClick={() => adicionaObjeto()} >
                             Nova rodada
@@ -61,23 +96,24 @@ function RodadaComponent() {
                 </div>
                 <div>
                     <ul className={style.ulPalpite}>
-                        {games.map((game, key) => {
+                        {teste.map((game, key) => {
+                            if (game.championshipId == ligaSelecionada.id)
                             return (
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={game.imgTimeCasa} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/${games[key].length > 0 && games[key][0].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
-                                                        {game.timeCasa}
+                                                        {games[key].length > 0 && games[key][0].team?.name}
                                                     </p>
                                                     :
                                                     <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
                                                         {/* <option>Selecione uma liga</option> */}
-                                                        {ligas.map((liga, index) => {
+                                                        {teams.map((team, index) => {
                                                             return (
-                                                                <option selected={liga.nome == game.timeCasa} key={index} onClick={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, timeCasa: liga.nome } : item))}>{liga.nome}</option>
+                                                                <option selected={games[key].length > 0 && (team.name == games[key][0].team?.name)} key={index} onClick={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, timeCasa: team.name } : item))}>{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
@@ -88,25 +124,26 @@ function RodadaComponent() {
                                             {
                                                 editar !== key ?
                                                     <p className={style.pPalpite}>
-                                                        {game.hora}
+                                                        {/* {game.hora} */}
+                                                        000
                                                     </p>
                                                     :
-                                                    <input onChange={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, hora: event.target.value } : item))} placeholder="Informe a data" type="date" lang={"pt-BR"}/>
+                                                    <input onChange={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, hora: event?.target?.value } : item))} placeholder="Informe a data" type="date" lang={"pt-BR"}/>
                                             }
                                         </div>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={game.imgTimeFora} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/${games[key].length > 0 && games[key][1].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
-                                                        {game.timeFora}
+                                                        {games[key].length > 0 && games[key][1].team?.name}
                                                     </p>
                                                     :
                                                     <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
                                                         {/* <option>Selecione uma liga</option> */}
-                                                        {ligas.map((liga, index) => {
+                                                        {teams.map((team, index) => {
                                                             return (
-                                                                <option selected={liga.nome == game.timeFora} key={index} onClick={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, timeFora: liga.nome } : item))}>{liga.nome}</option>
+                                                                <option selected={games[key].length > 0 && (team.name == games[key][1].team?.name)} key={index} onClick={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, timeFora: team.name } : item))}>{team.name}</option>
                                                             )
                                                         })}
                                                     </select>

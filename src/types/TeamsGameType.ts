@@ -1,3 +1,4 @@
+import { TeamType } from './TeamType';
 
 
 export interface TeamsGameType {
@@ -5,5 +6,6 @@ export interface TeamsGameType {
     gol?:       number;
     teamId?:    number;
     gameId?:    number;
-    expire:    Date | null;
+    expire:     Date | null;
+    team?:       TeamType | null
 }

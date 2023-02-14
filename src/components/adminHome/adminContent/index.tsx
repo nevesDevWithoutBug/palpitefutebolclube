@@ -1,6 +1,7 @@
 import RodadaComponent from "../adminRodada"
 import JogosComponent from "../adminJogos"
 import style from "./style.module.css"
+import CampeonatoCamponent from "../adminCampeonato"
 
 function ContentComponent(props: any) {
     const page = props.page
@@ -9,6 +10,7 @@ function ContentComponent(props: any) {
         <div className={style.content}>
             {page === 'user' && <JogosComponent />}
             {page === 'jogo' && <RodadaComponent />}
+            {page === 'campeonato' && <CampeonatoCamponent />}
         </div>
     )
 }

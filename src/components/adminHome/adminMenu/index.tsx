@@ -3,8 +3,9 @@ import style from "./style.module.css"
 function MenuComponent({setMenu}:any) {
     return (
         <aside className={style.menu}>      
-            <a onClick={() => setMenu('home')}>Home</a>            
-            <a onClick={() => setMenu('jogo')}>Rodadas</a>            
+            <a onClick={() => setMenu('home')}>Home</a>
+            <a onClick={() => setMenu('campeonato')}>Campeonatos</a>
+            <a onClick={() => setMenu('jogo')}>Rodadas</a>
             <a onClick={() => setMenu('user')}>Jogos</a> 
             <a href="/teste">Palpites 
                 <svg className={style.exitIcon} fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
