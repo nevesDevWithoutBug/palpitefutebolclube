@@ -1,0 +1,165 @@
+.bodyPalpite {
+    height: 100%;
+    box-shadow: 0 1px 3px 1px #44637633;
+    border-radius: 0.25rem;
+}
+
+.listaLigas {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.listaLigaLI {
+    cursor: pointer;
+    padding: 0.3rem;
+    white-space: nowrap;                  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.listaLigaLI:hover {
+    box-sizing: border-box;
+    background: rgb(189, 185, 185);
+    transition:all 0.8s 0s ease;
+    border-radius: 10px;
+}
+
+.visaoJogos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}
+
+.visaoJogos span {
+    padding-right: 0.5rem;
+}
+
+.uniqueVis {
+    border: 0.5px solid gray;
+    margin-right: 0.2rem;
+    cursor: pointer;
+}
+
+.multiplyVis {
+    border: 0.5px solid gray;
+    cursor: pointer;
+}
+
+.ulPalpite {
+    transition:all 0.5s 0s ease;
+    padding-top: 1rem;
+    max-height: 46.1rem;
+    overflow-y: scroll;
+}
+
+.liPalpite {
+    display: flex;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;
+}
+
+.contentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 1.5rem;
+    gap: 2rem;
+    align-items: center;
+}
+
+.inputPalpite {
+    border: 1px solid  rgb(231, 226, 226);
+    width: 2rem;
+    height: 2.5rem;
+    background-color: #e4e4e4; 
+    text-align: center;
+    font-size: 1.5rem;
+}
+.spanPalpiteX {
+    display: flex;
+    gap: 10px;
+    text-align: center;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+.pPalpite {
+    font-size: 0.9rem;
+}
+.spanPalpiteTime{
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+    align-items: center;
+}
+.imgPalpite {
+    padding-bottom: 5px;
+}
+
+/*_________________segunda condicao________________ */
+
+.ulPalpiteMult {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.liPalpiteMult {
+    transition:all 0.3s 0s linear;
+    padding: 1rem;
+    max-width: 22rem; 
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-weight: 400;
+    box-shadow: 0 1px 3px 1px #44637633;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    background-size: cover;
+    justify-content: space-between;
+}
+
+.titleCard {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.titleCardContent {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.nomeTimeCard {
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.contentContainerMult {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contentContainerMult .spanPalpiteTime {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contentContainerMult .spanPalpiteX{
+    display: flex;
+    align-items: center;
+}

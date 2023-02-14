@@ -1,0 +1,38 @@
+.footerSite {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right, #126e51, #24a57c);
+    padding: 1rem;
+}
+
+.spanFooter {
+    color: white;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.footerSite ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.footerSite ul div {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+
+.titlePalpite {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.gitHub {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
