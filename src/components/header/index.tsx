@@ -30,10 +30,17 @@ function HeaderPrincipal() {
         setDisplayModal(!displayModal)
     }
 
-
     return (
         <header className={style.headerPai}>
             <div className={!closeBan ? style.banner : style.close}>
+                <div className={style.textHeaderPai}>
+                    <h1 className={style.textHeaderFilho1}>
+                        Faça parte do nosso clube!
+                    </h1>
+                    <h2 className={style.textHeaderFilho2}>
+                        Cadastre-se agora e concorra a premios!
+                    </h2>
+                </div>
                 <div>
                     <span className={style.closeBanner} onClick={() => setCloseBan(true)}>X</span>
                 </div>
@@ -45,7 +52,7 @@ function HeaderPrincipal() {
                 <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
                 <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
             </div>
-            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} />}
+            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} />}
             {/* <ul className={style.subHeader}>
                 {leagues.map((league, key) =>
                     <li key={key}>
