@@ -38,10 +38,12 @@ model Games {
   id           Int @id @default(autoincrement())
   name         String
 
-  teamsGame    TeamsGame[] @relation("GameByTeams")
+  teamsGame         TeamsGame[] @relation("GameByTeams")
 
-  championship         Championships? @relation("ChampioshipGames", fields: [championshipId], references: [id])
-  championshipId       Int?
+  championship         Championships @relation("ChampioshipGames", fields: [championshipId], references: [id])
+  championshipId       Int
+  
+  expire               DateTime?
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -52,14 +54,13 @@ model TeamsGame {
   id           Int @id @default(autoincrement())
   gol          Int @default(0)
 
-  team         Teams? @relation("TeamGames", fields: [teamId], references: [id])
-  teamId       Int?
+  team         Teams @relation("TeamGames", fields: [teamId], references: [id])
+  teamId       Int
 
   
-  game        Games? @relation("GameByTeams",  fields: [gameId], references: [id])
-  gameId      Int?
+  game        Games @relation("GameByTeams",  fields: [gameId], references: [id])
+  gameId      Int
 
-  expire       DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   @@map("teamsGame")

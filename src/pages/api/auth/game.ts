@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import GameModel from 'src/models/GameModel';
+import TeamsGameModel from 'src/models/TeamsGameModel';
 import { GameType } from 'src/types/GameType';
+import { TeamsGameType } from 'src/types/TeamsGameType';
 
 // 200 OK
 // 201 Created
@@ -31,25 +33,26 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
         if(method === 'GET') {
 
-            const { id } = req.query
+            const { id, championshipId } = req.query
 
-            const gameDb :GameType | GameType[] = await GameModel.get(Number(id))
+            if(championshipId) return res.status(200).json( await GameModel.getBychampionship(Number(championshipId)) )
 
-            if(!gameDb) return res.status(404).json({ message: 'game not found' })
-
-            return res.status(200).json(gameDb)
+            return res.status(200).json( await GameModel.get(Number(id)) )
 
         }
 
         if(method === 'POST') {
 
-            const { game } : { game:GameType } = req.body
+            const { id, name, championshipId, firstTeam, secondTeam } = req.body
 
-            const gameDb :GameType = await GameModel.upsert(game)
+            const gameDb :GameType = await GameModel.upsert({id, name, championshipId})
 
             if(!gameDb) return res.status(500).json({ message: 'game not created' })
 
-            return res.status(200).json(gameDb)
+            const firstTeamDb : TeamsGameType = await TeamsGameModel.upsert({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  })
+            const secondTeamDb : TeamsGameType = await TeamsGameModel.upsert({ teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
+
+            return res.status(200).json( await GameModel.get(gameDb.id) )
 
         }
 

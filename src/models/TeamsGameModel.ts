@@ -10,9 +10,12 @@ function model() {
             : <TeamsGameType[]> await prisma.teamsGame.findMany()
         },
 
-        async upsert(teamsGame: TeamsGameType) {
+        async upsert(teamsGame: any) {
+
+            const found = <TeamsGameType> await prisma.teamsGame.findFirst({ where: {teamId: teamsGame.teamId, gameId: teamsGame.gameId} }) 
+
             return <TeamsGameType> await prisma.teamsGame.upsert({
-                where: { id: teamsGame.id ? teamsGame.id : -1},
+                where: { id: found ? found.id : -1 },
                 create: teamsGame,
                 update: teamsGame,
             })
