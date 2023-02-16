@@ -2,33 +2,39 @@ import { BsFacebook, BsTwitter, BsYoutube, BsGithub } from "react-icons/bs"
 import { AiFillInstagram } from "react-icons/ai"
 import { BiCopyright } from "react-icons/bi"
 import style from "./style.module.css"
+import Link from "next/link"
+import insta from '../../../public/assets/assets/instagramLogo.png'
+import youtube from '../../../public/assets/assets/youtubeLogo.png'
+import Image from "next/image"
 
 function Footer() {
 
     return (
         <footer className={style.footerSite}>
-            <ul>
+            <ul className={style.ulRedes}>
                 <span className={style.spanFooter}>Nos siga nas redes</span>
                 <div>
                     <li>
-                        <AiFillInstagram size={50} />
+                        <Link href='https://instagram.com/palpitefutebolclube?igshid=YmMyMTA2M2Y=' target="_blank" >
+                            <Image alt="instagram" src={insta} height={50} />
+                        </Link>
                     </li>
                     <li>
-                        <BsFacebook size={50} />
-                    </li>
-                    <li>
-                        <BsTwitter size={50} />
-                    </li>
-                    <li>
-                        <BsYoutube size={50} />
+                        <Link href='https://www.youtube.com' target="_blank">
+                            <Image alt="youtube" src={youtube} height={53}/>
+                        </Link>
                     </li>
                 </div>
             </ul>
             <div className={style.titlePalpite}>
-                <BiCopyright size={20} /> <span className={style.spanFooter}> Palpite Futebol CLube </span>
+                <BiCopyright size={20} />  <span className={style.logoText}>Palpite Futebol Clube</span>
             </div>
             <div className={style.gitHub}>
-                <span className={style.spanFooter}> Desenvolvido por:</span> <BsGithub size={50} />
+                <span className={style.spanFooter}> Desenvolvido por</span> 
+                <div className={style.githubLink}>
+                    <Link href='https://github.com/nevesDevWithoutBug' target="_blank" style={{marginTop:'2px'}}> Devs do asfalto </Link>
+                    <BsGithub size={30} />
+                </div>
             </div>
         </footer>
     )
