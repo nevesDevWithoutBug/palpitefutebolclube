@@ -6,6 +6,17 @@
     padding: 1rem;
 }
 
+.logoText {
+    margin-top: 2.4px;
+    margin-left: 5px;
+    font-family: "Bowlby One SC", cursive;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    color: #ffffff;
+}
+
 .spanFooter {
     color: white;
     padding-left: 0.5rem;
@@ -13,12 +24,14 @@
     font-size: 1.2rem;
 }
 
-.footerSite ul {
+.ulRedes {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.footerSite ul div {
+.ulRedes div {
+    margin-top: 0.2rem;
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -32,7 +45,19 @@
 }
 
 .gitHub {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0.5px dashed white;
+    border-radius: 5px;
+    background: linear-gradient(to right, #126e51, #24a57c);
+}
+
+.githubLink {
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    gap: 0.5rem;
+    align-content: center;
 }

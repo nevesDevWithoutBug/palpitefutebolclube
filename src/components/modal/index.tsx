@@ -42,7 +42,7 @@ const Modal = ({ display, toggle, open, setOpen }: any) => {
     return createPortal(
         <motion.div animate={{ x: 0, opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.3 }}>
             <div style={{ display: display ? 'block' : 'none', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.5)', padding: '50px' }}>
-                <div style={{ background: '#fff', borderRadius: '10px', width: '28rem', margin: 'auto', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: '#fff', borderRadius: '10px', width: '28rem', margin: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 3px 1px #44637633'}}>
                     <div className={style.fecharModal}>
                         <span className={style.logoText}>Palpite Futebol Clube</span>
                         <button onClick={toggle}>
