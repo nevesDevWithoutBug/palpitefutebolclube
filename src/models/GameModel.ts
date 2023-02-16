@@ -9,11 +9,11 @@ function model() {
             return id ? <GameType> await prisma.games.findFirst({
               where: {id: id},
               include: { 
-                teamsGame: { include: { team: { select: { name: true } } },} 
+                teamsGame: { include: { team: true },} 
               }
             }) : <Array<GameType>> await prisma.games.findMany({
               include: { 
-                teamsGame: { include: { team: { select: { name: true } } } } 
+                teamsGame: { include: { team: true } } 
               }
             })
           },

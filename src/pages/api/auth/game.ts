@@ -33,7 +33,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             const { id } = req.query
 
-            const gameDb :GameType | GameType[] = await GameModel.get(Number(id))
+const gameDb :GameType | GameType[] = await GameModel.get(Number(id))
 
             if(!gameDb) return res.status(404).json({ message: 'game not found' })
 

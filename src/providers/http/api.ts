@@ -11,12 +11,12 @@ interface Http {
  * @return {[type]}      [description]
  */
 interface ApiType {
-    get: Http,
-    post: Http
-    put?: Http, 
-    delete: Http, 
-    auth: <JSON = any>(url: string, object: any) => Promise<JSON>, 
-    signOut: () => Promise<void>
+    get: Http;
+    post: Http;
+    put?: Http;
+    delete: Http;
+    auth: <JSON = any>(url: string, object: any) => Promise<JSON>;
+    signOut: () => Promise<void>;
 }
 
 
