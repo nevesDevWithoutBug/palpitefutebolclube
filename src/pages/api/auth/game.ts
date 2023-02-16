@@ -33,13 +33,11 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
         if(method === 'GET') {
 
-            const { id } = req.query
+            const { id, championshipId } = req.query
 
-            const gameDb :GameType | GameType[] = await GameModel.get(Number(id))
+            if(championshipId) return res.status(200).json( await GameModel.getBychampionship(Number(championshipId)) )
 
-            if(!gameDb) return res.status(404).json({ message: 'game not found' })
-
-            return res.status(200).json(gameDb)
+            return res.status(200).json( await GameModel.get(Number(id)) )
 
         }
 
