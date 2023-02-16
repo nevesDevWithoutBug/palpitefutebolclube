@@ -42,6 +42,7 @@
     font-weight: 900;
     background: rgba(255, 255, 255, 0.549);
     border-radius: 100%;
+    cursor: pointer;
 }
 
 .close {

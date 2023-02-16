@@ -99,6 +99,17 @@
     font-size: 1.5rem;
 }
 
+.inputPalpite::-webkit-outer-spin-button,
+.inputPalpite::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.inputPalpite[type=number] {
+    -moz-appearance: textfield;
+}
+
 .spanPalpiteX {
     display: flex;
     gap: 10px;
