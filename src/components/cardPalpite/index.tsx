@@ -73,7 +73,7 @@ function CardPalpite() {
                 {isLoading && <li> <CardSkeleton video={false} blog={false} cards={games.length} enquete={false} /> </li>}
                 {!isLoading && games.map((game, key) => (
                     <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite}>
-                        {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><img src={Ball} alt="" />Campeonato Teste</span> <span>{game.hora}</span></div>}
+                        {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><Image src={Ball} alt="" />Campeonato Teste</span> <span>{game.hora}</span></div>}
                         <div className={!unique ? style.contentContainerMult : style.contentContainer}>
                             <span className={style.spanPalpiteTime}>
                                 <Image className={style.imgPalpite} src={game.imgTimeCasa} width={45} height={45} alt="" />
@@ -81,14 +81,14 @@ function CardPalpite() {
                                     {game.timeCasa}
                                 </p>
                             </span>
-                            <input className={style.inputPalpite}></input>
+                            <input type='text' pattern="\d{1,2}" onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <div className={style.spanPalpiteX}>
                                 <p>X</p>
                                 {unique && <p className={style.pPalpite}>
                                     {game.hora}
                                 </p>}
                             </div>
-                            <input className={style.inputPalpite}></input>
+                            <input type='text' pattern="\d{1,2}" onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <span className={style.spanPalpiteTime}>
                                 <Image className={style.imgPalpite} src={game.imgTimeFora} width={45} height={45} alt="" />
                                 <p className={style.nomeTimeCard}>
