@@ -21,8 +21,8 @@ function model() {
         async upsert(game: GameType) {
             return <GameType> await prisma.games.upsert({
                 where: { id: game.id ? game.id : -1},
-                create: game,
-                update: game,
+                create: { name: game.name, championshipId: Number(game.championshipId) },
+                update: { name: game.name },
                 include: { teamsGame: true}
             })
         },

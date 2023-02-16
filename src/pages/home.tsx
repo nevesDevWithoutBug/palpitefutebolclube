@@ -13,21 +13,19 @@ const Home: NextPage = () => {
 
 
 
+    async function handleGame() {
 
-    useEffect(() => {
-        (async () => {
+        const championships = await Api.post('/api/auth/game', { name: 'jogo 2', championshipId:1, firstTeam:{ id: 1, gol: 2 }, secondTeam:{ id: 2, gol: 1 } })
 
-            const championships = await Api.get('/api/auth/game')
+        console.log('games', championships)
 
-            console.log('games', championships)
+    }
 
-        })()
-    }, [])
 
 
 
     return (
-        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div onClick={()=> handleGame()} style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <HeaderPrincipal />
             <motion.div
                 animate={{ x: 0, opacity: 1 }}
