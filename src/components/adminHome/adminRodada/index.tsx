@@ -38,16 +38,18 @@ function RodadaComponent() {
 
     const [editar, setEdit] = useState(NaN)
 
-    const adicionaObjeto = async () => {
+    const adicionaObjeto = async (id: Number) => {
        
-        const body = {
-            game: {
-                name: 'teste',
-                championshipId : 1
-            }
+        const game = {
+            name: 'teste',
+            championshipId : id,
+            teamsGame: [
+                { gol: 0, team: {name: ''} },
+                { gol: 0, team: {name: ''} }
+            ] 
         }
-        const volta = await Api.post('/api/auth/game', body)
-        console.log(volta)
+        setteste([...teste, game])
+        setJogos([...games, game.teamsGame])
     };
 
     const removeObjeto = (key: number) => {
@@ -57,11 +59,20 @@ function RodadaComponent() {
         }
     };
 
-    const save = async (id: number) => {
-        const body = {
-            TeamsGameType: games[id]
+    const save = async (id: number, index: number) => {
+        setIsLoading(true)
+        const body = { 
+            name: 'jogo 2', 
+            championshipId:id, 
+            firstTeam:{ id: games[index][0].teamId, gol: 0 }, 
+            secondTeam:{ id: games[index][1].teamId, gol: 0 } 
         }
-        const volta = await Api.post('/api/auth/teamsGame', body)
+        await Api.post('/api/auth/game', body)
+        const game = await Api.get('/api/auth/game')
+        setteste(game)
+        setJogos(game.map((item: any) => item.teamsGame))
+        setEdit(NaN)
+        setIsLoading(false)
     }
 
     return (
@@ -89,7 +100,7 @@ function RodadaComponent() {
                 <div className={style.tituloContent}>
                     {ligaSelecionada.name}
                     <div className={style.newRound}>
-                        <button className={style.buttonAdd} onClick={() => adicionaObjeto()} >
+                        <button className={style.buttonAdd} onClick={() => adicionaObjeto(ligaSelecionada.id)} >
                             Nova rodada
                         </button>
                     </div>
@@ -102,7 +113,7 @@ function RodadaComponent() {
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/${games[key].length > 0 && games[key][0].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${games[key].length > 0 && games[key][0].team?.name.toLocaleLowerCase().replace('-', '')}.png`} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
@@ -113,7 +124,7 @@ function RodadaComponent() {
                                                         {/* <option>Selecione uma liga</option> */}
                                                         {teams.map((team, index) => {
                                                             return (
-                                                                <option selected={games[key].length > 0 && (team.name == games[key][0].team?.name)} key={index} onClick={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, timeCasa: team.name } : item))}>{team.name}</option>
+                                                                <option selected={games[key].length > 0 && (team.name == games[key][0].team?.name)} key={index} onClick={() => setJogos([...games, games[key][0].teamId = team.id])}>{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
@@ -132,7 +143,7 @@ function RodadaComponent() {
                                             }
                                         </div>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/${games[key].length > 0 && games[key][1].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${games[key].length > 0 && games[key][1].team?.name.toLocaleLowerCase().replace('-', '')}.png`} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
@@ -143,7 +154,7 @@ function RodadaComponent() {
                                                         {/* <option>Selecione uma liga</option> */}
                                                         {teams.map((team, index) => {
                                                             return (
-                                                                <option selected={games[key].length > 0 && (team.name == games[key][1].team?.name)} key={index} onClick={() => setJogos(prevItems => prevItems.map((item, id) => id === key ? { ...item, timeFora: team.name } : item))}>{team.name}</option>
+                                                                <option selected={games[key].length > 0 && (team.name == games[key][1].team?.name)} key={index} onClick={() => setJogos([...games, games[key][1].teamId = team.id])}>{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
@@ -158,7 +169,7 @@ function RodadaComponent() {
                                                 </svg>
                                             </button>
                                             :
-                                            <button className={style.buttonSalvar} onClick={() => setEdit(NaN)}>
+                                            <button className={style.buttonSalvar} onClick={() => save(ligaSelecionada.id, key)}>
                                                 <svg className={style.acaoEditar} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                     <path fill="white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
                                                 </svg>
