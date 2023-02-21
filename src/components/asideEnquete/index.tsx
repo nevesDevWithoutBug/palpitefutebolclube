@@ -10,7 +10,7 @@ function AsideEnquete() {
         <aside className={style.paiAsideEnquete}>
             <div className={style.cardInfo}>
                 <div className={style.headerBlog}>
-                    <Image src={noticias} width={25} height={10} style={{ marginRight: '0.5rem' }} alt="noticias" />
+                    <Image src={noticias} width={25} style={{ marginRight: '0.5rem',objectFit: 'cover' }} alt="noticias" />
                     Enquetes
                 </div>
                 <section>
