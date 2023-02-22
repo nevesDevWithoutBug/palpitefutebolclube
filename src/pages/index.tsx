@@ -13,19 +13,19 @@ const Home: NextPage = () => {
 
 
 
-    async function handleGame() {
+    // async function handleGame() {
 
-        const teste = await Api.post('/api/auth/game', { name: 'jogo 2', championshipId:1, firstTeam:{ id: 1, gol: 2 }, secondTeam:{ id: 2, gol: 1 } })
+    //     const teste = await Api.post('/api/auth/game', { name: 'jogo 2', championshipId:1, firstTeam:{ id: 1, gol: 2 }, secondTeam:{ id: 2, gol: 1 } })
 
-        console.log('games', teste)
+    //     console.log('games', teste)
 
-    }
+    // }
 
 
 
 
     return (
-        <div onClick={()=> handleGame()} style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <HeaderPrincipal />
             <motion.div
                 animate={{ x: 0, opacity: 1 }}

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import style from './style.module.css'
-import bayern from "../../../../public/assets/assets/clubes/bayern.png"
-import psg from "../../../../public/assets/assets/clubes/psg.png"
 import Image from 'next/image'
 import Api from 'src/providers/http/api'
 import { TeamType } from 'src/types/TeamType'
@@ -10,20 +8,17 @@ import Spinner from "src/components/spinner"
 
 function JogosComponent() {
 
-    const [teste, setteste] = useState<any[]>([])
+    const [games, setGames] = useState<any[]>([])
 
     const [ligas, setLigas] = useState<ChampionshipType[]>([])
 
     const [ligaSelecionada, setLiga] = useState({ id: 0, name: 'Selecione uma liga' })
-
-    const [games, setJogos] = useState<any[]>([])
 
     const [editar, setEdit] = useState(NaN)
 
     const [teams, setTeams] = useState<TeamType[]>([])
 
     const [isLoading, setIsLoading] = useState(false);
-
 
     useEffect(() => {
         (async () => {
@@ -33,9 +28,7 @@ function JogosComponent() {
             const championship = await Api.get('/api/auth/championship')
             setLigas(championship);
             const games = await Api.get('/api/auth/game')
-            setteste(games)
-            setJogos(games.map((item: any) => item.teamsGame))
-            console.log('games', games)
+            setGames(games)
             setIsLoading(false)
         })()
     }, [])
@@ -45,29 +38,24 @@ function JogosComponent() {
         return regex.test(value);
     };
 
-    const [inputValue, setInputValue] = useState<string>('');
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, id:number) => {
         const { value } = event.target;
         if (!validateInput(value)) return;
-        setInputValue(value);
+        setGames([...games, games[index].teamsGame[id].gol = Number(value)])
     };
 
-    const save = async (id: number, index: number) => {
-        console.log('games', games[index])
+    const save = async (idLiga: number, index: number) => {
         setIsLoading(true)
         const body = { 
-            id: games[index][0].gameId,
+            id: games[index].id,
             name: 'jogo 2', 
-            championshipId:id, 
-            firstTeam:{ id: games[index][0].teamId, gol: games[index][0].gol }, 
-            secondTeam:{ id: games[index][1].teamId, gol: games[index][1].gol } 
+            championshipId: idLiga, 
+            firstTeam:{ id: games[index].teamsGame[0].teamId, gol: games[index].teamsGame[0].gol }, 
+            secondTeam:{ id: games[index].teamsGame[1].teamId, gol: games[index].teamsGame[1].gol } 
         }
         const volta = await Api.post('/api/auth/game', body)
-        console.log('volta')
         const game = await Api.get('/api/auth/game')
-        setteste(game)
-        setJogos(game.map((item: any) => item.teamsGame))
+        setGames(game)
         setEdit(NaN)
         setIsLoading(false)
     }
@@ -75,10 +63,11 @@ function JogosComponent() {
     const del = async (index: number) => {
         setIsLoading(true)
         const body = {
-            id: games[index][0].gameId
+            id: games[index].id
         }
-        const volta = await Api.delete('/api/auth/game', body)
-        console.log('volta', volta)
+        await Api.delete('/api/auth/game', body)
+        const game = await Api.get('/api/auth/game')
+        setGames(game)
         setIsLoading(false)
     } 
 
@@ -108,18 +97,18 @@ function JogosComponent() {
                     {ligaSelecionada.name}
                 </div>
                 <ul className={style.ulPalpite}>
-                    {teste.map((game, key) => {
+                    {games.map((game, key) => {
                         if (game.championshipId == ligaSelecionada.id)
                             return (
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${games[key].length > 0 && games[key][0].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.teamsGame.length > 0 && game.teamsGame[0].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
                                             <p className={style.nomeTimeCard}>
-                                                {games[key].length > 0 && games[key][0].team?.name}
+                                                {game.teamsGame.length > 0 && game.teamsGame[0].team?.name}
                                             </p>
                                         </span>
-                                        <input value={games[key].length > 0 ? games[key][0].gol : 0} onChange={(event) => setJogos([...games, games[key][0].gol = Number(event?.target.value)])} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
+                                        <input value={game.teamsGame.length > 0 ? game.teamsGame[0].gol : 0} onChange={(event) => handleInputChange(event, key, 0)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
                                         <div className={style.spanPalpiteX}>
                                             <p>X</p>
                                             <p className={style.pPalpite}>
@@ -127,11 +116,11 @@ function JogosComponent() {
                                                 000
                                             </p>
                                         </div>
-                                        <input value={games[key].length > 0 ? games[key][1].gol : 0} onChange={(event) => setJogos([...games, games[key][1].gol = Number(event?.target.value)])} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
+                                        <input value={game.teamsGame.length > 0 ? game.teamsGame[1].gol : 0} onChange={(event) => handleInputChange(event, key, 1)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${games[key].length > 0 && games[key][1].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.teamsGame.length > 0 && game.teamsGame[1].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
                                             <p className={style.nomeTimeCard}>
-                                                {games[key].length > 0 && games[key][1].team?.name}
+                                                {game.teamsGame.length > 0 && game.teamsGame[1].team?.name}
                                             </p>
                                         </span>
                                     </div>
