@@ -21,7 +21,7 @@ export default async function middleware(req: NextRequest) {
 
 //  running middleware on specific paths.
 export const config = {
-    matcher: ['/admin/:path*', '/api/auth/:path*'],
+    matcher: ['/admins/:path*', '/api/sauth/:path*'],
 }
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {

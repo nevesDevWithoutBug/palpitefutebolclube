@@ -3,17 +3,19 @@ import { motion } from "framer-motion";
 import style from "./style.module.css"
 import { useState } from "react";
 import { userCreateType } from "src/types/UserCreateType";
+import { UserType } from "src/types/UserType";
 import Image from "next/image";
 import Close from "../../../public/assets/assets/rectangle-xmark-regular.svg"
+import Api from "src/providers/http/api";
 
 
 const Modal = ({ display, toggle, open, setOpen }: any) => {
 
-    const [user, setUser] = useState<userCreateType>({ nome: '', email: '', senha: '' })
+    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role: 1000 })
     const [senhaOk, setSenhaOk] = useState<boolean>(false)
 
     function handleNomeChange(e: any) {
-        setUser({ ...user, nome: e.target.value })
+        setUser({ ...user, name: e.target.value })
     }
 
     function handleEmailChange(e: any) {
@@ -21,22 +23,30 @@ const Modal = ({ display, toggle, open, setOpen }: any) => {
     }
 
     function handleSenhaChange(e: any) {
-        setUser({ ...user, senha: e.target.value })
+        setUser({ ...user, password: e.target.value })
         setSenhaOk(false)
     }
 
     function handleVerifySenhaChange(e: any) {
-        if (user.senha === e.target.value) return setSenhaOk(true)
+        if (user.password === e.target.value) return setSenhaOk(true)
         return setSenhaOk(false)
     }
 
     function submitUser(e: any) {
         e.preventDefault()
-        if (user.nome === '') {
+        if (user.name === '') {
             console.log('login', user)
         } else {
             console.log('cadastro', user)
         }
+    }
+
+    async function signup() {
+        await Api.post('api/signup', user)
+    }
+
+ async function signin() {
+        await Api.post('api/signin', user)
     }
 
     return createPortal(
@@ -52,14 +62,15 @@ const Modal = ({ display, toggle, open, setOpen }: any) => {
                     {open === 'cadastro' &&
                         <><motion.form initial={{ x: 15 }} animate={{ x: 0 }} transition={{ duration: 0.3 }} className={style.formModal} onSubmit={submitUser}>
                             <span>Nome</span>
-                            <input placeholder="Informe seu nome" type="text" name="nome" value={user.nome} onChange={handleNomeChange} />
+                            <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
                             <span>Email</span>
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
                             <span>Senha</span>
-                            <input placeholder="********" type="password" name="senha" value={user.senha} onChange={handleSenhaChange} />
+                            <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
                             <span>Confirme sua senha {senhaOk && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                             <input placeholder="********" type="password" name="senha" onChange={handleVerifySenhaChange} />
-                            <button type="submit" disabled={user.nome && user.email && user.senha && senhaOk ? false : true} >Cadastrar</button>
+                            <button type="submit" disabled={user.name && user.email && user.password && senhaOk ? false : true} 
+                            onClick={() => signup()} >Cadastrar</button>
                         </motion.form>
                             <button className={style.modalNav} onClick={() => setOpen('login')}>Entrar</button></>
                     }
@@ -68,8 +79,9 @@ const Modal = ({ display, toggle, open, setOpen }: any) => {
                             <span>Email</span>
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
                             <span>Senha</span>
-                            <input placeholder="********" type="password" name="senha" value={user.senha} onChange={handleSenhaChange} />
-                            <button type="submit" disabled={user.email && user.senha ? false : true}>Entrar</button>
+                            <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
+                            <button type="submit" disabled={user.email && user.password ? false : true}
+                            onClick={() => signin()} >Entrar</button>
                         </motion.form >
                             <button className={style.modalNav} onClick={() => setOpen('cadastro')}>Cadastrar</button></>
                     }
