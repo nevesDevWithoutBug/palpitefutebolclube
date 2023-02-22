@@ -10,7 +10,8 @@ function model() {
             : <ChampionshipType[]> await prisma.championships.findMany({ include: { games: true} })
         },
 
-        async upsert(championship: ChampionshipType) {
+        async upsert(championshipParam: any) {
+            const {games,  ...championship } = championshipParam
             return <ChampionshipType> await prisma.championships.upsert({
                 where: { id: championship.id ? championship.id : -1},
                 create: championship,

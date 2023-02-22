@@ -21,13 +21,12 @@ export default async function middleware(req: NextRequest) {
 
 //  running middleware on specific paths.
 export const config = {
-    matcher: ['/admins/:path*', '/api/sauth/:path*'],
+    matcher: ['/admin/:path*', '/api/auth/:path*'],
 }
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
 
-    const {value:token} = <any> req.cookies.get('auth')
-    
+    const { value:token } = <any> req.cookies.get('auth')
     if(!token) return false 
 
     const decodedToken = await verify(token, process.env.ACCESS_TOKEN as string)
@@ -40,7 +39,7 @@ function handleNotAuthenticated(req: NextRequest) {
 
     const { pathname } = req.nextUrl
 
-    if (pathname.startsWith('/app')) return NextResponse.redirect(new URL('/login', req.url))
+    if (pathname.startsWith('/admin')) return NextResponse.redirect(new URL('/', req.url))
 
     return NextResponse.json({ success: false,  message: 'Error: Auth failed' }, { status: 401 });
 

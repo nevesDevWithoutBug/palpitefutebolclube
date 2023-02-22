@@ -11,7 +11,7 @@ import Api from "src/providers/http/api";
 
 const Modal = ({ display, toggle, open, setOpen }: any) => {
 
-    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role: 1000 })
+    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role : 300 })
     const [senhaOk, setSenhaOk] = useState<boolean>(false)
 
     function handleNomeChange(e: any) {
@@ -45,8 +45,8 @@ const Modal = ({ display, toggle, open, setOpen }: any) => {
         await Api.post('api/signup', user)
     }
 
- async function signin() {
-        await Api.post('api/signin', user)
+    async function signin() {
+        await Api.auth('api/signin', user)
     }
 
     return createPortal(

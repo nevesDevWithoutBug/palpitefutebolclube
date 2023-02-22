@@ -21,7 +21,7 @@ model Users {
   name         String
   email        String  @unique
   password     String
-  role         Int // 100 = adm // 200 = sample user // 300 any
+  role         Int // 100 = adm // 200 = columnist // 300 user
   news         News[] @relation("NewsUser")
   @@map("users")
 }
