@@ -80,12 +80,14 @@ function fetchApi():ApiType {
             })
             const data = await response.json()
             await Cookie.set('auth', data.accessToken, 360)
+            await Cookie.set('user', data.user, 360)
             return data
         },
     
         signOut: async(): Promise<void> => {
             try{
     
+                await Cookie.expire('auth')
                 await Cookie.expire('auth')
                 if(typeof window !== 'undefined') window.location.reload()
     
