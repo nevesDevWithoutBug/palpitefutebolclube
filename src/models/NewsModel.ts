@@ -6,8 +6,8 @@ function model() {
     // export all function that is in the return
     return { 
         async get(id?: number) {
-            return id ? <NewsType> await prisma.news.findFirst({ where: {id: id} }) 
-            : <NewsType[]> await prisma.news.findMany()
+            return id ? <NewsType> await prisma.news.findFirst({ where: {id: id}, include : { author: true } }) 
+            : <NewsType[]> await prisma.news.findMany({ include : { author: true } })
         },
 
         async upsert(news: NewsType) {
@@ -15,6 +15,7 @@ function model() {
                 where: { id: news.id ? news.id : -1},
                 create: news,
                 update: news,
+                include : { author: true }
             })
         },
 
