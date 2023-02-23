@@ -1,6 +1,6 @@
 import Image from "next/image"
 import cruzeiro from "../../../public/assets/assets/cruzeiro.svg"
-import atletico from "../../../public/assets/assets/atleticomg.svg"
+import atletico from "../../../public/assets/assets/atletico.svg"
 import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 

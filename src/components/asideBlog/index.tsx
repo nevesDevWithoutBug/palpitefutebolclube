@@ -1,6 +1,6 @@
 import Image from "next/image"
 import cruzeiro from "../../../public/assets/assets/cruzeiro.svg"
-import atletico from "../../../public/assets/assets/atleticomg.svg"
+import atletico from "../../../public/assets/assets/atletico.svg"
 import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 import { useEffect, useState } from "react"
@@ -21,33 +21,37 @@ function AsideBlog() {
             <div className={style.cardInfo}>
                 <div className={style.headerBlog}>
                     <Image src={noticias} width={25} height={10} style={{ marginRight: '0.5rem' }} alt="noticias" />
-                    Notícias
+                    Blog
                 </div>
                 <section>
                     {isLoading && <CardSkeleton video={false} blog={true} cards={null} enquete={false} />}
                     {!isLoading && <>
                         <div className={style.contentNoticias}>
-                            <h1>Cristiano Ronaldo</h1>
+                            <div style={{display:"flex", flexDirection:"row", justifyContent:'space-between', alignItems:'center' }}>
+                                <h1 style={{marginTop:'3px'}}>Cristiano Ronaldo</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
+                            </div>
                             <article>
                                 Lorem, ipsum dolor sit amet consectetur
                                 adipisicing elit. Minus nisi, voluptatibus
                                 quos atque porro blanditiis totam.
                             </article>
                         </div>
-                        <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" /></>}
+                        </>}
                 </section>
                 <section>
                     {isLoading && <CardSkeleton video={false} blog={false} cards={null} enquete={true} />}
                     {!isLoading &&
                         <> <div className={style.contentNoticias}>
-                            <h1>Lionel Messi</h1>
+                            <div style={{display:"flex", flexDirection:"row", justifyContent:'space-between', alignItems:'center' }}>
+                                <h1 style={{marginTop:'3px'}}>Lionel Messi</h1> <Image src={atletico} width={50} height={40} alt="Atletico" />
+                            </div>
                             <article>
                                 Lorem, ipsum dolor sit amet consectetur
                                 adipisicing elit. Minus nisi, voluptatibus
                                 quos atque porro blanditiis totam.
                             </article>
                         </div>
-                            <Image src={atletico} width={70} height={70} alt="Atletico" /></>}
+                        </>}
                 </section>
             </div>
             <div className={style.cardInfo}>

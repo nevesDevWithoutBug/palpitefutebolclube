@@ -9,6 +9,7 @@ import style from "./style.module.css"
 import Image from "next/image"
 import { useState } from "react"
 import Modal from '../modal'
+import Api from "src/providers/http/api"
 
 function HeaderPrincipal() {
 
@@ -30,6 +31,11 @@ function HeaderPrincipal() {
         setDisplayModal(!displayModal)
     }
 
+
+    async function Sair() {
+        return Api.signOut()        
+    }
+
     return (
         <header className={style.headerPai}>
             <div className={!closeBan ? style.banner : style.close}>
@@ -46,20 +52,11 @@ function HeaderPrincipal() {
                 </div>
             </div>
             <div className={style.Header1}>
-                <span>Palpitar</span>
-                <span>Resultados</span>
-                <Image src={Logo} height={50} width={500} alt="palpite.com" />
                 <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
+                <Image src={Logo} height={50} width={500} alt="palpite.com" />
                 <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
             </div>
             {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} />}
-            {/* <ul className={style.subHeader}>
-                {leagues.map((league, key) =>
-                    <li key={key}>
-                        <Image className="imgHeader" src={league.imagem} alt="" />
-                        <span> {league.nome}</span>
-                    </li>)}
-            </ul> */}
         </header>
     )
 }
