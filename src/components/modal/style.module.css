@@ -53,3 +53,20 @@
     color: black;
     font-weight: bold;
 }
+
+.contentModal {
+   background: #fff; 
+   border-radius: 10px; 
+   width: 28rem; 
+   margin: auto; 
+   padding: 20px;
+   display: flex; 
+   flex-direction: column; 
+   box-shadow: 0 1px 3px 1px #44637633;
+}
+
+@media screen and (max-width: 600px) {
+    .contentModal {
+        width: 90%;
+    }
+}

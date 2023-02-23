@@ -5,9 +5,7 @@ import AsideEnquete from "src/components/asideEnquete";
 import CardPalpite from "src/components/cardPalpite/index";
 import Footer from "src/components/footer/index";
 import HeaderPrincipal from "../components/header/index"
-
-import { useEffect, useState } from 'react'
-import Api from "src/providers/http/api";
+import style from "./style.module.css"
 
 const Home: NextPage = () => {
 
@@ -25,13 +23,10 @@ const Home: NextPage = () => {
 
 
     return (
-        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className={style.contentHome}>
             <HeaderPrincipal />
-            <motion.div
-                animate={{ x: 0, opacity: 1 }}
-                initial={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                style={{ display: "flex", justifyContent: "space-evenly", flexDirection: "row", gap: '1rem', padding: '2rem' }}>
+            <motion.div animate={{ x: 0, opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }} 
+            className={style.contentSite}>
                 <AsideEnquete />
                 <CardPalpite />
                 <AsideBlog />
