@@ -48,6 +48,22 @@ function CardPalpite() {
     }, []);
 
     const [unique, setUnique] = useState<boolean>(true)
+
+    useEffect(() => {
+        function verificarTamanhoTela() {
+            if (window.innerWidth <= 450) {
+                return setUnique(false);
+            } 
+            if (window.innerWidth <= 727) {
+                return setUnique(true);
+            }
+        }
+        verificarTamanhoTela();
+        window.addEventListener('resize', verificarTamanhoTela);
+        
+        return () => { window.removeEventListener('resize', verificarTamanhoTela) };
+    }, []); 
+
     return (
         <div className={style.bodyPalpite}>
             {/* style={!unique ? { maxWidth: '110rem' } : { width: '110rem' }} */}

@@ -66,3 +66,15 @@
     width: 100% !important;
     height: 13.8rem !important;
 }
+
+@media screen and (max-width: 980px) {
+    .headerBlog{
+        justify-content: center;
+    }
+    
+    .contentBlogMobile {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}

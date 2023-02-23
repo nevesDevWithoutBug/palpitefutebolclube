@@ -53,7 +53,7 @@ function HeaderPrincipal() {
             </div>
             <div className={style.Header1}>
                 <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
-                <Image src={Logo} height={50} width={500} alt="palpite.com" />
+                <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
                 <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
             </div>
             {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} />}
