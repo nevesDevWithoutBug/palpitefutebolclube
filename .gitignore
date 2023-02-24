@@ -40,5 +40,6 @@ yarn-error.log*
 .vscode
 styles/dist.css
 
+# prisma
 /prisma/prisma
 ./prisma/prisma
