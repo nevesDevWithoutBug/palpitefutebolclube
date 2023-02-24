@@ -80,11 +80,19 @@ function RodadaComponent() {
         setIsLoading(false)
     }
 
-    function handlerGame(team: any, index: number, id: number) {
-        if(!team || team == ''){
+    function handlerGame(teamId: any, index: number, id: number) {
+        if(!teamId || teamId == ''){
             setGames([...games, games[index].teamsGame[id].teamId = '', games[index].teamsGame[id].team.name = ''])
         }else {
-            setGames([...games, games[index].teamsGame[id].teamId = team.id, games[index].teamsGame[id].team.name = team.name])
+            let teamName = ''
+            teams.map((team, index) => {
+                if(team.id == teamId) {
+                    return(
+                        teamName = team.name
+                    )
+                }
+            })
+            setGames([...games, games[index].teamsGame[id].teamId = Number(teamId), games[index].teamsGame[id].team.name = teamName])
         }
     }
 
@@ -106,11 +114,11 @@ function RodadaComponent() {
                     Jogos da rodada
                 </div>
                 <div className="relative">
-                    <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
-                        <option>Selecione uma liga</option>
+                    <select onChange={(event) => setLiga(prevState => ({...prevState, id: Number(event.target.value)}))} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                        <option value={NaN}>Selecione uma liga</option>
                         {ligas.map((liga, key) => {
                             return (
-                                <option onClick={() => setLiga({id: Number(liga.id), name: liga.name})} key={key}>{liga.name}</option>
+                                <option value={liga.id} key={key}>{liga.name}</option>
                             )
                         })}
                     </select>
@@ -118,6 +126,14 @@ function RodadaComponent() {
             </div>
             <div className={style.jogoContent}>
                 <div className={style.tituloContent}>
+                    {ligas.map((liga, key) => {
+                        if(liga.id === ligaSelecionada.id){
+                            ligaSelecionada.name = ''
+                            return(
+                                liga.name
+                                )
+                        }
+                    })}
                     {ligaSelecionada.name}
                     <div className={style.newRound}>
                         <button className={style.buttonAdd} onClick={() => addGame(ligaSelecionada.id)} >
@@ -140,11 +156,11 @@ function RodadaComponent() {
                                                         {game.teamsGame.length > 0 && game.teamsGame[0].team?.name}
                                                     </p>
                                                     :
-                                                    <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
-                                                        <option onClick={() => handlerGame('', key, 0)}>Selecione um time</option>
+                                                    <select onChange={(event) => handlerGame(event.target.value, key, 0)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                                                        <option value={''} >Selecione um time</option>
                                                         {teams.map((team, index) => {
                                                             return (
-                                                                <option selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[0].team.id) : false} key={index} onClick={() => handlerGame(team, key, 0)}>{team.name}</option>
+                                                                <option value={team.id} selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[0].team.id) : false} key={index}>{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
@@ -162,11 +178,11 @@ function RodadaComponent() {
                                                         {game.teamsGame.length > 0 && game.teamsGame[1].team?.name}
                                                     </p>
                                                     :
-                                                    <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
-                                                        <option onClick={() => handlerGame('', key, 1)}>Selecione um time</option>
+                                                    <select onChange={(event) => handlerGame(event.target.value, key, 1)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                                                        <option value={''}>Selecione um time</option>
                                                         {teams.map((team, index) => {
                                                             return (
-                                                                <option selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[1].team.id): false} key={index} onClick={() => handlerGame(team, key, 1)}>{team.name}</option>
+                                                                <option value={team.id} selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[1].team.id): false} key={index} >{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
