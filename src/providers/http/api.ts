@@ -80,7 +80,7 @@ function fetchApi():ApiType {
             })
             const data = await response.json()
             await Cookie.set('auth', data.accessToken, 360)
-            await Cookie.set('user', data.user, 360)
+            await Cookie.set('user', JSON.stringify(data.user), 360)
             return data
         },
     
