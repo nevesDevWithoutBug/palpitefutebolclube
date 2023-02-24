@@ -37,7 +37,6 @@ function RodadaComponent() {
 
 
     const addGame = async (id: Number) => {
-       
         const game = {
             name: 'games',
             championshipId : id,
@@ -46,7 +45,8 @@ function RodadaComponent() {
                 { gol: 0, team: {name: ''} }
             ] 
         }
-        setGames([...games, game])
+        setGames([game, ...games])
+        setEdit(0)
     };
 
     const removeGame = async (key: number) => {
@@ -62,9 +62,8 @@ function RodadaComponent() {
     };
 
     const saveGame = async (idLiga: number, index: number) => {
-        if(!games[index].teamsGame[0].teamId || !games[index].teamsGame[0].teamId) {
-            window.alert('aaaaaaaaaaaaa, seleciona o time né')
-            return
+        if(!games[index].teamsGame[0].teamId || !games[index].teamsGame[1].teamId) {
+            return window.alert('aaaaaaaaaaaaa, seleciona o time né')
         }
         setIsLoading(true)
         const body = { 
@@ -82,7 +81,18 @@ function RodadaComponent() {
     }
 
     function handlerGame(team: any, index: number, id: number) {
-        setGames([...games, games[index].teamsGame[id].teamId = team.id, games[index].teamsGame[id].team.name = team.name])
+        if(!team || team == ''){
+            setGames([...games, games[index].teamsGame[id].teamId = '', games[index].teamsGame[id].team.name = ''])
+        }else {
+            setGames([...games, games[index].teamsGame[id].teamId = team.id, games[index].teamsGame[id].team.name = team.name])
+        }
+    }
+
+    function handlerEdit(index: number) {
+        if(editar && (!games[editar].teamsGame[0].teamId || !games[editar].teamsGame[1].teamId)) {
+            return window.alert('aaaaaaaaaaaaa, seleciona o time né')
+        }
+        setEdit(index)
     }
 
     return (
@@ -131,7 +141,7 @@ function RodadaComponent() {
                                                     </p>
                                                     :
                                                     <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
-                                                        <option>Selecione um time</option>
+                                                        <option onClick={() => handlerGame('', key, 0)}>Selecione um time</option>
                                                         {teams.map((team, index) => {
                                                             return (
                                                                 <option selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[0].team.id) : false} key={index} onClick={() => handlerGame(team, key, 0)}>{team.name}</option>
@@ -153,7 +163,7 @@ function RodadaComponent() {
                                                     </p>
                                                     :
                                                     <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
-                                                        <option>Selecione um time</option>
+                                                        <option onClick={() => handlerGame('', key, 1)}>Selecione um time</option>
                                                         {teams.map((team, index) => {
                                                             return (
                                                                 <option selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[1].team.id): false} key={index} onClick={() => handlerGame(team, key, 1)}>{team.name}</option>
@@ -165,7 +175,7 @@ function RodadaComponent() {
                                     </div>
                                     <div className={style.acao}>
                                         {editar !== key ?
-                                            <button className={style.buttonEditar} onClick={() => setEdit(key)}>
+                                            <button className={style.buttonEditar} onClick={() => handlerEdit(key)}>
                                                 <svg className={style.acaoEditar} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                     <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z" />
                                                 </svg>
