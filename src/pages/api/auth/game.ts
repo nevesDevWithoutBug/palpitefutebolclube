@@ -39,56 +39,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
             
             if(championshipId) gameDb = await GameModel.getBychampionship(Number(championshipId))
             gameDb = await GameModel.get(Number(id))
-            console.log('games:', gameDb)
 
-            if(Array.isArray(gameDb)) {
-                
-                let manipuledGame: any[] = [] 
-
-                gameDb.forEach((game:any)=>{
-
-                    manipuledGame = [...manipuledGame, {
-                        id: game.id,
-                        name: game.name,
-                        start: game.start,
-                        championshipId: game.championshipId,
-                        firstTeam: {
-                            gol: game.teamsGame[0].gol,
-                            ...game.teamsGame[0].team,
-                        },
-                        secondTeam: {
-                            gol: game.teamsGame[1].gol,
-                            ...game.teamsGame[1].team,
-                        },
-                        createdAt: game.createdAt,
-                        updatedAt: game.updatedAt
-                    }]
-
-                })
-
-                return res.status(200).json(manipuledGame)
-
-            } else {
-                let manipuledGame: any = {
-                    id: gameDb.id,
-                    name: gameDb.name,
-                    start: gameDb.start,
-                    championshipId: gameDb.championshipId,
-                    firstTeam: {
-                        id: gameDb.teamsGame[0].team.id,
-                        name: gameDb.teamsGame[0].team.name,
-                        gol: gameDb.teamsGame[0].gol,
-                    },
-                    secondTeam: {
-                        id: gameDb.teamsGame[1].team.id,
-                        name: gameDb.teamsGame[1].team.name,
-                        gol: gameDb.teamsGame[1].gol,
-                    },
-                    createdAt: gameDb.createdAt,
-                    updatedAt: gameDb.updatedAt
-                }
-                return res.status(200).json(manipuledGame)
-            }
+            return res.status(200).json( handleGameObject(gameDb) )
 
         }
 
@@ -100,10 +52,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             if(!gameDb) return res.status(500).json({ message: 'game not created' })
 
-            const firstTeamDb : TeamsGameType = await TeamsGameModel.save({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  })
-            const secondTeamDb : TeamsGameType = await TeamsGameModel.save({ teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
+            await TeamsGameModel.save({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  }, { teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
 
-            return res.status(200).json( await GameModel.get(gameDb.id) )
+            return res.status(200).json( handleGameObject(await GameModel.get(gameDb.id)) )
 
         }
 
@@ -129,4 +80,55 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         
     }
     
+}
+
+function handleGameObject(gameDb:any) {
+    if(Array.isArray(gameDb)) {
+                
+        let manipuledGame: any[] = [] 
+
+        gameDb.forEach((game:any)=>{
+
+            manipuledGame = [...manipuledGame, {
+                id: game.id,
+                name: game.name,
+                start: game.start,
+                championshipId: game.championshipId,
+                firstTeam: {
+                    gol: game.teamsGame[0].gol,
+                    ...game.teamsGame[0].team,
+                },
+                secondTeam: {
+                    gol: game.teamsGame[1].gol,
+                    ...game.teamsGame[1].team,
+                },
+                createdAt: game.createdAt,
+                updatedAt: game.updatedAt
+            }]
+
+        })
+
+        return manipuledGame
+
+    } else {
+        let manipuledGame: any = {
+            id: gameDb.id,
+            name: gameDb.name,
+            start: gameDb.start,
+            championshipId: gameDb.championshipId,
+            firstTeam: {
+                id: gameDb.teamsGame[0].team.id,
+                name: gameDb.teamsGame[0].team.name,
+                gol: gameDb.teamsGame[0].gol,
+            },
+            secondTeam: {
+                id: gameDb.teamsGame[1].team.id,
+                name: gameDb.teamsGame[1].team.name,
+                gol: gameDb.teamsGame[1].gol,
+            },
+            createdAt: gameDb.createdAt,
+            updatedAt: gameDb.updatedAt
+        }
+        return manipuledGame
+    }
 }
