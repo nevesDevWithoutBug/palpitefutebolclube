@@ -35,24 +35,26 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             const { id, championshipId } = req.query
 
-            if(championshipId) return res.status(200).json( await GameModel.getBychampionship(Number(championshipId)) )
+            let gameDb: any;
+            
+            if(championshipId) gameDb = await GameModel.getBychampionship(Number(championshipId))
+            gameDb = await GameModel.get(Number(id))
 
-            return res.status(200).json( await GameModel.get(Number(id)) )
+            return res.status(200).json( handleGameObject(gameDb) )
 
         }
 
         if(method === 'POST') {
 
-            const { id, name, championshipId, firstTeam, secondTeam } = req.body
+            const { id, name, championshipId, start, firstTeam, secondTeam } = req.body
 
-            const gameDb :GameType = await GameModel.upsert({id, name, championshipId})
+            const gameDb :GameType = await GameModel.upsert({id, name, championshipId, start})
 
             if(!gameDb) return res.status(500).json({ message: 'game not created' })
 
-            const firstTeamDb : TeamsGameType = await TeamsGameModel.upsert({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  })
-            const secondTeamDb : TeamsGameType = await TeamsGameModel.upsert({ teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
+            await TeamsGameModel.save({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  }, { teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
 
-            return res.status(200).json( await GameModel.get(gameDb.id) )
+            return res.status(200).json( handleGameObject(await GameModel.get(gameDb.id)) )
 
         }
 
@@ -78,4 +80,55 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         
     }
     
+}
+
+function handleGameObject(gameDb:any) {
+    if(Array.isArray(gameDb)) {
+                
+        let manipuledGame: any[] = [] 
+
+        gameDb.forEach((game:any)=>{
+
+            manipuledGame = [...manipuledGame, {
+                id: game.id,
+                name: game.name,
+                start: game.start,
+                championshipId: game.championshipId,
+                firstTeam: {
+                    gol: game.teamsGame[0].gol,
+                    ...game.teamsGame[0].team,
+                },
+                secondTeam: {
+                    gol: game.teamsGame[1].gol,
+                    ...game.teamsGame[1].team,
+                },
+                createdAt: game.createdAt,
+                updatedAt: game.updatedAt
+            }]
+
+        })
+
+        return manipuledGame
+
+    } else {
+        let manipuledGame: any = {
+            id: gameDb.id,
+            name: gameDb.name,
+            start: gameDb.start,
+            championshipId: gameDb.championshipId,
+            firstTeam: {
+                id: gameDb.teamsGame[0].team.id,
+                name: gameDb.teamsGame[0].team.name,
+                gol: gameDb.teamsGame[0].gol,
+            },
+            secondTeam: {
+                id: gameDb.teamsGame[1].team.id,
+                name: gameDb.teamsGame[1].team.name,
+                gol: gameDb.teamsGame[1].gol,
+            },
+            createdAt: gameDb.createdAt,
+            updatedAt: gameDb.updatedAt
+        }
+        return manipuledGame
+    }
 }

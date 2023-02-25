@@ -7,7 +7,7 @@ function model() {
     return { 
 
       async getBychampionship(id: number) {
-        return <GameType[]> await prisma.games.findMany({ where: {championshipId: id},include: { teamsGame: { include: { team: true },}  }})
+        return <GameType[]> await prisma.games.findMany({ where: {championshipId: id},include: { teamsGame: { include: { team: true },}, championship: true  }})
       },
       async get(id?: number) {
         return id ? <GameType> await prisma.games.findFirst({ where: {id: id}, include: {   teamsGame: { include: { team: true },} } })
@@ -18,8 +18,8 @@ function model() {
         console.log('aaaaaaaaaaaaaa', game)
         return <GameType> await prisma.games.upsert({
           where: { id: game.id ? game.id : -1},
-          create: { name: game.name, championshipId: Number(game.championshipId) },
-          update: { name: game.name },
+          create: { name: game.name, championshipId: Number(game.championshipId), start: game.start },
+          update: { name: game.name, start: game.start },
           include: { teamsGame: true}
         })
       },
