@@ -46,9 +46,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
         if(method === 'POST') {
 
-            const { id, name, championshipId, firstTeam, secondTeam } = req.body
+            const { id, name, championshipId, start, firstTeam, secondTeam } = req.body
 
-            const gameDb :GameType = await GameModel.upsert({id, name, championshipId})
+            const gameDb :GameType = await GameModel.upsert({id, name, championshipId, start})
 
             if(!gameDb) return res.status(500).json({ message: 'game not created' })
 

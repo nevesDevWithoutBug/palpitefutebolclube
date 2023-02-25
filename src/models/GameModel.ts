@@ -18,8 +18,8 @@ function model() {
         console.log('aaaaaaaaaaaaaa', game)
         return <GameType> await prisma.games.upsert({
           where: { id: game.id ? game.id : -1},
-          create: { name: game.name, championshipId: Number(game.championshipId) },
-          update: { name: game.name },
+          create: { name: game.name, championshipId: Number(game.championshipId), start: game.start },
+          update: { name: game.name, start: game.start },
           include: { teamsGame: true}
         })
       },
