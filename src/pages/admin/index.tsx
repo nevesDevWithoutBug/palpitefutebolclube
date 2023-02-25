@@ -7,7 +7,7 @@ const index: NextPage = () => {
 
         async function handleGame() {
 
-        const teste = await Api.get('/api/auth/game', {id: 3})
+        const teste = await Api.get('/api/auth/game')
 
         console.log('games', teste)
 
@@ -15,9 +15,9 @@ const index: NextPage = () => {
 
     return (
         <>
-            <div onClick={handleGame}>
+            {/* <div onClick={handleGame}> */}
                 <AdminHomeComponent /> 
-            </div>
+            {/* </div> */}
         </>
     );
 }
