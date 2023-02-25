@@ -2,7 +2,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "db": "npx prisma db push",
     "prisma": "npx prisma studio",
     "turbo": "next dev --turbo",
     "build": "next build",
