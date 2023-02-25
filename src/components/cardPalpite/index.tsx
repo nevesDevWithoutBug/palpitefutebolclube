@@ -14,6 +14,7 @@ import style from "./style.module.css"
 import Image from "next/image"
 import CardSkeleton from "../skeleton"
 import Api from "src/providers/http/api"
+import { objPalpiteType } from "src/types/objPalpiteType"
 
 function CardPalpite() {
 
@@ -21,7 +22,10 @@ function CardPalpite() {
     const [teams, setTeams] = useState<any>([])
     const [championships, setChampionships] = useState<any>([])
     const [gamesFiltered, setGamesFiltered] = useState<any>([])
-    
+    const [selectedLi, setSelectedLi] = useState<number | null>(null);
+    const [unique, setUnique] = useState<boolean>(true)
+    const [isLoading, setLoading] = useState<boolean>(true)
+    const [objPalpite, setObjectPalpite ] = useState<objPalpiteType>({id:'', mandante:'0', visitante:'0'})
 
     useEffect(() => {
         (async () => {
@@ -31,6 +35,7 @@ function CardPalpite() {
         Api.get('/api/auth/game'),
         ]);
         setGames(games); setChampionships(championships); setTeams(teams);
+        setLoading(false);
         console.log('campeonatos', championships, 'games', games);
         })()
     }, [])
@@ -39,27 +44,22 @@ function CardPalpite() {
         setGamesFiltered(games.filter((jogos:any)=>jogos.championshipId === id))
     }
 
-    const [isLoading, setLoading] = useState<boolean>(true)
+    const sendPalpite = (objPalpite: objPalpiteType) => {
+        console.log('asasasas',objPalpite);
+        
+    }
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
-
-    const [unique, setUnique] = useState<boolean>(true)
-
-    useEffect(() => {
+        //aqui eu controlo qual card é o padrao da tela por meio de um state.
         function verificarTamanhoTela() {
-        if (window.matchMedia("(max-width: 450px)").matches) {
-            setUnique(false);
-        } else if (window.matchMedia("(max-width: 727px)").matches) {
-            setUnique(true);
-        } else {
-            setUnique(false); // <= define o valor padrão caso a largura da janela seja maior que 727 pixels
+            if (window.matchMedia("(max-width: 450px)").matches) {
+                setUnique(false);
+            } else if (window.matchMedia("(max-width: 727px)").matches) {
+                setUnique(true);
+            } else if (window.matchMedia("(min-width: 728px)").matches) {
+                setUnique(true);
+            }
         }
-        }
-
         verificarTamanhoTela();
         window.addEventListener('resize', verificarTamanhoTela);
         
@@ -92,30 +92,31 @@ function CardPalpite() {
             <ul className={!unique ? style.ulPalpiteMult : style.ulPalpite}>
                 {isLoading && <li> <CardSkeleton video={false} blog={false} cards={games.length} enquete={false} /> </li>}
                 {!isLoading && (gamesFiltered.length ? gamesFiltered : games).map((game: any, key: any) => (
-                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite}>
+                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite} onClick={() => {setSelectedLi(key); setObjectPalpite({id:'', mandante:'0', visitante:'0'})}}>
                         {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><Image src={Ball} alt="" />{championships.filter((campeonato: any) => campeonato.id === game.championshipId).map((campeonato: any) => campeonato.name)}</span> {/* <span>{game.hora}</span>*/}</div>}
                         <div className={!unique ? style.contentContainerMult : style.contentContainer}>
                             <span className={style.spanPalpiteTime}>
-                                <Image className={style.imgPalpite} src={game.teamsGame[0].team.image} width={45} height={45} alt="" />
+                                <Image className={style.imgPalpite} src={game.firstTeam.image} width={45} height={45} alt="" />
                                 <p className={style.nomeTimeCard}>
-                                    {game.teamsGame[0].team.name}
+                                    {game.firstTeam.name}
                                 </p>
                             </span>
-                            <input type='text' pattern="\d{1,2}" onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
+                            <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, mandante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <div className={style.spanPalpiteX}>
                                 <p>X</p>
                                 {unique && <p className={style.pPalpite}>
                                     {/*game.hora*/}
                                 </p>}
                             </div>
-                            <input type='text' pattern="\d{1,2}" onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
+                            <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, visitante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <span className={style.spanPalpiteTime}>
-                                <Image className={style.imgPalpite} src={game.teamsGame[1].team.image} width={45} height={45} alt="" />
+                                <Image className={style.imgPalpite} src={game.secondTeam.image} width={45} height={45} alt="" />
                                 <p className={style.nomeTimeCard}>
-                                    {game.teamsGame[1].team.name}
+                                    {game.secondTeam.name}
                                 </p>
                             </span>
                         </div>
+                        <button className={selectedLi === key ? style.btnPalpite : style.btnPalpiteOff} onClick={() => sendPalpite({...objPalpite, id: game.id})}>PALPITAR</button>
                     </li>
                 )
                 )}
