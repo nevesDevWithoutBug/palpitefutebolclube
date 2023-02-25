@@ -7,7 +7,7 @@ const index: NextPage = () => {
 
         async function handleGame() {
 
-        const teste = await Api.get('/api/auth/game')
+        const teste = await Api.get('/api/auth/game', {id: 3})
 
         console.log('games', teste)
 

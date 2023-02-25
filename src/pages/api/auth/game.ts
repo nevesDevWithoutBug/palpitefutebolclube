@@ -35,16 +35,19 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             const { id, championshipId } = req.query
 
-            let manipuledGame
             let gameDb: any;
             
             if(championshipId) gameDb = await GameModel.getBychampionship(Number(championshipId))
             gameDb = await GameModel.get(Number(id))
+            console.log('games:', gameDb)
 
             if(Array.isArray(gameDb)) {
-            
+                
+                let manipuledGame: any[] = [] 
+
                 gameDb.forEach((game:any)=>{
-                    manipuledGame = {
+
+                    manipuledGame = [...manipuledGame, {
                         id: game.id,
                         name: game.name,
                         start: game.start,
@@ -59,11 +62,14 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
                         },
                         createdAt: game.createdAt,
                         updatedAt: game.updatedAt
-                    }
+                    }]
+
                 })
 
+                return res.status(200).json(manipuledGame)
+
             } else {
-                manipuledGame = {
+                let manipuledGame: any = {
                     id: gameDb.id,
                     name: gameDb.name,
                     start: gameDb.start,
@@ -81,10 +87,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
                     createdAt: gameDb.createdAt,
                     updatedAt: gameDb.updatedAt
                 }
+                return res.status(200).json(manipuledGame)
             }
-
-
-            return res.status(200).json({game: manipuledGame})
 
         }
 
