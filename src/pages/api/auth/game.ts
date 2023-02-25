@@ -35,9 +35,56 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             const { id, championshipId } = req.query
 
-            if(championshipId) return res.status(200).json( await GameModel.getBychampionship(Number(championshipId)) )
+            let manipuledGame
+            let gameDb: any;
+            
+            if(championshipId) gameDb = await GameModel.getBychampionship(Number(championshipId))
+            gameDb = await GameModel.get(Number(id))
 
-            return res.status(200).json( await GameModel.get(Number(id)) )
+            if(Array.isArray(gameDb)) {
+            
+                gameDb.forEach((game:any)=>{
+                    manipuledGame = {
+                        id: game.id,
+                        name: game.name,
+                        expire: game.expire,
+                        championshipId: game.championshipId,
+                        firstTeam: {
+                            gol: game.teamsGame[0].gol,
+                            ...game.teamsGame[0].team,
+                        },
+                        secondTeam: {
+                            gol: game.teamsGame[1].gol,
+                            ...game.teamsGame[1].team,
+                        },
+                        createdAt: game.createdAt,
+                        updatedAt: game.updatedAt
+                    }
+                })
+
+            } else {
+                manipuledGame = {
+                    id: gameDb.id,
+                    name: gameDb.name,
+                    expire: gameDb.expire,
+                    championshipId: gameDb.championshipId,
+                    firstTeam: {
+                        id: gameDb.teamsGame[0].team.id,
+                        name: gameDb.teamsGame[0].team.name,
+                        gol: gameDb.teamsGame[0].gol,
+                    },
+                    secondTeam: {
+                        id: gameDb.teamsGame[1].team.id,
+                        name: gameDb.teamsGame[1].team.name,
+                        gol: gameDb.teamsGame[1].gol,
+                    },
+                    createdAt: gameDb.createdAt,
+                    updatedAt: gameDb.updatedAt
+                }
+            }
+
+
+            return res.status(200).json({game: manipuledGame, oldGame: await GameModel.get() })
 
         }
 
