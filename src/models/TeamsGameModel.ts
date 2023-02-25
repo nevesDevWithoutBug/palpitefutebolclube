@@ -21,6 +21,13 @@ function model() {
             })
         },
 
+        async save(teamsGame: any) {
+
+            await prisma.teamsGame.deleteMany({ where: {gameId: teamsGame.gameId, teamId: teamsGame.teamId} }) 
+            return <TeamsGameType> await prisma.teamsGame.create({ data: teamsGame })
+
+        },
+
         async delete(id: number) {
             return <TeamsGameType> await prisma.teamsGame.delete({ where: { id: id } })
         },

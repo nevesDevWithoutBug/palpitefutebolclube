@@ -100,8 +100,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             if(!gameDb) return res.status(500).json({ message: 'game not created' })
 
-            const firstTeamDb : TeamsGameType = await TeamsGameModel.upsert({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  })
-            const secondTeamDb : TeamsGameType = await TeamsGameModel.upsert({ teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
+            const firstTeamDb : TeamsGameType = await TeamsGameModel.save({ teamId: firstTeam.id, gol: firstTeam.gol, gameId: gameDb.id  })
+            const secondTeamDb : TeamsGameType = await TeamsGameModel.save({ teamId: secondTeam.id, gol: secondTeam.gol, gameId: gameDb.id  })
 
             return res.status(200).json( await GameModel.get(gameDb.id) )
 
