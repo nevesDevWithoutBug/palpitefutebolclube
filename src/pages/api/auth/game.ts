@@ -84,7 +84,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
             }
 
 
-            return res.status(200).json({game: manipuledGame, oldGame: await GameModel.get() })
+            return res.status(200).json({game: manipuledGame})
 
         }
 
