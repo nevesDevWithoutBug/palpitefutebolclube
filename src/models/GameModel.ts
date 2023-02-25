@@ -7,7 +7,7 @@ function model() {
     return { 
 
       async getBychampionship(id: number) {
-        return <GameType[]> await prisma.games.findMany({ where: {championshipId: id},include: { teamsGame: { include: { team: true },}  }})
+        return <GameType[]> await prisma.games.findMany({ where: {championshipId: id},include: { teamsGame: { include: { team: true },}, championship: true  }})
       },
       async get(id?: number) {
         return id ? <GameType> await prisma.games.findFirst({ where: {id: id}, include: {   teamsGame: { include: { team: true },} } })
