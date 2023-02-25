@@ -44,7 +44,7 @@ model Games {
   championship         Championships @relation("ChampioshipGames", fields: [championshipId], references: [id])
   championshipId       Int
   
-  expire               DateTime?
+  start               DateTime?
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

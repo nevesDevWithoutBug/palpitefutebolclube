@@ -47,7 +47,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
                     manipuledGame = {
                         id: game.id,
                         name: game.name,
-                        expire: game.expire,
+                        start: game.start,
                         championshipId: game.championshipId,
                         firstTeam: {
                             gol: game.teamsGame[0].gol,
@@ -66,7 +66,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
                 manipuledGame = {
                     id: gameDb.id,
                     name: gameDb.name,
-                    expire: gameDb.expire,
+                    start: gameDb.start,
                     championshipId: gameDb.championshipId,
                     firstTeam: {
                         id: gameDb.teamsGame[0].team.id,
