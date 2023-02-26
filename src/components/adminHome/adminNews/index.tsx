@@ -52,7 +52,6 @@ function NewsComponent() {
     }
     function edit(key: number) {
         setNewsEdit({id : news[key].id, title : news[key].title, content : news[key].content})
-        console.log(newsEdit)
         setEdit(true)
     }
 
