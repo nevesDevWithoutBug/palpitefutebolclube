@@ -35,13 +35,17 @@
     position: absolute;
     right: 0;
     bottom: 5px;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 .buttonAdd {
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    background: linear-gradient(to right, #126e51, #24a57c);
+    background-color: #24a57c;
     color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: white;
+}
+.disabled {
+    opacity: 0.5;
 }
 
 .ulPalpite {

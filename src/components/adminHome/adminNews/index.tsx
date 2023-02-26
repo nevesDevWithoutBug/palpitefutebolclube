@@ -4,6 +4,7 @@ import Api from "src/providers/http/api";
 import style from "./style.module.css"
 import Cookie from "src/providers/storage/cookie"
 import Spinner from "src/components/spinner";
+import { toast } from "react-toastify";
 
 function NewsComponent() {
 
@@ -29,19 +30,20 @@ function NewsComponent() {
     }
 
     const save = async () => {
+        if(!newsEdit.title || !newsEdit.content) return toast.error('Título e o conteúdo obrigatórios')
         setIsLoading(true)
         const getCookie : any = await Cookie.get('user')
         const user = JSON.parse(getCookie);
-        console.log('user', user)
         const body = { 
             news: {
-                id: newsEdit.id ? newsEdit.id : null,
+                id: newsEdit.id ? newsEdit.id : undefined,
                 title: newsEdit.title,
                 content: newsEdit.content, 
                 userId: Number(user.id),
             }
         }
-        await Api.post('/api/auth/news', body)
+        const response = await Api.post('/api/auth/news', body)
+        if(response.id) toast.success('Notícia salva com sucesso!')
         const news = await Api.get('/api/auth/news')
         setNews(news)
         setNewsEdit({id:NaN, title :'', content :''})
@@ -50,8 +52,21 @@ function NewsComponent() {
     }
     function edit(key: number) {
         setNewsEdit({id : news[key].id, title : news[key].title, content : news[key].content})
-        console.log(newsEdit)
         setEdit(true)
+    }
+
+    async function remove() {
+        setIsLoading(true)
+        const body = {
+            id: newsEdit.id
+        }
+        const response = await Api.delete('/api/auth/news', body)
+        if(response.id) toast.success('Notícia excluída com sucesso!')
+        const news = await Api.get('/api/auth/news')
+        setNews(news)
+        setNewsEdit({id:NaN, title :'', content :''})
+        setEdit(false)
+        setIsLoading(false)
     }
 
     return (
@@ -71,13 +86,17 @@ function NewsComponent() {
                         {!editar ? <button className={style.buttonAdd} onClick={() => add()} >Nova notícia</button> :
                             <button className={style.buttonAdd} onClick={() => save()} >Salvar notícia</button>}
                     </div>
+                    <div className={style.deleteRound}>
+                        { editar && <button className={style.buttonDelete} onClick={() => remove()} >Excluir notícia</button>}
+                    </div>
                 </div>
-                {editar && <div className={style.inputsDiv}>
-                    <input value={newsEdit.title} onChange={() => setNewsEdit(prevState => ({...prevState, title: event?.target.value}))} className={style.inputTitle} type="text" placeholder="Digite o titulo" />
-                    <textarea value={newsEdit.content} onChange={() => setNewsEdit(prevState => ({...prevState, content: event?.target.value}))} className={style.textarea} placeholder="Digite o conteúdo" />
-                </div>}
+                { editar && <div className={style.inputsDiv}>
+                    <input value={newsEdit.title} onChange={(event) => setNewsEdit(prevState => ({...prevState, title: event.target.value}))} className={style.inputTitle} type="text" placeholder="Digite o titulo" />
+                    <textarea value={newsEdit.content} onChange={(event) => setNewsEdit(prevState => ({...prevState, content: event.target.value}))} className={style.textarea} placeholder="Digite o conteúdo" />
+                </div> }
                 {!editar &&
                     <div style={{ width: '100%', height: '90%', display: 'flex', alignItems:'center', flexDirection: 'column', gap: '10px'}}>
+                        {!news.length && <p>Sem notícias cadastradas...</p>}
                         {news.map((e, key) => {
                             return ( 
                                 <div key={key} onClick={() => edit(key)} className={style.card}>
@@ -92,7 +111,7 @@ function NewsComponent() {
                                 </div> 
                             )
                         })}
-                        <button className={style.button}>Carregar mais</button>
+                        {news.length > 0 && <button onClick={() => {setIsLoading(true); setIsLoading(false)}} className={style.button}>Carregar mais</button>}
                     </div>}
             </div>
         </div>

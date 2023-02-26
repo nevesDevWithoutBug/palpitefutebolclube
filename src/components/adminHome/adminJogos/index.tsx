@@ -5,6 +5,7 @@ import Api from 'src/providers/http/api'
 import { TeamType } from 'src/types/TeamType'
 import { ChampionshipType } from 'src/types/ChampionshipType'
 import Spinner from "src/components/spinner"
+import { toast } from "react-toastify";
 
 function JogosComponent() {
 
@@ -41,7 +42,8 @@ function JogosComponent() {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, id:number) => {
         const { value } = event.target;
         if (!validateInput(value)) return;
-        setGames([...games, games[index].teamsGame[id].gol = Number(value)])
+        if(id === 0)setGames([...games, games[index].firstTeam.gol = Number(value)])
+        if(id === 1)setGames([...games, games[index].secondTeam.gol = Number(value)])
     };
 
     const save = async (idLiga: number, index: number) => {
@@ -50,10 +52,11 @@ function JogosComponent() {
             id: games[index].id,
             name: 'jogo 2', 
             championshipId: idLiga, 
-            firstTeam:{ id: games[index].teamsGame[0].teamId, gol: games[index].teamsGame[0].gol }, 
-            secondTeam:{ id: games[index].teamsGame[1].teamId, gol: games[index].teamsGame[1].gol } 
+            firstTeam:{ id: games[index].firstTeam.id, gol: games[index].firstTeam.gol }, 
+            secondTeam:{ id: games[index].secondTeam.id, gol: games[index].secondTeam.gol } 
         }
-        const volta = await Api.post('/api/auth/game', body)
+        const response = await Api.post('/api/auth/game', body)
+        if(response.id) toast.success('Jogo Salvo com sucesso!')
         const game = await Api.get('/api/auth/game')
         setGames(game)
         setEdit(NaN)
@@ -65,11 +68,14 @@ function JogosComponent() {
         const body = {
             id: games[index].id
         }
-        await Api.delete('/api/auth/game', body)
+        const response = await Api.delete('/api/auth/game', body)
+        if(response.id) toast.success('Jogo excluído com sucesso!')
         const game = await Api.get('/api/auth/game')
         setGames(game)
         setIsLoading(false)
     } 
+    
+    function brDate(date:any){ return (new Date(date)).toLocaleString('pt-BR')}
 
     return (
         <>
@@ -82,11 +88,11 @@ function JogosComponent() {
                     Administração da rodada
                 </div>
                 <div className="relative">
-                    <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{ textAlign: 'center' }}>
-                        <option>Selecione uma liga</option>
+                <select onChange={(event) => setLiga(prevState => ({...prevState, id: Number(event.target.value)}))} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                        <option value={NaN}>Selecione uma liga</option>
                         {ligas.map((liga, key) => {
                             return (
-                                <option onClick={() => setLiga({ id: Number(liga.id), name: liga.name })} key={key}>{liga.name}</option>
+                                <option value={liga.id} key={key}>{liga.name}</option>
                             )
                         })}
                     </select>
@@ -94,6 +100,14 @@ function JogosComponent() {
             </div>
             <div className={style.jogoContent}>
                 <div className={style.tituloContent}>
+                    {ligas.map((liga, key) => {
+                        if(liga.id === ligaSelecionada.id){
+                            ligaSelecionada.name = ''
+                            return(
+                                liga.name
+                                )
+                        }
+                    })}
                     {ligaSelecionada.name}
                 </div>
                 <ul className={style.ulPalpite}>
@@ -103,24 +117,21 @@ function JogosComponent() {
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.teamsGame.length > 0 && game.teamsGame[0].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.firstTeam && game.firstTeam.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
                                             <p className={style.nomeTimeCard}>
-                                                {game.teamsGame.length > 0 && game.teamsGame[0].team?.name}
+                                                {game.firstTeam && game.firstTeam.name}
                                             </p>
                                         </span>
-                                        <input value={game.teamsGame.length > 0 ? game.teamsGame[0].gol : 0} onChange={(event) => handleInputChange(event, key, 0)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
+                                        <input value={game.firstTeam ? game.firstTeam.gol : 0} onChange={(event) => handleInputChange(event, key, 0)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
                                         <div className={style.spanPalpiteX}>
                                             <p>X</p>
-                                            <p className={style.pPalpite}>
-                                                {/* {game.hora} */}
-                                                000
-                                            </p>
+                                            <p className={style.pPalpite}>{game.start ? brDate(game.start): '00/00/0000, 00:00:00'}</p>
                                         </div>
-                                        <input value={game.teamsGame.length > 0 ? game.teamsGame[1].gol : 0} onChange={(event) => handleInputChange(event, key, 1)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
+                                        <input value={game.secondTeam ? game.secondTeam.gol : 0} onChange={(event) => handleInputChange(event, key, 1)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.teamsGame.length > 0 && game.teamsGame[1].team?.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.secondTeam && game.secondTeam.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
                                             <p className={style.nomeTimeCard}>
-                                                {game.teamsGame.length > 0 && game.teamsGame[1].team?.name}
+                                                {game.secondTeam && game.secondTeam.name}
                                             </p>
                                         </span>
                                     </div>

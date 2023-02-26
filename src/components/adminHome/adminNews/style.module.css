@@ -36,8 +36,21 @@
     bottom: 5px;
     font-size: 1rem;
 }
+.deleteRound {
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    font-size: 1rem;
+}
 .buttonAdd {
     background-color: #24a57c;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: white;
+}
+.buttonDelete {
+    background-color: red;
     color: white;
     border-radius: 20px;
     padding: 10px 20px;
