@@ -8,6 +8,8 @@ import PatchLaliga from "../../../public/assets/assets/laLiga.png"
 import style from "./style.module.css"
 import Image from "next/image"
 import { useState } from "react"
+import Modal from '../modal'
+import Api from "src/providers/http/api"
 
 function HeaderPrincipal() {
 
@@ -21,27 +23,40 @@ function HeaderPrincipal() {
         { nome: 'Sulamericana', pais: 'America do Sul', imagem: PatchLigue1 },
         { nome: 'Mundial de Clubes', pais: 'Mundo', imagem: PatchBundesliga },
     ]
+
+    const [displayModal, setDisplayModal] = useState(false)
+    const [open, setOpen] = useState('')
+
+    const toggle = () => {
+        setDisplayModal(!displayModal)
+    }
+
+
+    async function Sair() {
+        return Api.signOut()        
+    }
+
     return (
         <header className={style.headerPai}>
             <div className={!closeBan ? style.banner : style.close}>
+                <div className={style.textHeaderPai}>
+                    <h1 className={style.textHeaderFilho1}>
+                        Faça parte do nosso clube!
+                    </h1>
+                    <h2 className={style.textHeaderFilho2}>
+                        Cadastre-se agora e concorra a premios!
+                    </h2>
+                </div>
                 <div>
                     <span className={style.closeBanner} onClick={() => setCloseBan(true)}>X</span>
                 </div>
             </div>
             <div className={style.Header1}>
-                <span>Palpitar</span>
-                <span>Resultados</span>
-                <Image src={Logo} height={50} width={500} alt="palpite.com" />
-                <span>Cadastre-se</span>
-                <span>Login</span>
+                <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
+                <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
+                <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
             </div>
-            {/* <ul className={style.subHeader}>
-                {leagues.map((league, key) =>
-                    <li key={key}>
-                        <Image className="imgHeader" src={league.imagem} alt="" />
-                        <span> {league.nome}</span>
-                    </li>)}
-            </ul> */}
+            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} />}
         </header>
     )
 }

@@ -9,7 +9,14 @@ function model() {
             return id ? <UserType> await prisma.users.findFirst({ where: {id: id}}) 
             : <UserType[]> await prisma.users.findMany()
         },
+
+        async create(user: UserType) {
+            return await prisma.users.create({
+                data: user
+            })
+        }
     }
+    
     
 }
 

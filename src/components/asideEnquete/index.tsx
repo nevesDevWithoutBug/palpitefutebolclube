@@ -1,6 +1,6 @@
 import Image from "next/image"
 import cruzeiro from "../../../public/assets/assets/cruzeiro.svg"
-import atletico from "../../../public/assets/assets/atleticomg.svg"
+import atletico from "../../../public/assets/assets/atletico.svg"
 import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 
@@ -10,7 +10,7 @@ function AsideEnquete() {
         <aside className={style.paiAsideEnquete}>
             <div className={style.cardInfo}>
                 <div className={style.headerBlog}>
-                    <Image src={noticias} width={25} height={10} style={{ marginRight: '0.5rem' }} alt="noticias" />
+                    <Image src={noticias} width={25} style={{ marginRight: '0.5rem',objectFit: 'cover' }} alt="noticias" />
                     Enquetes
                 </div>
                 <section>

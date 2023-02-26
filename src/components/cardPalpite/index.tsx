@@ -13,49 +13,69 @@ import tottenham from "../../../public/assets/assets/tottenham.png"
 import style from "./style.module.css"
 import Image from "next/image"
 import CardSkeleton from "../skeleton"
+import Api from "src/providers/http/api"
+import { objPalpiteType } from "src/types/objPalpiteType"
 
 function CardPalpite() {
-    const games = [
-        { imgTimeCasa: psg, timeCasa: 'PSG', votoCasa: '1', votoFora: '1', imgTimeFora: bayern, timeFora: 'Bayern de Munique', hora: 'Hoje 17:00' },
-        { imgTimeCasa: liverpool, timeCasa: 'Liverpool', votoCasa: '2', votoFora: '2', imgTimeFora: realmadrid, timeFora: 'Real Madrid', hora: 'Hoje 13:00' },
-        { imgTimeCasa: leipzig, timeCasa: 'RB Leipzig', votoCasa: '1', votoFora: '1', imgTimeFora: manchestercity, timeFora: 'Manchester City', hora: 'Hoje 17:00' },
-        { imgTimeCasa: psg, timeCasa: 'PSG', votoCasa: '1', votoFora: '1', imgTimeFora: bayern, timeFora: 'Bayern de Munique', hora: 'Hoje 17:00' },
-        { imgTimeCasa: liverpool, timeCasa: 'Liverpool', votoCasa: '2', votoFora: '2', imgTimeFora: realmadrid, timeFora: 'Real Madrid', hora: 'Hoje 13:00' },
-        { imgTimeCasa: leipzig, timeCasa: 'RB Leipzig', votoCasa: '1', votoFora: '1', imgTimeFora: manchestercity, timeFora: 'Manchester City', hora: 'Hoje 17:00' },
-        { imgTimeCasa: psg, timeCasa: 'PSG', votoCasa: '1', votoFora: '1', imgTimeFora: bayern, timeFora: 'Bayern de Munique', hora: 'Hoje 17:00' },
-        { imgTimeCasa: liverpool, timeCasa: 'Liverpool', votoCasa: '2', votoFora: '2', imgTimeFora: realmadrid, timeFora: 'Real Madrid', hora: 'Hoje 13:00' },
-        { imgTimeCasa: leipzig, timeCasa: 'RB Leipzig', votoCasa: '1', votoFora: '1', imgTimeFora: manchestercity, timeFora: 'Manchester City', hora: 'Hoje 17:00' },
-        { imgTimeCasa: borussiadortmund, timeCasa: 'Borussia Dortmund ', votoCasa: '1', votoFora: '1', imgTimeFora: chelsea, timeFora: 'Chelsea', hora: 'Hoje 13:00' },
-        { imgTimeCasa: milan, timeCasa: 'Milan ', votoCasa: '3', votoFora: '3', imgTimeFora: tottenham, timeFora: 'Tottenham Hotspur', hora: 'Hoje 17:00' },
-        { imgTimeCasa: psg, timeCasa: 'PSG', votoCasa: '1', votoFora: '1', imgTimeFora: bayern, timeFora: 'Bayern de Munique', hora: 'Hoje 17:00' },
-    ]
 
-    const leagues = [
-        { nome: 'Premier League', pais: 'Inglaterra' },
-        { nome: 'Brasileirão', pais: 'Brasil' },
-        { nome: 'Copa do Brasil', pais: 'Brasil' },
-        { nome: 'Libertadores', pais: 'America do Sul' },
-        { nome: 'Sulamericana', pais: 'America do Sul' },
-        { nome: 'Mundial de Clubes', pais: 'Mundo' },
-    ]
-
+    const [games, setGames] = useState<any>([])
+    const [teams, setTeams] = useState<any>([])
+    const [championships, setChampionships] = useState<any>([])
+    const [gamesFiltered, setGamesFiltered] = useState<any>([])
+    const [selectedLi, setSelectedLi] = useState<number | null>(null);
+    const [unique, setUnique] = useState<boolean>(true)
     const [isLoading, setLoading] = useState<boolean>(true)
+    const [objPalpite, setObjectPalpite ] = useState<objPalpiteType>({id:'', mandante:'0', visitante:'0'})
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+        (async () => {
+        const [teams, championships, games] = await Promise.all([
+        Api.get('/api/auth/team'),
+        Api.get('/api/auth/championship'),
+        Api.get('/api/auth/game'),
+        ]);
+        setGames(games); setChampionships(championships); setTeams(teams);
+        setLoading(false);
+        console.log('campeonatos', championships, 'games', games);
+        })()
+    }, [])
+
+    const setGamesExhibition = (id: any) => {
+        setGamesFiltered(games.filter((jogos:any)=>jogos.championshipId === id))
+    }
+
+    const sendPalpite = (objPalpite: objPalpiteType) => {
+        console.log('asasasas',objPalpite);
+        
+    }
+
+    useEffect(() => {
+        //aqui eu controlo qual card é o padrao da tela por meio de um state.
+        function verificarTamanhoTela() {
+            if (window.matchMedia("(max-width: 450px)").matches) {
+                setUnique(false);
+            } else if (window.matchMedia("(max-width: 727px)").matches) {
+                setUnique(true);
+            } else if (window.matchMedia("(min-width: 728px)").matches) {
+                setUnique(true);
+            }
+        }
+        verificarTamanhoTela();
+        window.addEventListener('resize', verificarTamanhoTela);
+        
+        return () => {
+        window.removeEventListener('resize', verificarTamanhoTela);
+        };
     }, []);
 
-    const [unique, setUnique] = useState<boolean>(true)
     return (
         <div className={style.bodyPalpite}>
             {/* style={!unique ? { maxWidth: '110rem' } : { width: '110rem' }} */}
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '1rem 1rem 0rem 1rem', boxSizing: 'border-box' }}>
                 <ul className={style.listaLigas}>
                     {
-                        leagues.map((liga, index) => (
-                            <li key={index} className={style.listaLigaLI}>{liga.nome}</li>
+                        championships.map((liga: any, index:any ) => (
+                            <li key={index} className={style.listaLigaLI} onClick={() => setGamesExhibition(liga.id)}>{liga.name}</li>
                         ))
                     }
                 </ul>
@@ -71,31 +91,32 @@ function CardPalpite() {
             </div>
             <ul className={!unique ? style.ulPalpiteMult : style.ulPalpite}>
                 {isLoading && <li> <CardSkeleton video={false} blog={false} cards={games.length} enquete={false} /> </li>}
-                {!isLoading && games.map((game, key) => (
-                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite}>
-                        {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><img src={Ball} alt="" />Campeonato Teste</span> <span>{game.hora}</span></div>}
+                {!isLoading && (gamesFiltered.length ? gamesFiltered : games).map((game: any, key: any) => (
+                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite} onClick={() => {setSelectedLi(key); setObjectPalpite({id:'', mandante:'0', visitante:'0'})}}>
+                        {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><Image src={Ball} alt="" />{championships.filter((campeonato: any) => campeonato.id === game.championshipId).map((campeonato: any) => campeonato.name)}</span> {/* <span>{game.hora}</span>*/}</div>}
                         <div className={!unique ? style.contentContainerMult : style.contentContainer}>
                             <span className={style.spanPalpiteTime}>
-                                <Image className={style.imgPalpite} src={game.imgTimeCasa} width={45} height={45} alt="" />
+                                <Image className={style.imgPalpite} src={game.firstTeam.image} width={45} height={45} alt="" />
                                 <p className={style.nomeTimeCard}>
-                                    {game.timeCasa}
+                                    {game.firstTeam.name}
                                 </p>
                             </span>
-                            <input className={style.inputPalpite}></input>
+                            <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, mandante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <div className={style.spanPalpiteX}>
                                 <p>X</p>
                                 {unique && <p className={style.pPalpite}>
-                                    {game.hora}
+                                    {/*game.hora*/}
                                 </p>}
                             </div>
-                            <input className={style.inputPalpite}></input>
+                            <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, visitante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <span className={style.spanPalpiteTime}>
-                                <Image className={style.imgPalpite} src={game.imgTimeFora} width={45} height={45} alt="" />
+                                <Image className={style.imgPalpite} src={game.secondTeam.image} width={45} height={45} alt="" />
                                 <p className={style.nomeTimeCard}>
-                                    {game.timeFora}
+                                    {game.secondTeam.name}
                                 </p>
                             </span>
                         </div>
+                        <button className={selectedLi === key ? style.btnPalpite : style.btnPalpiteOff} onClick={() => sendPalpite({...objPalpite, id: game.id})}>PALPITAR</button>
                     </li>
                 )
                 )}

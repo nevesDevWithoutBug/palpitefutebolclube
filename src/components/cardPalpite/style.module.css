@@ -1,7 +1,8 @@
 .bodyPalpite {
-    height: 100%;
     box-shadow: 0 1px 3px 1px #44637633;
     border-radius: 0.25rem;
+    height: 48.3rem;
+    width: 60%;
 }
 
 .listaLigas {
@@ -13,7 +14,7 @@
 .listaLigaLI {
     cursor: pointer;
     padding: 0.3rem;
-    white-space: nowrap;                  
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -21,7 +22,7 @@
 .listaLigaLI:hover {
     box-sizing: border-box;
     background: rgb(189, 185, 185);
-    transition:all 0.8s 0s ease;
+    transition: all 0.8s 0s ease;
     border-radius: 10px;
 }
 
@@ -29,7 +30,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .visaoJogos span {
@@ -48,17 +49,47 @@
 }
 
 .ulPalpite {
-    transition:all 0.5s 0s ease;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s 0s ease;
     padding-top: 1rem;
-    max-height: 46.1rem;
     overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #126e51 #24a57c;
+    height: 90%;
+}
+
+.ulPalpite .btnPalpite {
+    margin: auto;
+    transition: all 0.8s 0s ease;
+    width: 30%;
+    color: white;
+    font-size: 12px;
+    font-weight: bolder;
+    border-radius: 5px;
+    background: linear-gradient(to right, #126e51, #24a57c);
+}
+
+.ulPalpite::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ulPalpite::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #126e51, #24a57c);
+    border-radius: 4px;
+}
+
+.ulPalpite::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
 
 .liPalpite {
+    width: 100%;
     display: flex;
+    flex-direction: column;
     border-width: 1px;
     border-bottom-style: solid;
-    border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;
+    border-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;
 }
 
 .contentContainer {
@@ -68,16 +99,34 @@
     padding: 1.5rem;
     gap: 2rem;
     align-items: center;
+    justify-content: space-evenly;
 }
 
 .inputPalpite {
-    border: 1px solid  rgb(231, 226, 226);
+    border: 1px solid rgb(231, 226, 226);
+    border-radius: 5px;
     width: 2rem;
     height: 2.5rem;
-    background-color: #e4e4e4; 
+    background-color: #e4e4e4;
     text-align: center;
     font-size: 1.5rem;
 }
+
+.inputPalpite::-webkit-outer-spin-button,
+.inputPalpite::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.inputPalpite::placeholder {
+  color: black;
+}
+
+/* Firefox */
+.inputPalpite[type=number] {
+    -moz-appearance: textfield;
+}
+
 .spanPalpiteX {
     display: flex;
     gap: 10px;
@@ -86,15 +135,18 @@
     flex-direction: column;
     justify-content: center;
 }
+
 .pPalpite {
     font-size: 0.9rem;
 }
-.spanPalpiteTime{
+
+.spanPalpiteTime {
     display: flex;
     width: 200px;
     flex-direction: column;
     align-items: center;
 }
+
 .imgPalpite {
     padding-bottom: 5px;
 }
@@ -107,13 +159,30 @@
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 90%;
+    scrollbar-width: thin;
+    scrollbar-color: #126e51 #24a57c;
     gap: 1rem;
 }
 
+.ulPalpiteMult::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ulPalpiteMult::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #126e51, #24a57c);
+    border-radius: 4px;
+}
+
+.ulPalpiteMult::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
 .liPalpiteMult {
-    transition:all 0.3s 0s linear;
+    transition: all 0.3s 0s linear;
     padding: 1rem;
-    max-width: 22rem; 
+    max-width: 19rem;
     height: 10rem;
     display: flex;
     flex-direction: column;
@@ -124,6 +193,26 @@
     border-radius: 0.25rem;
     background-size: cover;
     justify-content: space-between;
+}
+
+.ulPalpiteMult .btnPalpite {
+    transition: all 0.8s 0s ease;
+    width: 100%;
+    color: white;
+    font-size: 12px;
+    font-weight: bolder;
+    border-radius: 5px;
+    background: linear-gradient(to right, #126e51, #24a57c);
+}
+
+.btnPalpiteOff {
+    width: 100%;
+    color: white;
+    font-size: 12px;
+    font-weight: bolder;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .titleCard {
@@ -137,11 +226,19 @@
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.titleCard span {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .nomeTimeCard {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .contentContainerMult {
@@ -159,7 +256,33 @@
     align-items: center;
 }
 
-.contentContainerMult .spanPalpiteX{
+.contentContainerMult .spanPalpiteX {
     display: flex;
     align-items: center;
+}
+
+@media screen and (max-width: 980px) {
+    .bodyPalpite {
+        width: 100%;
+        order: 5;
+    }
+}
+
+@media screen and (max-width: 727px) {
+    .visaoJogos{
+        display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    .bodyPalpite {
+        height: 35rem;
+    }
+
+    .ulPalpite {
+        
+    }
+
+    .liPalpiteMult {
+        width: 16rem;
+    }
 }

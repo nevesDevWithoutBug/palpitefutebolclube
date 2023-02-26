@@ -9,11 +9,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Users {
@@ -21,7 +23,8 @@ model Users {
   name         String
   email        String  @unique
   password     String
-  role         Int // 100 = adm // 200 = sample user // 300 any
+  role         Int // 100 = adm // 200 = columnist // 300 user
+  news         News[] @relation("NewsUser")
   @@map("users")
 }
 
@@ -38,31 +41,37 @@ model Games {
   id           Int @id @default(autoincrement())
   name         String
 
-  teamsGame    TeamsGame[] @relation("GameByTeams")
+  teamsGame         TeamsGame[] @relation("GameByTeams")
 
-  championship         Championships? @relation("ChampioshipGames", fields: [championshipId], references: [id])
-  championshipId       Int?
+  championship         Championships @relation("ChampioshipGames", fields: [championshipId], references: [id])
+  championshipId       Int
+  
+  start               DateTime?
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   @@map("games")
+  
+  @@index([championshipId])
 }
 
 model TeamsGame {
   id           Int @id @default(autoincrement())
   gol          Int @default(0)
 
-  team         Teams? @relation("TeamGames", fields: [teamId], references: [id])
-  teamId       Int?
+  team         Teams @relation("TeamGames", fields: [teamId], references: [id])
+  teamId       Int
 
   
-  game        Games? @relation("GameByTeams",  fields: [gameId], references: [id])
-  gameId      Int?
+  game        Games @relation("GameByTeams",  fields: [gameId], references: [id])
+  gameId      Int
 
-  expire       DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   @@map("teamsGame")
+  
+  @@index([gameId])
+  @@index([teamId])
 }
 
 model Teams {
@@ -77,6 +86,21 @@ model Teams {
   @@map("teams")
 }
 
+model News {
+  
+  id            Int @id @default(autoincrement())
 
+  title         String
+  content       String
+  
+  author       Users @relation("NewsUser", fields: [userId], references: [id])
+  userId       Int
 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("news")
+
+  @@index([userId])
+}
 

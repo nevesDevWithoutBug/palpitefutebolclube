@@ -11,12 +11,12 @@ interface Http {
  * @return {[type]}      [description]
  */
 interface ApiType {
-    get: Http,
-    post: Http
-    put?: Http, 
-    delete: Http, 
-    auth: <JSON = any>(url: string, object: any) => Promise<JSON>, 
-    signOut: () => Promise<void>
+    get: Http;
+    post: Http;
+    put?: Http;
+    delete: Http;
+    auth: <JSON = any>(url: string, object: any) => Promise<JSON>;
+    signOut: () => Promise<void>;
 }
 
 
@@ -80,12 +80,14 @@ function fetchApi():ApiType {
             })
             const data = await response.json()
             await Cookie.set('auth', data.accessToken, 360)
+            await Cookie.set('user', JSON.stringify(data.user), 360)
             return data
         },
     
         signOut: async(): Promise<void> => {
             try{
     
+                await Cookie.expire('auth')
                 await Cookie.expire('auth')
                 if(typeof window !== 'undefined') window.location.reload()
     
