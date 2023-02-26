@@ -3,10 +3,9 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import Api from "src/providers/http/api"
 import { TeamType } from "src/types/TeamType"
-import { GameType} from "src/types/GameType"
-import { TeamsGameType} from "src/types/TeamsGameType"
 import { ChampionshipType} from "src/types/ChampionshipType"
 import Spinner from "src/components/spinner"
+import { toast } from "react-toastify";
 
 function RodadaComponent() {
 
@@ -35,15 +34,13 @@ function RodadaComponent() {
         })()
     }, [])
 
-
     const addGame = async (id: Number) => {
         const game = {
             name: 'games',
             championshipId : id,
-            teamsGame: [
-                { gol: 0, team: {name: ''} },
-                { gol: 0, team: {name: ''} }
-            ] 
+            start: Date.now,
+            firstTeam: {gol: 0,name: ''},
+            secondTeam: {gol: 0,name: ''},
         }
         setGames([game, ...games])
         setEdit(0)
@@ -54,7 +51,8 @@ function RodadaComponent() {
         const body = {
             id: games[key].id
         }
-        await Api.delete('/api/auth/game', body)
+        const response = await Api.delete('/api/auth/game', body)
+        if(response.id) toast.success('Jogo excluído com sucesso!')
         const game = await Api.get('/api/auth/game')
         setGames(game);
         setEdit(NaN);
@@ -62,27 +60,28 @@ function RodadaComponent() {
     };
 
     const saveGame = async (idLiga: number, index: number) => {
-        if(!games[index].teamsGame[0].teamId || !games[index].teamsGame[1].teamId) {
-            return window.alert('aaaaaaaaaaaaa, seleciona o time né')
-        }
+        if(!games[index].firstTeam.id || !games[index].secondTeam.id) return toast.error('Selecione os times')
+        if(!games[index].start) return toast.error('Selecione a data e hora do jogo')
         setIsLoading(true)
         const body = { 
             id: games[index].id ? games[index].id : null,
             name: 'jogo 2', 
             championshipId: idLiga, 
-            firstTeam:{ id: games[index].teamsGame[0].teamId, gol: 0 }, 
-            secondTeam:{ id: games[index].teamsGame[1].teamId, gol: 0 } 
+            start: convertToISODateTime(games[index].start),
+            firstTeam:{ id: games[index].firstTeam.id, gol: 0 }, 
+            secondTeam:{ id: games[index].secondTeam.id, gol: 0 } 
         }
-        await Api.post('/api/auth/game', body)
+        const response = await Api.post('/api/auth/game', body)
+        if(response.id) toast.success('Jogo Salvo com sucesso!')
         const game = await Api.get('/api/auth/game')
         setGames(game)
         setEdit(NaN)
         setIsLoading(false)
     }
 
-    function handlerGame(teamId: any, index: number, id: number) {
+    function handlerGameFirst(teamId: any, index: number, id: number) {
         if(!teamId || teamId == ''){
-            setGames([...games, games[index].teamsGame[id].teamId = '', games[index].teamsGame[id].team.name = ''])
+            setGames([...games, games[index].firstTeam.id = '', games[index].firstTeam.name = ''])
         }else {
             let teamName = ''
             teams.map((team, index) => {
@@ -92,16 +91,46 @@ function RodadaComponent() {
                     )
                 }
             })
-            setGames([...games, games[index].teamsGame[id].teamId = Number(teamId), games[index].teamsGame[id].team.name = teamName])
+            setGames([...games, games[index].firstTeam.id = Number(teamId), games[index].firstTeam.name = teamName])
+        }
+    }
+
+    function handlerGameSecond(teamId: any, index: number, id: number) {
+        if(!teamId || teamId == ''){
+            setGames([...games, games[index].secondTeam.id = '', games[index].secondTeam.name = ''])
+        }else {
+            let teamName = ''
+            teams.map((team, index) => {
+                if(team.id == teamId) {
+                    return(
+                        teamName = team.name
+                    )
+                }
+            })
+            setGames([...games, games[index].secondTeam.id = Number(teamId), games[index].secondTeam.name = teamName])
         }
     }
 
     function handlerEdit(index: number) {
-        if(editar && (!games[editar].teamsGame[0].teamId || !games[editar].teamsGame[1].teamId)) {
-            return window.alert('aaaaaaaaaaaaa, seleciona o time né')
+        if(editar && (!games[editar].firstTeam.id || !games[editar].secondTeam.id)) {
+            return toast.error('Selecione os times')
         }
         setEdit(index)
     }
+
+    function convertToISODateTime(datetimeLocalValue: any) {
+        const date = new Date(datetimeLocalValue);
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        const seconds = ('0' + date.getSeconds()).slice(-2);
+        const isoDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+        return isoDateTime;
+    }
+
+    function brDate(date:any){ return (new Date(date)).toLocaleString('pt-BR')}
 
     return (
         <div className={style.jogo}>
@@ -136,7 +165,8 @@ function RodadaComponent() {
                     })}
                     {ligaSelecionada.name}
                     <div className={style.newRound}>
-                        <button className={style.buttonAdd} onClick={() => addGame(ligaSelecionada.id)} >
+                        <button className={style.buttonAdd} onClick={() => addGame(ligaSelecionada.id)} 
+                            disabled={!ligaSelecionada.id || !isNaN(editar)} style={!ligaSelecionada.id || !isNaN(editar) ? {opacity: 0.5} : {opacity: 1}}>
                             Nova rodada
                         </button>
                     </div>
@@ -149,18 +179,18 @@ function RodadaComponent() {
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.teamsGame.length > 0 && game.teamsGame[0].team.name ? game.teamsGame[0].team.name.toLocaleLowerCase().replace('-', ''):'branco'}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.firstTeam && game.firstTeam.name ? game.firstTeam.name.toLocaleLowerCase().replace('-', ''):'branco'}.png`} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
-                                                        {game.teamsGame.length > 0 && game.teamsGame[0].team?.name}
+                                                        {game.firstTeam && game.firstTeam.name}
                                                     </p>
                                                     :
-                                                    <select onChange={(event) => handlerGame(event.target.value, key, 0)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
-                                                        <option value={''} >Selecione um time</option>
+                                                    <select onChange={(event) => handlerGameFirst(event.target.value, key, 0)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                                                        <option selected={false} value={''} >Selecione um time</option>
                                                         {teams.map((team, index) => {
                                                             return (
-                                                                <option value={team.id} selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[0].team.id) : false} key={index}>{team.name}</option>
+                                                                <option value={team.id} selected={game.firstTeam.name ? (team.id == game.firstTeam.id) : false} key={index}>{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
@@ -168,21 +198,25 @@ function RodadaComponent() {
                                         </span>
                                         <div className={style.spanPalpiteX}>
                                             <p>X</p>
-                                            <p className={style.pPalpite}>000</p>
+                                            { editar !==key ?   
+                                                <p className={style.pPalpite}>{game.start ? brDate(game.start): '00/00/0000, 00:00:00'}</p>
+                                            :
+                                                <input type="datetime-local" onChange={(event) => games[key].start = event.target.value} />
+                                            }
                                         </div>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.teamsGame.length > 0 && game.teamsGame[1].team.name ? game.teamsGame[1].team.name.toLocaleLowerCase().replace('-', ''):'branco'}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.secondTeam && game.secondTeam.name ? game.secondTeam.name.toLocaleLowerCase().replace('-', ''):'branco'}.png`} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
-                                                        {game.teamsGame.length > 0 && game.teamsGame[1].team?.name}
+                                                        {game.secondTeam && game.secondTeam.name}
                                                     </p>
-                                                    :
-                                                    <select onChange={(event) => handlerGame(event.target.value, key, 1)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                                                :
+                                                    <select onChange={(event) => handlerGameSecond(event.target.value, key, 1)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
                                                         <option value={''}>Selecione um time</option>
                                                         {teams.map((team, index) => {
                                                             return (
-                                                                <option value={team.id} selected={game.teamsGame.length > 0 ? (team.id == game.teamsGame[1].team.id): false} key={index} >{team.name}</option>
+                                                                <option value={team.id} selected={game.secondTeam.name ? (team.id == game.secondTeam.id): false} key={index} >{team.name}</option>
                                                             )
                                                         })}
                                                     </select>
