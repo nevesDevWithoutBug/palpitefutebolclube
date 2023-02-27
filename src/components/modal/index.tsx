@@ -10,7 +10,7 @@ import Api from "src/providers/http/api";
 import { toast } from "react-toastify";
 
 
-const Modal = ({ display, toggle, open, setOpen }: any) => {
+const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
 
     const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role : 300 })
     const [senhaOk, setSenhaOk] = useState<boolean>(false)
@@ -48,6 +48,8 @@ const Modal = ({ display, toggle, open, setOpen }: any) => {
         const {message, ...response} = await Api.auth('api/signin', user)
         if(message){return toast.error(message)}
         toggle()
+        setUserExibition({name: response.user.name})
+        localStorage.setItem('UserPalpite', response.user.name)
         return toast.success(`Seja bem vindo ${response.user.name}`)
         }
         return toast.error('Confira os dados digitados.')

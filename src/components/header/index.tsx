@@ -7,32 +7,29 @@ import PatchBrasileirao from "../../../public/assets/assets/brasileiro.svg"
 import PatchLaliga from "../../../public/assets/assets/laLiga.png"
 import style from "./style.module.css"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Modal from '../modal'
 import Api from "src/providers/http/api"
+import { userExhibitionType } from "src/types/userExhibitionType"
 
 function HeaderPrincipal() {
 
     const [closeBan, setCloseBan] = useState<boolean>(false)
-
-    const leagues = [
-        { nome: 'Premier League', pais: 'Inglaterra', imagem: PatchPremier },
-        { nome: 'Brasileirão', pais: 'Brasil', imagem: PatchBrasileirao },
-        { nome: 'Copa do Brasil', pais: 'Brasil', imagem: PatchSerieA },
-        { nome: 'Libertadores', pais: 'America do Sul', imagem: PatchLaliga },
-        { nome: 'Sulamericana', pais: 'America do Sul', imagem: PatchLigue1 },
-        { nome: 'Mundial de Clubes', pais: 'Mundo', imagem: PatchBundesliga },
-    ]
-
     const [displayModal, setDisplayModal] = useState(false)
     const [open, setOpen] = useState('')
+    const [userExibition, setUserExibition] = useState<userExhibitionType>({name: ''})
 
     const toggle = () => {
         setDisplayModal(!displayModal)
     }
 
+    useEffect(() => {
+        const nameUser = localStorage.getItem('UserPalpite')
+        setUserExibition({name: !nameUser ? '' : nameUser})
+    },[])
 
     async function Sair() {
+        localStorage.clear()
         return Api.signOut()        
     }
 
@@ -52,11 +49,15 @@ function HeaderPrincipal() {
                 </div>
             </div>
             <div className={style.Header1}>
-                <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
+                { !userExibition.name.length ? <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span> 
+                : 
+                <span>Olá {userExibition.name}</span>}
                 <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
-                <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
+                { !userExibition.name.length ? <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
+                : 
+                <span onClick={() => Sair()}>Sair</span>}
             </div>
-            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} />}
+            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} setUserExibition={setUserExibition}/>}
         </header>
     )
 }
