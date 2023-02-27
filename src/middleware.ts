@@ -7,7 +7,7 @@ export default async function middleware(req: NextRequest) {
 
     try{
 
-        // if(!await isAuthenticated(req)) return handleNotAuthenticated(req)
+        if(!await isAuthenticated(req)) return handleNotAuthenticated(req)
 
         return NextResponse.next();
         
@@ -26,8 +26,8 @@ export const config = {
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
 
-    const { value:token } = <any> req.cookies.get('auth')
-    console.log(req)
+    const token = req.headers.get('authorization') !== null ? (req.headers.get('authorization') as string).replace('Bearer ', '') : (<any> req.cookies.get('auth')).value
+
     if(!token) return false 
 
     const decodedToken = await verify(token, process.env.ACCESS_TOKEN as string)

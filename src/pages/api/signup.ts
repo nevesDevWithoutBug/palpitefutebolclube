@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse) 
     
     if(method !== 'POST') return res.status(405).json({ message: 'method Not allowed' })
 
-    if(!name || !email || !password) return res.status(200).json({ message: 'missing parameters' })
+    if(!name || !email || !password) return res.status(406).json({ message: 'missing parameters' })
     
     try {
         

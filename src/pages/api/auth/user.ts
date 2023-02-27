@@ -44,7 +44,26 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
             return res.status(200).json(userDb)
 
         }
-        
+
+        if(method === 'POST') {
+
+            const token = await authorizationToken(req)
+
+            const { name, team, info, number, birthday } : { name: string, team: string, info: string, number: string, birthday: string } = req.body
+            
+            const decodedToken = await verify(token, process.env.ACCESS_TOKEN as string)
+            
+            if(!decodedToken) return res.status(401).json({ message: 'missing bearer token' })
+
+            const userDb :any = await UserModel.get(Number(decodedToken.id))
+
+            if(!userDb || decodedToken.email !== userDb.email) return res.status(404).json({ message: 'user not found' })
+
+            await UserModel.update({ email: userDb.email, name: name, team: team, info: info, number: number, birthday: birthday })
+
+            return res.status(200).json(userDb)
+
+        }
         
     } catch(error) {
 

@@ -14,7 +14,22 @@ function model() {
             return await prisma.users.create({
                 data: user
             })
-        }
+        },
+
+        async update(user: { email: string, name: string, team: string, info: string, number: string, birthday: string }) {
+            return await prisma.users.update({
+                where: { email: user.email },
+                data: {
+                    name: user.name ? user.name : undefined,
+                    team: user.team ? user.team : undefined,
+                    info: user.info ? user.info : undefined,
+                    number: user.number ? user.number : undefined,
+                    birthday: user.birthday ? user.birthday : undefined,
+                }
+            })
+        },
+
+
     }
     
     
