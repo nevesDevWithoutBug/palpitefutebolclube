@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
 
-    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role : 300 })
+    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role: 300 })
     const [senhaOk, setSenhaOk] = useState<boolean>(false)
 
     function handleNomeChange(e: any) {
@@ -34,9 +34,9 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
     }
 
     async function signup() {
-        if((user.email.includes('@')) && (user.password.length >= 6)){
-            const {message, ...response} = await Api.auth('api/signup', user)
-            if(message){return toast.error(message)}
+        if ((user.email.includes('@')) && (user.password.length >= 6)) {
+            const { message, ...response } = await Api.auth('api/signup', user)
+            if (message) { return toast.error(message) }
             setOpen('login')
             return toast.success(`Olá ${response.user.name}, agora faça login!`)
         }
@@ -44,13 +44,13 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
     }
 
     async function signin() {
-        if(user.email.includes('@')){
-        const {message, ...response} = await Api.auth('api/signin', user)
-        if(message){return toast.error(message)}
-        toggle()
-        setUserExibition({name: response.user.name})
-        localStorage.setItem('UserPalpite', response.user.name)
-        return toast.success(`Seja bem vindo ${response.user.name}`)
+        if (user.email.includes('@')) {
+            const { message, ...response } = await Api.auth('api/signin', user)
+            if (message) { return toast.error(message) }
+            toggle()
+            setUserExibition({ name: response.user.name })
+            localStorage.setItem('UserPalpite', response.user.name)
+            return toast.success(`Seja bem vindo ${response.user.name}`)
         }
         return toast.error('Confira os dados digitados.')
     }
@@ -71,12 +71,26 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
                             <span>Email</span>
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
-                            <span>Senha <span style={{fontSize:'12px'}}>(minimo 6 digitos)</span>{user.password.length >= 6 && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
+                            <div className={style.dadosComplementares}>
+                                <span>Time do coração</span>
+                                <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
+                                <span>Data de nascimento</span>
+                                <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
+                                <span>Estado</span>
+                                <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
+                                <span>Cidade</span>
+                                <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
+                                <span>Endereço</span>
+                                <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
+                                <span>Numero</span>
+                                <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
+                            </div>
+                            <span>Senha <span style={{ fontSize: '12px' }}>(minimo 6 digitos)</span>{user.password.length >= 6 && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                             <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
                             <span>Confirme sua senha {senhaOk && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                             <input placeholder="********" type="password" name="senha" onChange={handleVerifySenhaChange} />
-                            <button type="button" disabled={user.name && user.email && user.password && senhaOk ? false : true} 
-                            onClick={() => signup()} >Cadastrar</button>
+                            <button type="button" disabled={user.name && user.email && user.password && senhaOk ? false : true}
+                                onClick={() => signup()} >Cadastrar</button>
                         </motion.form>
                             <button className={style.modalNav} onClick={() => setOpen('login')}>Entrar</button></>
                     }
@@ -87,7 +101,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <span>Senha</span>
                             <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
                             <button type="button" disabled={user.email && user.password ? false : true}
-                            onClick={() => signin()} >Entrar</button>
+                                onClick={() => signin()} >Entrar</button>
                         </motion.form >
                             <button className={style.modalNav} onClick={() => setOpen('cadastro')}>Cadastrar</button></>
                     }
