@@ -6,6 +6,7 @@ import { TeamType } from 'src/types/TeamType'
 import { ChampionshipType } from 'src/types/ChampionshipType'
 import Spinner from "src/components/spinner"
 import { toast } from "react-toastify";
+import timeBranco from "/public/assets/assets/clubes/branco.png"
 
 function JogosComponent() {
 
@@ -77,6 +78,11 @@ function JogosComponent() {
     
     function brDate(date:any){ return (new Date(date)).toLocaleString('pt-BR')}
 
+    function handlerImage(name: string) { 
+        name = name.replace(/\s+/g, "").replace(/-/g, "")
+        return `/assets/assets/clubes/${name.replace(/\s+/g, "").charAt(0).toUpperCase()}${name.slice(1)}.png`
+    }
+
     return (
         <>
         {isLoading && <Spinner></Spinner>}
@@ -117,7 +123,7 @@ function JogosComponent() {
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.firstTeam && game.firstTeam.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                        <Image className={style.imgPalpite} src={game.firstTeam && game.firstTeam.name ?handlerImage(game.firstTeam.name):timeBranco} width={50} height={50} alt="" />
                                             <p className={style.nomeTimeCard}>
                                                 {game.firstTeam && game.firstTeam.name}
                                             </p>
@@ -129,7 +135,7 @@ function JogosComponent() {
                                         </div>
                                         <input value={game.secondTeam ? game.secondTeam.gol : 0} onChange={(event) => handleInputChange(event, key, 1)} disabled={editar !== key} className={editar === key ? style.inputPalpite : style.inputPalpiteDisabled}></input>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.secondTeam && game.secondTeam.name.toLocaleLowerCase()}.png`} width={50} height={50} alt="" />
+                                        <Image className={style.imgPalpite} src={game.secondTeam && game.secondTeam.name ?handlerImage(game.secondTeam.name):timeBranco} width={50} height={50} alt="" />
                                             <p className={style.nomeTimeCard}>
                                                 {game.secondTeam && game.secondTeam.name}
                                             </p>

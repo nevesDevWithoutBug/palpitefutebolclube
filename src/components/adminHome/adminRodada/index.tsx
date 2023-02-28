@@ -6,6 +6,7 @@ import { TeamType } from "src/types/TeamType"
 import { ChampionshipType} from "src/types/ChampionshipType"
 import Spinner from "src/components/spinner"
 import { toast } from "react-toastify";
+import timeBranco from "/public/assets/assets/clubes/branco.png"
 
 function RodadaComponent() {
 
@@ -132,6 +133,11 @@ function RodadaComponent() {
 
     function brDate(date:any){ return (new Date(date)).toLocaleString('pt-BR')}
 
+    function handlerImage(name: string) { 
+        name = name.replace(/\s+/g, "").replace(/-/g, "")
+        return `/assets/assets/clubes/${name.replace(/\s+/g, "").charAt(0).toUpperCase()}${name.slice(1)}.png`
+    }
+
     return (
         <div className={style.jogo}>
              {isLoading && <Spinner></Spinner>}
@@ -179,7 +185,7 @@ function RodadaComponent() {
                                 <li key={key} className={style.liPalpite}>
                                     <div className={style.contentContainer}>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.firstTeam && game.firstTeam.name ? game.firstTeam.name.toLocaleLowerCase().replace('-', ''):'branco'}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={game.firstTeam && game.firstTeam.name ?handlerImage(game.firstTeam.name):timeBranco} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
@@ -205,7 +211,7 @@ function RodadaComponent() {
                                             }
                                         </div>
                                         <span className={style.spanPalpiteTime}>
-                                            <Image className={style.imgPalpite} src={`/assets/assets/clubes/${game.secondTeam && game.secondTeam.name ? game.secondTeam.name.toLocaleLowerCase().replace('-', ''):'branco'}.png`} width={50} height={50} alt="" />
+                                            <Image className={style.imgPalpite} src={game.secondTeam && game.secondTeam.name ?handlerImage(game.secondTeam.name):timeBranco} width={50} height={50} alt="" />
                                             {
                                                 editar !== key ?
                                                     <p className={style.nomeTimeCard}>
