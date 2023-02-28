@@ -35,12 +35,18 @@
 .dadosComplementares {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 1rem;
+    transition: all 0.3s 0s linear;
 }
 
-.dadosComplementares input {
-    width: 50%;
+.dadosComplementares div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.dadosComplementares div input {
+    width: 100%;
 }
 
 .formModal button {
