@@ -21,8 +21,8 @@ function CardPalpite() {
     useEffect(() => {
         (async () => {
         const [championships, games] = await Promise.all([
-        Api.get('/api/auth/championship'),
-        Api.get('/api/auth/game'),
+        Api.get('/api/championship'),
+        Api.get('/api/game'),
         ]);
         setGames(games); setChampionships(championships);
         setLoading(false);
