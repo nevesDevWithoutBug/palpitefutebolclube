@@ -1,40 +1,30 @@
 import Ball from "../../../public/assets/ball.svg"
 import { useEffect, useState } from "react"
-import bayern from "../../../public/assets/assets/bayern.png"
-import psg from "../../../public/assets/assets/psg.png"
-import liverpool from "../../../public/assets/assets/liverpool.png"
-import realmadrid from "../../../public/assets/assets/realmadrid.png"
-import leipzig from "../../../public/assets/assets/leipzig.png"
-import manchestercity from "../../../public/assets/assets/manchestercity.png"
-import borussiadortmund from "../../../public/assets/assets/borussiadortmund.png"
-import chelsea from "../../../public/assets/assets/chelsea.png"
-import milan from "../../../public/assets/assets/milan.png"
-import tottenham from "../../../public/assets/assets/tottenham.png"
 import style from "./style.module.css"
 import Image from "next/image"
 import CardSkeleton from "../skeleton"
 import Api from "src/providers/http/api"
 import { objPalpiteType } from "src/types/objPalpiteType"
+import { toast } from "react-toastify"
 
 function CardPalpite() {
 
+
     const [games, setGames] = useState<any>([])
-    const [teams, setTeams] = useState<any>([])
     const [championships, setChampionships] = useState<any>([])
     const [gamesFiltered, setGamesFiltered] = useState<any>([])
     const [selectedLi, setSelectedLi] = useState<number | null>(null);
     const [unique, setUnique] = useState<boolean>(true)
     const [isLoading, setLoading] = useState<boolean>(true)
-    const [objPalpite, setObjectPalpite ] = useState<objPalpiteType>({id:'', mandante:'0', visitante:'0'})
+    const [objPalpite, setObjectPalpite ] = useState<objPalpiteType>({id:'', mandante:'0', visitante:'0', horario:''})
 
     useEffect(() => {
         (async () => {
-        const [teams, championships, games] = await Promise.all([
-        Api.get('/api/auth/team'),
-        Api.get('/api/auth/championship'),
-        Api.get('/api/auth/game'),
+        const [championships, games] = await Promise.all([
+        Api.get('/api/championship'),
+        Api.get('/api/game'),
         ]);
-        setGames(games); setChampionships(championships); setTeams(teams);
+        setGames(games); setChampionships(championships);
         setLoading(false);
         console.log('campeonatos', championships, 'games', games);
         })()
@@ -45,9 +35,20 @@ function CardPalpite() {
     }
 
     const sendPalpite = (objPalpite: objPalpiteType) => {
-        console.log('asasasas',objPalpite);
-        
+    const {horario} = objPalpite
+    const dataDoJogo = new Date(Date.parse(horario));
+    const horaAtual = new Date();
+
+    if (dataDoJogo.toLocaleDateString('pt-BR') === horaAtual.toLocaleDateString('pt-BR') && dataDoJogo <= horaAtual) {
+        // O jogo já começou hoje, então não pode enviar o palpite
+        return toast.error('Jogo já começou, você não pode enviar um palpite')
+    } else {
+        // O jogo ainda não começou ou não é hoje, pode enviar o palpite
+        return toast.success('Marcha no progresso')
+    }        
     }
+
+
 
     useEffect(() => {
         //aqui eu controlo qual card é o padrao da tela por meio de um state.
@@ -92,11 +93,20 @@ function CardPalpite() {
             <ul className={!unique ? style.ulPalpiteMult : style.ulPalpite}>
                 {isLoading && <li> <CardSkeleton video={false} blog={false} cards={games.length} enquete={false} /> </li>}
                 {!isLoading && (gamesFiltered.length ? gamesFiltered : games).map((game: any, key: any) => (
-                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite} onClick={() => {setSelectedLi(key); setObjectPalpite({id:'', mandante:'0', visitante:'0'})}}>
-                        {!unique && <div className={style.titleCard}> <span className={style.titleCardContent}><Image src={Ball} alt="" />{championships.filter((campeonato: any) => campeonato.id === game.championshipId).map((campeonato: any) => campeonato.name)}</span> {/* <span>{game.hora}</span>*/}</div>}
+                    <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite} onClick={() => {setSelectedLi(key); setObjectPalpite({id:'', mandante:'0', visitante:'0', horario:''})}}>
+                        {!unique && 
+                        <div className={style.titleCard}> 
+                            <span className={style.titleCardContent}>
+                                <Image src={Ball} alt="" />
+                                {championships.filter((campeonato: any) => campeonato.id === game.championshipId).map((campeonato: any) => campeonato.name)}
+                            </span>
+                            <p className={style.pPalpite}>
+                                {new Date(game.start).toLocaleDateString('pt-BR').split('/').slice(0, 2).join('/')} as {new Date(game.start).toLocaleTimeString('pt-BR').split(':').slice(0, 2).join(':')}
+                            </p>
+                        </div>}
                         <div className={!unique ? style.contentContainerMult : style.contentContainer}>
                             <span className={style.spanPalpiteTime}>
-                                <Image className={style.imgPalpite} src={game.firstTeam.image} width={45} height={45} alt="" />
+                                {/* <Image className={style.imgPalpite} src={game.firstTeam.image} width={45} height={45} alt="" /> */}
                                 <p className={style.nomeTimeCard}>
                                     {game.firstTeam.name}
                                 </p>
@@ -104,19 +114,19 @@ function CardPalpite() {
                             <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, mandante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <div className={style.spanPalpiteX}>
                                 <p>X</p>
-                                {unique && <p className={style.pPalpite}>
-                                    {/*game.hora*/}
+                                {unique && <p className={style.pPalpiteUnique}>
+                                    {new Date(game.start).toLocaleDateString('pt-BR').split('/').slice(0, 2).join('/')} as {new Date(game.start).toLocaleTimeString('pt-BR').split(':').slice(0, 2).join(':')}
                                 </p>}
                             </div>
                             <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, visitante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <span className={style.spanPalpiteTime}>
-                                <Image className={style.imgPalpite} src={game.secondTeam.image} width={45} height={45} alt="" />
+                                {/* <Image className={style.imgPalpite} src={game.secondTeam.image} width={45} height={45} alt="" /> */}
                                 <p className={style.nomeTimeCard}>
                                     {game.secondTeam.name}
                                 </p>
                             </span>
                         </div>
-                        <button className={selectedLi === key ? style.btnPalpite : style.btnPalpiteOff} onClick={() => sendPalpite({...objPalpite, id: game.id})}>PALPITAR</button>
+                        <button className={selectedLi === key ? style.btnPalpite : style.btnPalpiteOff} onClick={() => sendPalpite({...objPalpite, id: game.id, horario: game.start})}>PALPITAR</button>
                     </li>
                 )
                 )}
