@@ -21,8 +21,8 @@ function CardPalpite() {
     useEffect(() => {
         (async () => {
         const [championships, games] = await Promise.all([
-        Api.get('/api/auth/championship'),
-        Api.get('/api/auth/game'),
+        Api.get('/api/championship'),
+        Api.get('/api/game'),
         ]);
         setGames(games); setChampionships(championships);
         setLoading(false);
@@ -114,7 +114,7 @@ function CardPalpite() {
                             <input type='text' pattern="\d{1,2}" placeholder="0" onChange={(e) => setObjectPalpite({...objPalpite, mandante: e.target.value})} onInput={(e: any) => { e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 2); }} className={style.inputPalpite} />
                             <div className={style.spanPalpiteX}>
                                 <p>X</p>
-                                {unique && <p className={style.pPalpite}>
+                                {unique && <p className={style.pPalpiteUnique}>
                                     {new Date(game.start).toLocaleDateString('pt-BR').split('/').slice(0, 2).join('/')} as {new Date(game.start).toLocaleTimeString('pt-BR').split(':').slice(0, 2).join(':')}
                                 </p>}
                             </div>

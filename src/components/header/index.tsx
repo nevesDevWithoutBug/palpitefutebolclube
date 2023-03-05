@@ -17,7 +17,7 @@ function HeaderPrincipal() {
     const [closeBan, setCloseBan] = useState<boolean>(false)
     const [displayModal, setDisplayModal] = useState(false)
     const [open, setOpen] = useState('')
-    const [userExibition, setUserExibition] = useState<userExhibitionType>({name: ''})
+    const [userExibition, setUserExibition] = useState<userExhibitionType>({ name: '' })
 
     const toggle = () => {
         setDisplayModal(!displayModal)
@@ -25,12 +25,12 @@ function HeaderPrincipal() {
 
     useEffect(() => {
         const nameUser = localStorage.getItem('UserPalpite')
-        setUserExibition({name: !nameUser ? '' : nameUser})
-    },[])
+        setUserExibition({ name: !nameUser ? '' : nameUser })
+    }, [])
 
     async function Sair() {
         localStorage.clear()
-        return Api.signOut()        
+        return Api.signOut()
     }
 
     return (
@@ -49,15 +49,15 @@ function HeaderPrincipal() {
                 </div>
             </div>
             <div className={style.Header1}>
-                { !userExibition.name.length ? <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span> 
-                : 
-                <span>Olá {userExibition.name}</span>}
+                {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
+                    :
+                    <span>Olá {`${userExibition.name.replace(/^\w/, c => c.toUpperCase()).split(' ')[0]}`}</span>}
                 <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
-                { !userExibition.name.length ? <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
-                : 
-                <span onClick={() => Sair()}>Sair</span>}
+                {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
+                    :
+                    <span onClick={() => Sair()}>Sair</span>}
             </div>
-            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} setUserExibition={setUserExibition}/>}
+            {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} setUserExibition={setUserExibition} />}
         </header>
     )
 }

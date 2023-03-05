@@ -32,6 +32,23 @@
     margin-bottom: 0.5rem;
 }
 
+.dadosComplementares {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    transition: all 0.3s 0s linear;
+}
+
+.dadosComplementares div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.dadosComplementares div input {
+    width: 100%;
+}
+
 .formModal button {
     margin-top: 1rem;
     background: linear-gradient(to right, #126e51, #24a57c);
@@ -55,14 +72,14 @@
 }
 
 .contentModal {
-   background: #fff; 
-   border-radius: 10px; 
-   width: 28rem; 
-   margin: auto; 
-   padding: 20px;
-   display: flex; 
-   flex-direction: column; 
-   box-shadow: 0 1px 3px 1px #44637633;
+    background: #fff;
+    border-radius: 10px;
+    width: 28rem;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px 1px #44637633;
 }
 
 @media screen and (max-width: 600px) {
