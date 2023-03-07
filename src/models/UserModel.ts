@@ -6,13 +6,14 @@ function model() {
     // export all function that is in the return
     return { 
         async get(id?: number) {
-            return id ? <UserType> await prisma.users.findFirst({ where: {id: id}}) 
-            : <UserType[]> await prisma.users.findMany()
+            return id ? <UserType> await prisma.users.findFirst({ where: {id: id}, select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true} }) 
+            : <UserType[]> await prisma.users.findMany({ select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true} })
         },
 
         async create(user: UserType) {
             return await prisma.users.create({
-                data: user
+                data: user,
+                select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true}
             })
         },
 
@@ -26,7 +27,8 @@ function model() {
                     info: user.info ? user.info : undefined,
                     number: user.number ? user.number : undefined,
                     birthday: user.birthday ? user.birthday : undefined,
-                }
+                },
+                select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true}
             })
         },
 
