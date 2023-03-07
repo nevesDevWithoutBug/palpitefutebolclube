@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 
 export default async function handler(req: NextApiRequest,res: NextApiResponse) {
     
-    const {name, email, password, role} = req.body;
+    const {name, email, password, role, document, team, info, number, birthday } = req.body;
     const { method } = req;
     
     if(method !== 'POST') return res.status(405).json({ message: 'method Not allowed' })
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse) 
 
         const hashedPassword = await bcrypt.hash(password, 2) 
 
-        const userDb = await UserModel.create( {name: name, email: email, password: hashedPassword, role: role ? Number(role) : 300} )
+        const userDb = await UserModel.create( {name: name, email: email, password: hashedPassword, role: role ? Number(role) : 300, document: document, team: team, info: info, number: number, birthday: birthday} )
 
         const newUser = {id:userDb.id, name:userDb.name, email:userDb.email};
 
