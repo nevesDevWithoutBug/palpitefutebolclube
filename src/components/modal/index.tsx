@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom"
 import { motion } from "framer-motion";
 import style from "./style.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { userCreateType } from "src/types/UserCreateType";
 import { UserType } from "src/types/UserType";
 import Image from "next/image";
@@ -12,7 +12,9 @@ import { toast } from "react-toastify";
 
 const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
 
-    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role: 300 })
+
+    const [endereco, setEndereco] = useState<any>({ estado: '', cidade: '', rua: '' })
+    const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role: 300, info: `${endereco.estado},${endereco.cidade},${endereco.rua}`, team: '', document: '', birthday: '', number: '' })
     const [senhaOk, setSenhaOk] = useState<boolean>(false)
     const [cadastroCompleto, setCadastroCompleto] = useState<boolean>(false)
 
@@ -29,14 +31,47 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
         setSenhaOk(false)
     }
 
-    function teste(){return null}
+    function handleTeamChange(e: any) {
+        setUser({ ...user, team: e.target.value })
+    }
+
+    function handleAniversarioChange(e: any) {
+        setUser({ ...user, birthday: e.target.value })
+    }
+
+    function handleDocChange(e: any) {
+        setUser({ ...user, document: e.target.value })
+    }
+
+    function handleEstadoChange(e: any) {
+        setEndereco({ ...endereco, estado: e.target.value })
+    }
+
+    function handleCidadeChange(e: any) {
+        setEndereco({ ...endereco, cidade: e.target.value })
+    }
+
+    function handleRuaChange(e: any) {
+        setEndereco({ ...endereco, rua: e.target.value })
+    }
+
+    function handleNumberChange(e: any) {
+        setUser({ ...user, number: e.target.value })
+    }
 
     function handleVerifySenhaChange(e: any) {
         if (user.password === e.target.value) return setSenhaOk(true)
         return setSenhaOk(false)
     }
 
+    useEffect(() => {
+        setUser({ ...user, info: `${endereco.estado},${endereco.cidade},${endereco.rua}` });
+    }, [endereco]);
+
+
     async function signup() {
+        console.log(user);
+
         if ((user.email.includes('@')) && (user.password.length >= 6)) {
             const { message, ...response } = await Api.auth('api/signup', user)
             if (message) { return toast.error(message) }
@@ -70,38 +105,40 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                     </div>
                     {open === 'cadastro' &&
                         <><motion.form initial={{ x: 15 }} animate={{ x: 0 }} transition={{ duration: 0.3 }} className={style.formModal}>
-                            <span>Clique aqui para fazer o cadastro completo e concorrer a premios <input type="checkbox" onClick={() => setCadastroCompleto(!cadastroCompleto)}/></span>
-                            <span>Nome</span> 
+                            <span>Nome</span>
                             <input placeholder="Informe seu nome" type="text" name="nome" value={user.name} onChange={handleNomeChange} />
                             <span>Email</span>
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
-                            { cadastroCompleto && <div className={style.dadosComplementares}>
-                                <div>
-                                    <span>Time do coração</span>
-                                    <input placeholder="Informe seu nome" type="text" name="Nos diga seu time" value={''} onChange={teste} />
-                                    <span>Data de nascimento</span>
-                                    <input placeholder="Informe seu nome" type="date" name="date" value={''} onChange={teste} />
-                                    <span>Estado</span>
-                                    <input placeholder="Informe seu nome" type="text" name="estado" value={''} onChange={teste} />
-                                </div>
-                                <div>
-                                    <span>Cidade</span>
-                                    <input placeholder="Informe seu nome" type="text" name="cidade" value={''} onChange={teste} />
-                                    <span>Endereço</span>
-                                    <input placeholder="Informe seu nome" type="text" name="endereco" value={''} onChange={teste} />
-                                    <span>Numero</span>
-                                    <input placeholder="Informe seu telefone" type="text" name="telefone" value={''} onChange={teste} pattern="^\(?\d{2}\)?[- ]?\d{4,5}[- ]?\d{4}$" required />
-
-                                </div>
-                            </div>}
+                            {cadastroCompleto && <motion.div initial={{ y: -15 }} animate={{ y: 0 }} transition={{ duration: 0.3 }}>
+                                <span>Documento de identificação</span>
+                                <input style={{ width: '100%' }} type="text" placeholder="CPF/ID" name="doc" value={user.document} onChange={handleDocChange} />
+                                <div className={style.dadosComplementares}>
+                                    <div>
+                                        <span>Time do coração</span>
+                                        <input placeholder="Qual time voce torce" type="text" name="Nos diga seu time" value={user.team} onChange={handleTeamChange} />
+                                        <span>Estado</span>
+                                        <input placeholder="Seu estado" type="text" name="estado" value={endereco.estado} onChange={handleEstadoChange} />
+                                        <span>Cidade</span>
+                                        <input placeholder="Sua cidade" type="text" name="cidade" value={endereco.cidade} onChange={handleCidadeChange} />
+                                    </div>
+                                    <div>
+                                        <span>Data de nascimento</span>
+                                        <input type="date" name="date" value={user.birthday} onChange={handleAniversarioChange} />
+                                        <span>Logradouro</span>
+                                        <input placeholder="Rua,avenida,bloco,etc..." type="text" name="endereco" value={endereco.rua} onChange={handleRuaChange} />
+                                        <span>Telefone</span>
+                                        <input placeholder="Informe seu telefone" type="text" name="telefone" value={user.number} onChange={handleNumberChange} pattern="^\(?\d{2}\)?[- ]?\d{4,5}[- ]?\d{4}$" />
+                                    </div>
+                                </div> </motion.div>}
                             <span>Senha <span style={{ fontSize: '12px' }}>(minimo 6 digitos)</span>{user.password.length >= 6 && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                             <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
                             <span>Confirme sua senha {senhaOk && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                             <input placeholder="********" type="password" name="senha" onChange={handleVerifySenhaChange} />
-                            <button type="button" disabled={user.name && user.email && user.password && senhaOk ? false : true}
-                                onClick={() => signup()} >Cadastrar</button>
                         </motion.form>
-                            <button className={style.modalNav} onClick={() => setOpen('login')}>Entrar</button></>
+                            <span className={style.btnCadastroCompleto}> <span> Clique aqui para fazer o cadastro completo e concorrer a premios </span><input type="checkbox" onClick={() => setCadastroCompleto(!cadastroCompleto)} /></span>
+                            <button className={style.btnOn} type="button" disabled={user.name && user.email && user.password && senhaOk ? false : true}
+                                onClick={() => signup()} >Cadastrar</button>
+                            <button className={style.modalNav} onClick={() => { setOpen('login'), setCadastroCompleto(false) }}>Entrar</button></>
                     }
                     {open === 'login' &&
                         <><motion.form initial={{ x: -15 }} animate={{ x: 0 }} transition={{ duration: 0.3 }} className={style.formModal}>
@@ -109,9 +146,9 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
                             <span>Senha</span>
                             <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
-                            <button type="button" disabled={user.email && user.password ? false : true}
-                                onClick={() => signin()} >Entrar</button>
                         </motion.form >
+                            <button className={style.btnOn} type="button" disabled={user.email && user.password ? false : true}
+                                onClick={() => signin()} >Entrar</button>
                             <button className={style.modalNav} onClick={() => setOpen('cadastro')}>Cadastrar</button></>
                     }
                 </div>

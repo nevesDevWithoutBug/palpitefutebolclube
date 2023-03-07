@@ -3,12 +3,14 @@ import JogosComponent from "../adminJogos"
 import style from "./style.module.css"
 import CampeonatoCamponent from "../adminCampeonato"
 import NewsComponent from "../adminNews"
+import AdminHomeInfoComponent from "../adminHomeInfo"
 
 function ContentComponent(props: any) {
     const page = props.page
 
     return (
         <div className={style.content}>
+            {page === 'home' && <AdminHomeInfoComponent />}
             {page === 'user' && <JogosComponent />}
             {page === 'jogo' && <RodadaComponent />}
             {page === 'campeonato' && <CampeonatoCamponent />}

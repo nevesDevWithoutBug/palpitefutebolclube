@@ -3,6 +3,7 @@ import cruzeiro from "../../../public/assets/assets/cruzeiro.svg"
 import atletico from "../../../public/assets/assets/atletico.svg"
 import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
+import Ranking from "../ranking"
 
 function AsideEnquete() {
 
@@ -10,7 +11,7 @@ function AsideEnquete() {
         <aside className={style.paiAsideEnquete}>
             <div className={style.cardInfo}>
                 <div className={style.headerBlog}>
-                    <Image src={noticias} width={25} style={{ marginRight: '0.5rem',objectFit: 'cover' }} alt="noticias" />
+                    <Image src={noticias} width={25} style={{ marginRight: '0.5rem', objectFit: 'cover' }} alt="noticias" />
                     Enquetes
                 </div>
                 <section>
@@ -32,28 +33,7 @@ function AsideEnquete() {
                     </svg>
                     Ranking
                 </div>
-                <section>
-                    <div className={style.contentNoticias}>
-                        <h1>Cristiano Ronaldo</h1>
-                        <article>
-                            Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Minus nisi, voluptatibus
-                            quos atque porro blanditiis totam.
-                        </article>
-                    </div>
-                    <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" />
-                </section>
-                <section>
-                    <div className={style.contentNoticias}>
-                        <h1>Lionel Messi</h1>
-                        <article>
-                            Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Minus nisi, voluptatibus
-                            quos atque porro blanditiis totam.
-                        </article>
-                    </div>
-                    <Image src={atletico} width={70} height={70} alt="Atletico" />
-                </section>
+                <Ranking />
             </div>
         </aside>
     )
