@@ -19,6 +19,23 @@
 .formModal {
     display: flex;
     flex-direction: column;
+    max-height: 20rem;
+    overflow: auto;
+    padding-right: 0.5rem;
+    transition: all 0.3s 0s linear;
+}
+
+.formModal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.formModal::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #126e51, #24a57c);
+    border-radius: 4px;
+}
+
+.formModal::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
 
 .formModal span {
@@ -49,7 +66,16 @@
     width: 100%;
 }
 
-.formModal button {
+.btnCadastroCompleto {
+    font-size: 12px;
+    flex-direction: row;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btnOn {
     margin-top: 1rem;
     background: linear-gradient(to right, #126e51, #24a57c);
     border-radius: 10px;
@@ -58,7 +84,7 @@
     font-weight: bold;
 }
 
-.formModal button:hover {
+.btnOn:hover {
     background: linear-gradient(to left, #126e51, #24a57c);
 }
 
