@@ -25,11 +25,11 @@ function AsideBlog() {
                 </div>
                 <div className={style.contentBlogMobile}>
                     <section>
-                        {isLoading && <CardSkeleton video={false} blog={true} cards={null} enquete={false} />}
+                        {isLoading && <CardSkeleton ranking={false} video={false} blog={true} cards={null} enquete={false} />}
                         {!isLoading && <>
                             <div className={style.contentNoticias}>
-                                <div style={{display:"flex", flexDirection:"row", justifyContent:'space-between', alignItems:'center' }}>
-                                    <h1 style={{marginTop:'4px'}}>Cristiano Ronaldo</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
+                                <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <h1 style={{ marginTop: '4px' }}>Cristiano Ronaldo</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
                                 </div>
                                 <article>
                                     Lorem, ipsum dolor sit amet consectetur
@@ -37,14 +37,14 @@ function AsideBlog() {
                                     quos atque porro blanditiis totam.
                                 </article>
                             </div>
-                            </>}
+                        </>}
                     </section>
                     <section>
-                        {isLoading && <CardSkeleton video={false} blog={false} cards={null} enquete={true} />}
+                        {isLoading && <CardSkeleton ranking={false} video={false} blog={false} cards={null} enquete={true} />}
                         {!isLoading &&
                             <> <div className={style.contentNoticias}>
-                                <div style={{display:"flex", flexDirection:"row", justifyContent:'space-between', alignItems:'center' }}>
-                                    <h1 style={{marginTop:'5px'}}>Lionel Messi</h1> <Image src={atletico} width={40} height={30} alt="Atletico" />
+                                <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <h1 style={{ marginTop: '5px' }}>Lionel Messi</h1> <Image src={atletico} width={40} height={30} alt="Atletico" />
                                 </div>
                                 <article>
                                     Lorem, ipsum dolor sit amet consectetur
@@ -64,7 +64,7 @@ function AsideBlog() {
                     Videos
                 </div>
                 <section className={style.video}>
-                    {isLoading && <CardSkeleton video={true} blog={false} cards={null} enquete={false} />}
+                    {isLoading && <CardSkeleton ranking={false} video={true} blog={false} cards={null} enquete={false} />}
                     {!isLoading && <>
                         <iframe
                             className={style.iframeV}

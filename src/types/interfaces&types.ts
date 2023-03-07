@@ -8,4 +8,5 @@ export interface PropsSkeleton {
     blog: boolean;
     enquete: boolean;
     video: boolean;
+    ranking: boolean;
 }

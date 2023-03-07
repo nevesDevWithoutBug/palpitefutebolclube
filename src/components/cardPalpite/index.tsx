@@ -26,7 +26,7 @@ function CardPalpite() {
                 Api.get('/api/game'),
             ]);
             setGames(games); setChampionships(championships);
-            setLoading(false);
+            // setLoading(false);
             console.log('campeonatos', championships, 'games', games);
         })()
     }, [])
@@ -75,6 +75,12 @@ function CardPalpite() {
         };
     }, []);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
+
     return (
         <div className={style.bodyPalpite}>
             {/* style={!unique ? { maxWidth: '110rem' } : { width: '110rem' }} */}
@@ -97,7 +103,7 @@ function CardPalpite() {
                 </div>
             </div>
             <ul className={!unique ? style.ulPalpiteMult : style.ulPalpite}>
-                {isLoading && <li> <CardSkeleton video={false} blog={false} cards={games.length} enquete={false} /> </li>}
+                {isLoading && <li> <CardSkeleton ranking={false} video={false} blog={false} cards={games.length} enquete={false} /> </li>}
                 {!isLoading && (gamesFiltered.length ? gamesFiltered : games).map((game: any, key: any) => (
                     <li key={key} className={!unique ? style.liPalpiteMult : style.liPalpite} onClick={() => { setSelectedLi(key); setObjectPalpite({ id: '', mandante: '0', visitante: '0', horario: '' }) }}>
                         {!unique &&
