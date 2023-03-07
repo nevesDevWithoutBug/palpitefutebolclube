@@ -27,7 +27,6 @@ function CardPalpite() {
             ]);
             setGames(games); setChampionships(championships);
             // setLoading(false);
-            console.log('campeonatos', championships, 'games', games);
         })()
     }, [])
 

@@ -7,12 +7,15 @@ import { useEffect, useState } from "react"
 import CardSkeleton from "../skeleton"
 import Api from "src/providers/http/api"
 import YouTube from 'react-youtube';
+import { newsRenderType } from "src/types/newsRenderType"
 
 
 function AsideBlog() {
 
     const [isLoading, setLoading] = useState<boolean>(true)
     const [linkVideo, setLinkVideo] = useState<string>('')
+    const [newsCruzeiro, setNewsCruzeiro] = useState<newsRenderType>({ title: '', content: '', author: '' })
+    const [newsAtletico, setNewsAtletico] = useState<newsRenderType>({ title: '', content: '', author: '' })
 
     //personalizacao do video player
     const opts = {
@@ -20,7 +23,7 @@ function AsideBlog() {
         width: '100%',
         playerVars: {
             // https://developers.google.com/youtube/player_parameters
-            autoplay: 1,
+            autoplay: 0,
         },
     }
 
@@ -28,6 +31,21 @@ function AsideBlog() {
         (async () => {
             const { value } = await Api.get('/api/urlvideo')
             setLinkVideo(value.split('=')[1])
+            const res = await Api.get('/api/news')
+            console.log(res);
+            const cruzeiro = res.filter((team: any) => team.author.team === 'cruzeiro').sort((a: any, b: any) => b.id - a.id)
+            const atletico = res.filter((team: any) => team.author.team === 'atletico').sort((a: any, b: any) => b.id - a.id)
+            setNewsCruzeiro({
+                title: cruzeiro[0].title,
+                content: cruzeiro[0].content,
+                author: cruzeiro[0].author.name
+            })
+
+            setNewsAtletico({
+                title: atletico[0].title,
+                content: atletico[0].content,
+                author: atletico[0].author.name
+            })
         })()
         setTimeout(() => {
             setLoading(false);
@@ -47,13 +65,13 @@ function AsideBlog() {
                         {!isLoading && <>
                             <div className={style.contentNoticias}>
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <h1 style={{ marginTop: '4px' }}>Cristiano Ronaldo</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
+                                    <h1 style={{ marginTop: '4px' }}>{newsCruzeiro.author}</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
                                 </div>
                                 <article>
-                                    Lorem, ipsum dolor sit amet consectetur
-                                    adipisicing elit. Minus nisi, voluptatibus
-                                    quos atque porro blanditiis totam.
+                                    <h1>{newsCruzeiro.title}</h1>
+                                    <div>{newsCruzeiro.content}</div>
                                 </article>
+                                <button>ver mais ...</button>
                             </div>
                         </>}
                     </section>
@@ -62,13 +80,13 @@ function AsideBlog() {
                         {!isLoading &&
                             <> <div className={style.contentNoticias}>
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <h1 style={{ marginTop: '5px' }}>Lionel Messi</h1> <Image src={atletico} width={40} height={30} alt="Atletico" />
+                                    <h1 style={{ marginTop: '5px' }}>{newsAtletico.author}</h1> <Image src={atletico} width={40} height={30} alt="Atletico" />
                                 </div>
                                 <article>
-                                    Lorem, ipsum dolor sit amet consectetur
-                                    adipisicing elit. Minus nisi, voluptatibus
-                                    quos atque porro blanditiis totam.
+                                    <h1>{newsAtletico.title}</h1>
+                                    <div>{newsAtletico.content}</div>
                                 </article>
+                                <button>ver mais ...</button>
                             </div>
                             </>}
                     </section>

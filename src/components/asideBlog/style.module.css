@@ -40,15 +40,23 @@
 }
 
 .cardInfo div article {
-    margin: 0 auto;
     font-size: 1rem;
     letter-spacing: -1px;
     font-family: opensans, opensans-bastian, Arial, sans-serif;
     font-weight: 700;
     color: #06aa48;
-    max-width: 13rem;
-    padding: 1rem 1rem 1rem 0rem;
+    max-width: 16rem;
     line-height: 1.1 !important;
+}
+
+.cardInfo div article h1 {
+    font-size: 15px;
+}
+
+.cardInfo div article div {
+    font-size: 14px;
+    height: 4rem;
+    overflow: hidden
 }
 
 .cardInfo section {
