@@ -138,7 +138,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <span className={style.btnCadastroCompleto}> <span> Clique aqui para fazer o cadastro completo e concorrer a premios </span><input type="checkbox" onClick={() => setCadastroCompleto(!cadastroCompleto)} /></span>
                             <button className={style.btnOn} type="button" disabled={user.name && user.email && user.password && senhaOk ? false : true}
                                 onClick={() => signup()} >Cadastrar</button>
-                            <button className={style.modalNav} onClick={() => setOpen('login')}>Entrar</button></>
+                            <button className={style.modalNav} onClick={() => { setOpen('login'), setCadastroCompleto(false) }}>Entrar</button></>
                     }
                     {open === 'login' &&
                         <><motion.form initial={{ x: -15 }} animate={{ x: 0 }} transition={{ duration: 0.3 }} className={style.formModal}>
