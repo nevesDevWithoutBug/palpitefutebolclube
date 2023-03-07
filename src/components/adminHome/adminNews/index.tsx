@@ -14,7 +14,7 @@ function NewsComponent() {
 
     const [news, setNews] = useState<any[]>([])
     
-    const [newsEdit, setNewsEdit] = useState({id:NaN, title:'', content:''})
+    const [newsEdit, setNewsEdit] = useState({id:NaN, title:'', content:'', info: ''})
 
     useEffect(() => {
         (async () => {
@@ -40,18 +40,19 @@ function NewsComponent() {
                 title: newsEdit.title,
                 content: newsEdit.content, 
                 userId: Number(user.id),
+                info: newsEdit.info
             }
         }
         const response = await Api.post('/api/auth/news', body)
         if(response.id) toast.success('Notícia salva com sucesso!')
         const news = await Api.get('/api/auth/news')
         setNews(news)
-        setNewsEdit({id:NaN, title :'', content :''})
+        setNewsEdit({id:NaN, title :'', content :'', info:''})
         setEdit(false)
         setIsLoading(false)
     }
     function edit(key: number) {
-        setNewsEdit({id : news[key].id, title : news[key].title, content : news[key].content})
+        setNewsEdit({id : news[key].id, title : news[key].title, content : news[key].content, info: news[key].info})
         setEdit(true)
     }
 
@@ -64,7 +65,7 @@ function NewsComponent() {
         if(response.id) toast.success('Notícia excluída com sucesso!')
         const news = await Api.get('/api/auth/news')
         setNews(news)
-        setNewsEdit({id:NaN, title :'', content :''})
+        setNewsEdit({id: NaN, title: '', content: '', info: ''})
         setEdit(false)
         setIsLoading(false)
     }
@@ -81,18 +82,31 @@ function NewsComponent() {
                 </div>
             </div>
             <div className={style.jogoContent}>
-                <div className={style.tituloContent}>
+                {!editar && <div className={style.tituloContent}>
                     <div className={style.newRound}>
-                        {!editar ? <button className={style.buttonAdd} onClick={() => add()} >Nova notícia</button> :
-                            <button className={style.buttonAdd} onClick={() => save()} >Salvar notícia</button>}
+                        <button className={style.buttonAdd} onClick={() => add()} >Nova notícia</button>
                     </div>
-                    <div className={style.deleteRound}>
+                    {/* <div className={style.deleteRound}>
                         { editar && <button className={style.buttonDelete} onClick={() => remove()} >Excluir notícia</button>}
-                    </div>
-                </div>
+                    </div> */}
+                </div>}
                 { editar && <div className={style.inputsDiv}>
                     <input value={newsEdit.title} onChange={(event) => setNewsEdit(prevState => ({...prevState, title: event.target.value}))} className={style.inputTitle} type="text" placeholder="Digite o titulo" />
-                    <textarea value={newsEdit.content} onChange={(event) => setNewsEdit(prevState => ({...prevState, content: event.target.value}))} className={style.textarea} placeholder="Digite o conteúdo" />
+                    <textarea maxLength={499} value={newsEdit.content} onChange={(event) => setNewsEdit(prevState => ({...prevState, content: event.target.value}))} className={style.textarea} placeholder="Digite o conteúdo" />
+                    <span className={style.contador}>Caracteres restantes: {499 - newsEdit.content.length}</span>
+                    <div className={style.acao}>
+                        <div>
+                            <select onChange={(event) => setNewsEdit(prevState => ({...prevState, info: event.target.value}))} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" style={{textAlign: 'center'}}>
+                                <option value="">Selecione o time</option>
+                                <option value="AtléticoMG">Atletico</option>
+                                <option value="Cruzeiro">Cruzeiro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button className={style.buttonDelete} onClick={() => remove()} >Excluir notícia</button>
+                            <button className={style.buttonAdd} onClick={() => save()} >Salvar notícia</button>
+                        </div>
+                    </div>
                 </div> }
                 {!editar &&
                     <div style={{ width: '100%', height: '90%', display: 'flex', alignItems:'center', flexDirection: 'column', gap: '10px'}}>
