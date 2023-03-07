@@ -96,7 +96,7 @@ model News {
   id            Int @id @default(autoincrement())
 
   title         String
-  content       String
+  content       String @db.VarChar(500)
   info          String?
   
   author       Users @relation("NewsUser", fields: [userId], references: [id])
