@@ -5,7 +5,7 @@ import MenuComponent from "./adminMenu"
 import style from "./style.module.css"
 
 function AdminHomeComponent() {
-    const [menuSelected, setMenuSelected] = useState<string>('')
+    const [menuSelected, setMenuSelected] = useState<string>('home')
     const [menuStatus, setMenuStatus] = useState<boolean>(true)
     
     return (
