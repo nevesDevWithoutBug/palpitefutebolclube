@@ -5,12 +5,30 @@ import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 import { useEffect, useState } from "react"
 import CardSkeleton from "../skeleton"
+import Api from "src/providers/http/api"
+import YouTube from 'react-youtube';
+
 
 function AsideBlog() {
 
     const [isLoading, setLoading] = useState<boolean>(true)
+    const [linkVideo, setLinkVideo] = useState<string>('')
+
+    //personalizacao do video player
+    const opts = {
+        height: '180',
+        width: '100%',
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 1,
+        },
+    }
 
     useEffect(() => {
+        (async () => {
+            const { value } = await Api.get('/api/urlvideo')
+            setLinkVideo(value.split('=')[1])
+        })()
         setTimeout(() => {
             setLoading(false);
         }, 2000);
@@ -66,13 +84,7 @@ function AsideBlog() {
                 <section className={style.video}>
                     {isLoading && <CardSkeleton ranking={false} video={true} blog={false} cards={null} enquete={false} />}
                     {!isLoading && <>
-                        <iframe
-                            className={style.iframeV}
-                            src="https://www.youtube.com/embed/OAZCs1sn55E"
-                            title="YouTube video player" frameBorder='0'
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen>
-                        </iframe>
+                        <YouTube className={style.iframeV} videoId={linkVideo} opts={opts} />
                     </>}
                 </section>
             </div>
