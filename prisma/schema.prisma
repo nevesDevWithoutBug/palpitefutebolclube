@@ -97,6 +97,7 @@ model News {
 
   title         String
   content       String
+  info          String?
   
   author       Users @relation("NewsUser", fields: [userId], references: [id])
   userId       Int
