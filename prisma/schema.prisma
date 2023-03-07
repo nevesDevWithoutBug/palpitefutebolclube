@@ -109,3 +109,50 @@ model News {
   @@index([userId])
 }
 
+model Config {
+  id            Int @id @default(autoincrement())
+  name          String @unique
+  value         String?
+
+  @@map("config")
+}
+
+model Votes {
+  id           Int @id @default(autoincrement())
+  title        String
+
+  options      Options[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("votes")
+}
+
+model Options {
+  id           Int @id @default(autoincrement())
+  title        String
+
+  vote         Votes @relation(fields: [voteId], references: [id])
+  voteId       Int
+
+  userVote     UserVote[] @relation("UserVote")
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("options")
+  @@index([voteId])
+}
+
+model UserVote {
+  id           Int @id @default(autoincrement())
+
+  optionId     Int
+  userId       Int
+
+  option       Options @relation("UserVote", fields: [optionId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("userVote")
+  @@index([optionId])
+}
