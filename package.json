@@ -17,7 +17,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@prisma/client": "4.9.0",
+    "@prisma/client": "4.11.0",
     "bcrypt": "5.1.0",
     "clsx": "1.2.1",
     "framer-motion": "9.0.0",
