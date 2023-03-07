@@ -14,7 +14,7 @@ function model() {
             return <NewsType> await prisma.news.upsert({
                 where: { id: news.id ? news.id : -1},
                 create: news,
-                update: news,
+                update: { title: news.title, content: news.content, info: news.info },
                 include : { author: {select: {id: true, name: true, team: true}} },
             })
         },
