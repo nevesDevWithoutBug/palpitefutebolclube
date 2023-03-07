@@ -7,7 +7,7 @@ function model() {
     return { 
         async get(id?: number) {
             return id ? <NewsType> await prisma.news.findFirst({ where: {id: id}, include : { author: {select: {id: true, name: true, team: true}} } }) 
-            : <NewsType[]> await prisma.news.findMany({ include : { author: {select: {id: true, name: true, team: true}} } })
+            : <NewsType[]> await prisma.news.findMany({ orderBy: { id: 'desc'}, include : { author: {select: {id: true, name: true, team: true}} } })
         },
 
         async upsert(news: NewsType) {
@@ -15,7 +15,7 @@ function model() {
                 where: { id: news.id ? news.id : -1},
                 create: news,
                 update: news,
-                include : { author: {select: {id: true, name: true, team: true}} }
+                include : { author: {select: {id: true, name: true, team: true}} },
             })
         },
 
