@@ -10,8 +10,8 @@ import nodemailer from "nodemailer";
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'palpitefc.com@gmail.com', // generated ethereal user
-      pass: 'oxpevlpqiekpifgu', // generated ethereal password
+      user: `${process.env.EMAIL_ADDRESS}` as string, // generated ethereal user
+      pass: `${process.env.EMAIL_PASSWORD}` as string, // generated ethereal password
     },
   });
 
