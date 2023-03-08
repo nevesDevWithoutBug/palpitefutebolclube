@@ -11,4 +11,5 @@ export interface UserType {
     info?:         string
     number?:       string
     birthday?:     string
+    code?:         string
 }
