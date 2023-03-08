@@ -8,6 +8,7 @@ import CardSkeleton from "../skeleton"
 import Api from "src/providers/http/api"
 import YouTube from 'react-youtube';
 import { newsRenderType } from "src/types/newsRenderType"
+import ModalBlog from "../modalBlog"
 
 
 function AsideBlog() {
@@ -16,6 +17,13 @@ function AsideBlog() {
     const [linkVideo, setLinkVideo] = useState<string>('')
     const [newsCruzeiro, setNewsCruzeiro] = useState<newsRenderType>({ title: '', content: '', author: '' })
     const [newsAtletico, setNewsAtletico] = useState<newsRenderType>({ title: '', content: '', author: '' })
+    const [displayModal, setDisplayModal] = useState(false)
+    const [open, setOpen] = useState('')
+
+
+    const toggle = () => {
+        setDisplayModal(!displayModal)
+    }
 
     //personalizacao do video player
     const opts = {
@@ -71,7 +79,7 @@ function AsideBlog() {
                                     <h1>{newsCruzeiro.title}</h1>
                                     <div>{newsCruzeiro.content}</div>
                                 </article>
-                                <button>ver mais ...</button>
+                                <button onClick={() => { toggle(); setOpen('cruzeiro') }}>ver mais ...</button>
                             </div>
                         </>}
                     </section>
@@ -86,7 +94,7 @@ function AsideBlog() {
                                     <h1>{newsAtletico.title}</h1>
                                     <div>{newsAtletico.content}</div>
                                 </article>
-                                <button>ver mais ...</button>
+                                <button onClick={() => { toggle(); setOpen('atletico') }}>ver mais ...</button>
                             </div>
                             </>}
                     </section>
@@ -106,6 +114,7 @@ function AsideBlog() {
                     </>}
                 </section>
             </div>
+            {displayModal && <ModalBlog toggle={toggle} display={displayModal} newsAtletico={newsAtletico} newsCruzeiro={newsCruzeiro} open={open} setOpen={setOpen} />}
         </aside >
     )
 }
