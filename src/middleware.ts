@@ -64,7 +64,7 @@ async function isAdmin(req: NextRequest): Promise<boolean> {
 
     const decodedToken = <any> await verify(token, process.env.ACCESS_TOKEN as string)
 
-    return Number(decodedToken.role) <= 100 ? true : false;
+    return Number(decodedToken.role) <= 200 ? true : false;
 
 }
 

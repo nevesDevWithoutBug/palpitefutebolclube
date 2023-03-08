@@ -5,12 +5,56 @@ import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 import { useEffect, useState } from "react"
 import CardSkeleton from "../skeleton"
+import Api from "src/providers/http/api"
+import YouTube from 'react-youtube';
+import { newsRenderType } from "src/types/newsRenderType"
+import ModalBlog from "../modalBlog"
+
 
 function AsideBlog() {
 
     const [isLoading, setLoading] = useState<boolean>(true)
+    const [linkVideo, setLinkVideo] = useState<string>('')
+    const [newsCruzeiro, setNewsCruzeiro] = useState<newsRenderType>({ title: '', content: '', author: '' })
+    const [newsAtletico, setNewsAtletico] = useState<newsRenderType>({ title: '', content: '', author: '' })
+    const [displayModal, setDisplayModal] = useState(false)
+    const [open, setOpen] = useState('')
+
+
+    const toggle = () => {
+        setDisplayModal(!displayModal)
+    }
+
+    //personalizacao do video player
+    const opts = {
+        height: '180',
+        width: '100%',
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 0,
+        },
+    }
 
     useEffect(() => {
+        (async () => {
+            const { value } = await Api.get('/api/urlvideo')
+            setLinkVideo(value.split('=')[1])
+            const res = await Api.get('/api/news')
+            console.log(res);
+            const cruzeiro = res.filter((team: any) => team.author.team === 'cruzeiro').sort((a: any, b: any) => b.id - a.id)
+            const atletico = res.filter((team: any) => team.author.team === 'atletico').sort((a: any, b: any) => b.id - a.id)
+            setNewsCruzeiro({
+                title: cruzeiro[0].title,
+                content: cruzeiro[0].content,
+                author: cruzeiro[0].author.name
+            })
+
+            setNewsAtletico({
+                title: atletico[0].title,
+                content: atletico[0].content,
+                author: atletico[0].author.name
+            })
+        })()
         setTimeout(() => {
             setLoading(false);
         }, 2000);
@@ -29,13 +73,13 @@ function AsideBlog() {
                         {!isLoading && <>
                             <div className={style.contentNoticias}>
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <h1 style={{ marginTop: '4px' }}>Cristiano Ronaldo</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
+                                    <h1 style={{ marginTop: '4px' }}>{newsCruzeiro.author}</h1> <Image src={cruzeiro} width={50} height={50} alt="Cruzeiro" />
                                 </div>
                                 <article>
-                                    Lorem, ipsum dolor sit amet consectetur
-                                    adipisicing elit. Minus nisi, voluptatibus
-                                    quos atque porro blanditiis totam.
+                                    <h1>{newsCruzeiro.title}</h1>
+                                    <div>{newsCruzeiro.content}</div>
                                 </article>
+                                <button onClick={() => { toggle(); setOpen('cruzeiro') }}>ver mais ...</button>
                             </div>
                         </>}
                     </section>
@@ -44,13 +88,13 @@ function AsideBlog() {
                         {!isLoading &&
                             <> <div className={style.contentNoticias}>
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <h1 style={{ marginTop: '5px' }}>Lionel Messi</h1> <Image src={atletico} width={40} height={30} alt="Atletico" />
+                                    <h1 style={{ marginTop: '5px' }}>{newsAtletico.author}</h1> <Image src={atletico} width={40} height={30} alt="Atletico" />
                                 </div>
                                 <article>
-                                    Lorem, ipsum dolor sit amet consectetur
-                                    adipisicing elit. Minus nisi, voluptatibus
-                                    quos atque porro blanditiis totam.
+                                    <h1>{newsAtletico.title}</h1>
+                                    <div>{newsAtletico.content}</div>
                                 </article>
+                                <button onClick={() => { toggle(); setOpen('atletico') }}>ver mais ...</button>
                             </div>
                             </>}
                     </section>
@@ -66,16 +110,11 @@ function AsideBlog() {
                 <section className={style.video}>
                     {isLoading && <CardSkeleton ranking={false} video={true} blog={false} cards={null} enquete={false} />}
                     {!isLoading && <>
-                        <iframe
-                            className={style.iframeV}
-                            src="https://www.youtube.com/embed/OAZCs1sn55E"
-                            title="YouTube video player" frameBorder='0'
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen>
-                        </iframe>
+                        <YouTube className={style.iframeV} videoId={linkVideo} opts={opts} />
                     </>}
                 </section>
             </div>
+            {displayModal && <ModalBlog toggle={toggle} display={displayModal} newsAtletico={newsAtletico} newsCruzeiro={newsCruzeiro} open={open} setOpen={setOpen} />}
         </aside >
     )
 }

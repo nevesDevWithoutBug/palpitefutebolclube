@@ -46,14 +46,15 @@
     background-color: #24a57c;
     color: white;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 7px 20px;
     color: white;
 }
 .buttonDelete {
+    margin-right: 5px;
     background-color: red;
     color: white;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 7px 20px;
     color: white;
 }
 .inputsDiv {
@@ -81,6 +82,11 @@
     padding: 5px;
     height: 50vh;
     border: none;
+}
+.contador {
+    padding-top: 5px;
+    font-size: 0.8rem;
+    color: #302e2e;
 }
 .card {
     display: flex;
@@ -113,4 +119,11 @@
     color: white;
     border-radius: 20px;
     padding: 10px 20px;
+}
+.acao {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid rgb(218, 212, 212);
+    padding-top: 10px;
 }

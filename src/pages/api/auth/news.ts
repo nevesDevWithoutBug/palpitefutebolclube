@@ -43,9 +43,13 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
         if(method === 'POST') {
 
-            const { news } : { news:NewsType } = req.body
+            const { news } : { news: NewsType } = req.body
 
-            const newDb :NewsType = await NewsModel.upsert(news)
+            if(!news.title) return res.status(406).json({ message: 'missing title param' })
+            if(!news.content) return res.status(406).json({ message: 'missing content param' })
+            if(!news.userId) return res.status(406).json({ message: 'missing userId param' })
+
+            const newDb: NewsType = await NewsModel.upsert(news)
 
             if(!newDb) return res.status(500).json({ message: 'news not created' })
 

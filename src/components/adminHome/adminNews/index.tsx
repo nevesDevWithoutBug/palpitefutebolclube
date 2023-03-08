@@ -14,7 +14,7 @@ function NewsComponent() {
 
     const [news, setNews] = useState<any[]>([])
     
-    const [newsEdit, setNewsEdit] = useState({id:NaN, title:'', content:''})
+    const [newsEdit, setNewsEdit] = useState({id:NaN, title:'', content:'' })
 
     useEffect(() => {
         (async () => {
@@ -46,12 +46,12 @@ function NewsComponent() {
         if(response.id) toast.success('Notícia salva com sucesso!')
         const news = await Api.get('/api/auth/news')
         setNews(news)
-        setNewsEdit({id:NaN, title :'', content :''})
+        setNewsEdit({id:NaN, title :'', content :'' })
         setEdit(false)
         setIsLoading(false)
     }
     function edit(key: number) {
-        setNewsEdit({id : news[key].id, title : news[key].title, content : news[key].content})
+        setNewsEdit({id : news[key].id, title : news[key].title, content : news[key].content })
         setEdit(true)
     }
 
@@ -64,9 +64,15 @@ function NewsComponent() {
         if(response.id) toast.success('Notícia excluída com sucesso!')
         const news = await Api.get('/api/auth/news')
         setNews(news)
-        setNewsEdit({id:NaN, title :'', content :''})
+        setNewsEdit({id: NaN, title: '', content: '' })
         setEdit(false)
         setIsLoading(false)
+    }
+
+    function handlerImage(image: string) {
+        if(!image) return ''
+        if(image === 'cruzeiro') return '/assets/assets/clubes/Cruzeiro.png'
+        if(image === 'atletico') return '/assets/assets/clubes/AtléticoMG.png'
     }
 
     return (
@@ -81,18 +87,27 @@ function NewsComponent() {
                 </div>
             </div>
             <div className={style.jogoContent}>
-                <div className={style.tituloContent}>
+                {!editar && <div className={style.tituloContent}>
                     <div className={style.newRound}>
-                        {!editar ? <button className={style.buttonAdd} onClick={() => add()} >Nova notícia</button> :
-                            <button className={style.buttonAdd} onClick={() => save()} >Salvar notícia</button>}
+                        <button className={style.buttonAdd} onClick={() => add()} >Nova notícia</button>
                     </div>
-                    <div className={style.deleteRound}>
+                    {/* <div className={style.deleteRound}>
                         { editar && <button className={style.buttonDelete} onClick={() => remove()} >Excluir notícia</button>}
-                    </div>
-                </div>
+                    </div> */}
+                </div>}
                 { editar && <div className={style.inputsDiv}>
                     <input value={newsEdit.title} onChange={(event) => setNewsEdit(prevState => ({...prevState, title: event.target.value}))} className={style.inputTitle} type="text" placeholder="Digite o titulo" />
-                    <textarea value={newsEdit.content} onChange={(event) => setNewsEdit(prevState => ({...prevState, content: event.target.value}))} className={style.textarea} placeholder="Digite o conteúdo" />
+                    <textarea maxLength={499} value={newsEdit.content} onChange={(event) => setNewsEdit(prevState => ({...prevState, content: event.target.value}))} className={style.textarea} placeholder="Digite o conteúdo" />
+                    <span className={style.contador}>Caracteres restantes: {499 - newsEdit.content.length}</span>
+                    <div className={style.acao}>
+                        <div>
+                            
+                        </div>
+                        <div>
+                            <button className={style.buttonDelete} onClick={() => remove()} >Excluir notícia</button>
+                            <button className={style.buttonAdd} onClick={() => save()} >Salvar notícia</button>
+                        </div>
+                    </div>
                 </div> }
                 {!editar &&
                     <div style={{ width: '100%', height: '90%', display: 'flex', alignItems:'center', flexDirection: 'column', gap: '10px'}}>
@@ -101,7 +116,7 @@ function NewsComponent() {
                             return ( 
                                 <div key={key} onClick={() => edit(key)} className={style.card}>
                                     <div className={style.news}>
-                                        <Image src={'/assets/assets/psg.png'} alt="" width={80} height={80} />
+                                        <Image src={String(handlerImage(e.author.team))} alt="" width={80} height={80} />
                                         <div className={style.newsContent}>
                                             <span style={{ fontSize: '1.3rem' }}>{e.title}</span>
                                             <span style={{ overflow: 'hidden' ,fontSize: '0.9rem', textOverflow: 'ellipsis', whiteSpace:'nowrap', maxWidth: '40ch' }}>{e.content}</span>
