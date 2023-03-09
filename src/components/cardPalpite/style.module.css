@@ -121,7 +121,7 @@
 }
 
 .inputPalpite::placeholder {
-  color: black;
+    color: black;
 }
 
 /* Firefox */
@@ -275,18 +275,33 @@
 }
 
 @media screen and (max-width: 727px) {
-    .visaoJogos{
+    .visaoJogos {
         display: none;
     }
 }
+
+@media screen and (max-width: 727px) {
+    .listaLigas {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .listaLigas li {
+        /* width: 100px; */
+        font-size: 13px;
+        font-weight: bold;
+        border: 0.1px solid rgba(128, 128, 128, 0.384);
+        border-radius: 8px;
+        background: rgba(128, 128, 128, 0.082);
+    }
+}
+
 @media screen and (max-width: 600px) {
     .bodyPalpite {
         height: 35rem;
     }
 
-    .ulPalpite {
-        
-    }
+    .ulPalpite {}
 
     .liPalpiteMult {
         width: 16rem;
