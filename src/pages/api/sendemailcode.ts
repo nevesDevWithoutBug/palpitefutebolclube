@@ -2,16 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import nodemailer from "nodemailer";
 import UserModel from 'src/models/UserModel';
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: 'palpitefc.com@gmail.com', // generated ethereal user
-      pass: 'oxpevlpqiekpifgu', // generated ethereal password
-    },
-});
-
 // 200 OK
 // 201 Created
 // 202 Accepted
@@ -32,6 +22,16 @@ const transporter = nodemailer.createTransport({
 // 501 Not Implemented
 // 502 Bad Gateway
 // 503 Service Unavailable
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: `${process.env.EMAIL_ADDRESS}` as string, // generated ethereal user
+      pass: `${process.env.EMAIL_PASSWORD}` as string, // generated ethereal password
+    },
+});
 
 function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
