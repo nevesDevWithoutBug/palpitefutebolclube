@@ -152,7 +152,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
                             <span>Senha</span>
                             <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
-                            <button type="button" onClick={() => toggleRecover()}>Recuperar senha</button>
+                            <button style={{ display: 'flex', justifyContent: 'end', fontSize: '14px' }} type="button" onClick={() => toggleRecover()}>Recuperar senha</button>
                         </motion.form >
                             <button className={style.btnOn} type="button" disabled={user.email && user.password ? false : true}
                                 onClick={() => signin()} >Entrar</button>
