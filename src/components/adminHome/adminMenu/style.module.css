@@ -28,3 +28,11 @@
         padding-left: 10px;
         height: 1rem;
 }
+@media (max-width: 500px) {
+        .menu {
+                position: absolute;
+                bottom: 0;
+                height: calc(100% - 4rem);
+                width: 10rem;
+        }
+}

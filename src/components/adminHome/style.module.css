@@ -33,3 +33,14 @@
     padding: 7px 10px;
     border-radius: 10%;
 }
+
+@media (max-width: 500px) {
+    /* .homeAdminHideMenu {
+        transition:none;
+        grid-template-columns: 0rem 1fr !important;
+    } */
+    .homeAdmin {
+        /* transition:none; */
+        grid-template-columns: 0rem 1fr !important;
+    }
+}
