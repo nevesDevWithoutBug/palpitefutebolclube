@@ -29,6 +29,7 @@ model Users {
   info         String?
   number       String?
   birthday     String?
+  code         String?
   news         News[] @relation("NewsUser")
   @@map("users")
 }
@@ -157,3 +158,4 @@ model UserVote {
   @@map("userVote")
   @@index([optionId])
 }
+

@@ -10,6 +10,10 @@ function model() {
             : <UserType[]> await prisma.users.findMany({ select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true} })
         },
 
+        async getByEmail(email?: string) {
+            return <UserType> await prisma.users.findUnique({ where: {email: email}, select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true, code: true} }) 
+        },
+
         async create(user: UserType) {
             return await prisma.users.create({
                 data: user,
@@ -17,7 +21,7 @@ function model() {
             })
         },
 
-        async update(user: { email: string, name: string, document: string, team: string, info: string, number: string, birthday: string }) {
+        async update(user: { email: string, name: string, document: string, team: string, info: string, number: string, birthday: string, code: string }) {
             return await prisma.users.update({
                 where: { email: user.email },
                 data: {
@@ -27,6 +31,17 @@ function model() {
                     info: user.info ? user.info : undefined,
                     number: user.number ? user.number : undefined,
                     birthday: user.birthday ? user.birthday : undefined,
+                    code: user.code ? user.code : undefined
+                },
+                select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true}
+            })
+        },
+
+        async changePassword(email: string, password: any) {
+            return await prisma.users.update({
+                where: { email: email },
+                data: {
+                    password: password,
                 },
                 select: {id: true, name: true, email: true, role: true, document: true, team: true, info: true, number: true, birthday: true}
             })
