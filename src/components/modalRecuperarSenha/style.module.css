@@ -110,4 +110,8 @@
     .contentModal {
         width: 90%;
     }
+
+    .senCode input {
+        width: 80%;
+    }
 }
