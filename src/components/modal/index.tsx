@@ -8,6 +8,7 @@ import Image from "next/image";
 import Close from "../../../public/assets/assets/rectangle-xmark-regular.svg"
 import Api from "src/providers/http/api";
 import { toast } from "react-toastify";
+import ModalRecuperarSenha from "../modalRecuperarSenha";
 
 
 const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
@@ -17,6 +18,11 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
     const [user, setUser] = useState<UserType>({ name: '', email: '', password: '', role: 300, info: `${endereco.estado},${endereco.cidade},${endereco.rua}`, team: '', document: '', birthday: '', number: '' })
     const [senhaOk, setSenhaOk] = useState<boolean>(false)
     const [cadastroCompleto, setCadastroCompleto] = useState<boolean>(false)
+    const [displayRecover, setDisplayRecover] = useState(false)
+
+    const toggleRecover = () => {
+        setDisplayRecover(!displayRecover)
+    }
 
     function handleNomeChange(e: any) {
         setUser({ ...user, name: e.target.value })
@@ -110,7 +116,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <span>Email</span>
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
                             {cadastroCompleto && <motion.div initial={{ y: -15 }} animate={{ y: 0 }} transition={{ duration: 0.3 }}>
-                                <span>Documento de identificação</span>
+                                <span> Documento de identificação </span>
                                 <input style={{ width: '100%' }} type="text" placeholder="CPF/ID" name="doc" value={user.document} onChange={handleDocChange} />
                                 <div className={style.dadosComplementares}>
                                     <div>
@@ -146,6 +152,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                             <input placeholder="palpitefc@mail.com" type="email" name="email" value={user.email} onChange={handleEmailChange} />
                             <span>Senha</span>
                             <input placeholder="********" type="password" name="senha" value={user.password} onChange={handleSenhaChange} />
+                            <button style={{ display: 'flex', justifyContent: 'end', fontSize: '14px' }} type="button" onClick={() => toggleRecover()}>Recuperar senha</button>
                         </motion.form >
                             <button className={style.btnOn} type="button" disabled={user.email && user.password ? false : true}
                                 onClick={() => signin()} >Entrar</button>
@@ -153,6 +160,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                     }
                 </div>
             </div>
+            {displayRecover && <ModalRecuperarSenha toggleRecover={toggleRecover} displayRecover={displayRecover} />}
         </motion.div>,
         document.body
     )
