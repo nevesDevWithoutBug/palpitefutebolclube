@@ -83,13 +83,13 @@ const ModalRecuperarSenha = ({ displayRecover, toggleRecover }: any) => {
                         <span>Insira o código que chegou no seu email</span>
                         <input type="text" maxLength={6} placeholder="******" name="code" value={codeRecebido} onChange={handleCodeChange} />
                     </div>
-                    {codeOk && <div className={style.contentModalBlog}>
+                    {codeOk && <motion.div initial={{ y: -15 }} animate={{ y: 0 }} transition={{ duration: 0.8 }} className={style.contentModalBlog}>
                         <span>Senha <span style={{ fontSize: '12px' }}>(minimo 6 digitos)</span>{newPass.length >= 6 && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                         <input placeholder="********" type="password" name="senha" value={newPass} onChange={handleSenhaChange} />
                         <span>Confirme sua senha {senhaOk && <span style={{ color: 'green', fontWeight: 'bolder' }}> &#10003; </span>}</span>
                         <input placeholder="********" type="password" name="senha" onChange={handleVerifySenhaChange} />
                         <button className={style.btnOn} type="button" disabled={user.email && user.code && user.password ? false : true} onClick={() => recuperarSenha()} >ALTERAR SENHA</button>
-                    </div>}
+                    </motion.div>}
                 </div>
             </div>
         </motion.div>,
