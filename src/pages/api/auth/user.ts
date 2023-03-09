@@ -59,7 +59,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             if(!userDb || decodedToken.email !== userDb.email) return res.status(404).json({ message: 'user not found' })
 
-            await UserModel.update({ email: userDb.email, name: name, document: document, team: team, info: info, number: number, birthday: birthday })
+            await UserModel.update({ email: userDb.email, name: name, document: document, team: team, info: info, number: number, birthday: birthday, code: userDb.code })
 
             return res.status(200).json(userDb)
 
