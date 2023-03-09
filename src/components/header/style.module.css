@@ -58,6 +58,14 @@
     height: 5rem;
 }
 
+.containerHeader {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .Header1 span {
     padding: 0.5rem;
     cursor: pointer;
@@ -70,6 +78,10 @@
     transition: all 0.5s 0s ease;
 }
 
+
+.imagemLogomarcaHeaderMobile {
+    display: none;
+}
 
 .imgHeader {
     width: 26rem;
@@ -116,26 +128,53 @@
     .textHeaderFilho1 {
         font-size: 20px;
     }
+
     .textHeaderFilho2 {
         font-size: 16px;
     }
 }
+
+@media screen and (max-width: 727px) {}
 
 @media screen and (max-width: 600px) {
 
     .Header1 {
         display: flex;
         flex-direction: column;
-        height: 7rem;
     }
 
-    .imagemLogomarcaHeader {
+    .imagemLogomarcaHeaderMobile {
+        display: block;
         width: 70%;
         order: -1;
         margin-bottom: -13px;
-        
-    }   
-    
+    }
+
+    .imagemLogomarcaHeader {
+        display: none;
+
+    }
+
+    .containerHeader span:first-child {
+        background: linear-gradient(to right, #126e51, #24a57c);
+        padding: 0.3rem;
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-top: 2px;
+    }
+
+    .containerHeader span:nth-child(3) {
+        background: linear-gradient(to left, #126e51, #24a57c);
+        padding: 0.3rem;
+        width: 102px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-top: 2px;
+    }
+
     .banner {
         display: none;
     }
