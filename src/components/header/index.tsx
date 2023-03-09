@@ -49,13 +49,16 @@ function HeaderPrincipal() {
                 </div>
             </div>
             <div className={style.Header1}>
-                {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
-                    :
-                    <span>Olá {`${userExibition.name.replace(/^\w/, c => c.toUpperCase()).split(' ')[0]}`}</span>}
-                <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
-                {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
-                    :
-                    <span onClick={() => Sair()}>Sair</span>}
+                <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeaderMobile} />
+                <div className={style.containerHeader}>
+                    {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
+                        :
+                        <span>Olá {`${userExibition.name.replace(/^\w/, c => c.toUpperCase()).split(' ')[0]}`}</span>}
+                    <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
+                    {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
+                        :
+                        <span onClick={() => Sair()}>Sair</span>}
+                </div>
             </div>
             {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} setUserExibition={setUserExibition} />}
         </header>
