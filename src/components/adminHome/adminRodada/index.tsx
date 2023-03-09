@@ -22,8 +22,11 @@ function RodadaComponent() {
     
     const [editar, setEdit] = useState(NaN)
 
+    const [width, setWidth] = useState<number>(0)
+
     useEffect(() => {
         (async () => {
+            setWidth(window.innerWidth)
             setIsLoading(true)
             const teams = await Api.get('/api/auth/team')
             setTeams(teams)
@@ -169,7 +172,7 @@ function RodadaComponent() {
                                 )
                         }
                     })}
-                    {ligaSelecionada.name}
+                    {width > 500 && ligaSelecionada.name}
                     <div className={style.newRound}>
                         <button className={style.buttonAdd} onClick={() => addGame(ligaSelecionada.id)} 
                             disabled={!ligaSelecionada.id || !isNaN(editar)} style={!ligaSelecionada.id || !isNaN(editar) ? {opacity: 0.5} : {opacity: 1}}>
