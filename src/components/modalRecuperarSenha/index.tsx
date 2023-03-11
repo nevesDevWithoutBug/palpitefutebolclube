@@ -21,8 +21,6 @@ const ModalRecuperarSenha = ({ displayRecover, toggleRecover }: any) => {
 
 
     function handleEmailChange(e: any) {
-        console.log(e);
-
         setEmail(e.target.value)
     }
 
