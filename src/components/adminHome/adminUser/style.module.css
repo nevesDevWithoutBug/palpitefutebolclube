@@ -147,3 +147,12 @@
     padding: 7px 20px;
     color: white;
 }
+
+@media(max-width: 500px) {
+    .divTable {
+        min-height: 100vh;
+    }
+    .acaoEditar {
+        height: 0.8rem;
+    }
+}

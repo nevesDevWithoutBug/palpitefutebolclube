@@ -65,7 +65,7 @@ function CampeonatoCamponent() {
                         </button>
                     </div>
                 </div>
-                <div>
+                <div className={style.divTable}>
                     <table className={style.table}>
                         <thead>
                             <tr>

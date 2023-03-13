@@ -32,7 +32,8 @@
         .menu {
                 position: absolute;
                 bottom: 0;
-                height: calc(100% - 3rem);
-                width: 10rem;
+                height: calc(100%);
+                width: 7rem;
+                z-index: 99;
         }
 }
