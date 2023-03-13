@@ -31,9 +31,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
         if(method === 'GET') {
 
-            const { title } = req.query
+            const { id } = req.query
 
-            const voteDb :VoteType | VoteType[] = await VoteModel.get(title as string)
+            const voteDb :VoteType | VoteType[] = await VoteModel.get(id ? Number(id) : undefined)
 
             if(!voteDb) return res.status(404).json({ message: 'vote not found' })
 

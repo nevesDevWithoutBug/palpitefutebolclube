@@ -5,8 +5,8 @@ function model() {
 
     // export all function that is in the return
     return { 
-        async get(title?: string) {
-            return title ? <VoteType> await prisma.votes.findFirst({ where: { title: title }, include: { options: true } }) 
+        async get(id?: number) {
+            return id ? <VoteType> await prisma.votes.findFirst({ where: { id: id }, include: { options: true } }) 
             : <VoteType[]> await prisma.votes.findMany({ include: { options: true } })
         },
 
