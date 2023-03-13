@@ -16,12 +16,17 @@ function AdminUserComponent() {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [width, setWidth] = useState<number>(0)
+    const [height, setHeight] = useState<number>(0)
+
     useEffect(() => {
         (async () => {
             setIsLoading(true)
             const response = await Api.get('/api/user')
             setUsers(response)
             setIsLoading(false)
+            setWidth(window.innerWidth)
+            setHeight(window.innerHeight)
         })()
     }, [])
 
@@ -105,12 +110,14 @@ function AdminUserComponent() {
                         </div>
                     </div>
                     :
+                    <div className={style.divTable}>
+
                     <table className={style.table}>
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Cargo</th>
-                                <th>E-mail</th>
+                                {width > 500 && <th>E-mail</th>}
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -122,12 +129,12 @@ function AdminUserComponent() {
                                     <tr key={key}>
                                         <td>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                <span className={style.avatar} style={{ backgroundColor: randomColor }}>{user.name.substring(0, 2)}</span>
+                                                {width > 500 && <span className={style.avatar} style={{ backgroundColor: randomColor }}>{user.name.substring(0, 2)}</span>}
                                                 {user.name}
                                             </div>
                                         </td>
                                         <td>{user.role === 100 ? 'Admin' : 200 ? 'Jornalista' : 300 ? 'Usuário' : ''}</td>
-                                        <td>{user.email}</td>
+                                        {width > 500 && <td>{user.email}</td>}
                                         <td>
                                             <button className={style.buttonEditar} onClick={() => edit(key)}>
                                                 <svg className={style.acaoEditar} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -140,10 +147,11 @@ function AdminUserComponent() {
                             })}
                         </tbody>
                     </table>
+                </div>
                 }
             </div>
         </>
-    )
+        )
 }
 
 export default AdminUserComponent
