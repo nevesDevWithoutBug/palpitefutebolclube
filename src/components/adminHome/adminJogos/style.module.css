@@ -1,31 +1,37 @@
-.jogoHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1% 5%;
-    text-align: start;
+.jogo {
     background: white;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
 }
 
-.svgHeader {
-    padding-right: 1%;
-    width: 2rem;
-}
-
-.jogoContent {
-    padding: 5px 3rem;
-    margin-top: 1rem;
-    background: white;
-}
-.tituloContent {
+.title {
     display: flex;
-    font-size: 1.3rem;
-    justify-content: center;
-    align-items: center;
-    padding-right: 44px;
     position: relative;
-    height: 50px;
+    width: 55%;
+    justify-content: space-between;
 }
+.title h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.title h3 {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgb(61, 62, 63);
+}
+.title select {
+    font-size: 1.3rem;
+    max-width: 20%;
+    min-width: 200px;
+    background-color: white;
+    border-bottom: black 1px solid;
+    /* margin: 0 auto; */
+}
+
 .ulPalpite {
     transition:all 0.5s 0s ease;
     width: 100%;
@@ -43,8 +49,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    padding: 3rem 0;
+    padding: 1rem 0;
     align-items: center;
+}
+@media(max-width: 500px) {
+    .contentContainer {
+        padding: 3rem 0;
+    }
 }
 
 .inputPalpiteDisabled {
@@ -80,21 +91,41 @@
     width: 200px;
     flex-direction: column;
     align-items: center;
+    font-size: 0.8rem !important;
+}
+@media(max-width: 500px) {
+    .spanPalpiteTime {
+        font-size: unset !important;
+    }
 }
 .imgPalpite {
     padding-bottom: 5px;
-    height: 4rem;
+    height: 3rem;
     width: auto;
+}
+@media(max-width: 500px) {
+    .imgPalpite {
+        height: 4rem;
+    }
 }
 .acao {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 10px;
 }
 .acaoEditar {
-    height: 1.2rem;
+    height: 1rem;
+}
+
+@media(max-width: 500px) {
+    .acao {
+        gap: 1.5rem;
+    }
+    .acaoEditar {
+        height: 1.3rem;
+    }
 }
 .buttonEditar {
     background-color: yellow;

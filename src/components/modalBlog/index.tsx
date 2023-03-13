@@ -13,7 +13,7 @@ const ModalBlog = ({ display, toggle, newsCruzeiro, newsAtletico, open, setOpen 
                 <div className={style.contentModal}>
                     <div className={style.fecharModal}>
                         <span className={style.logoText}>Blog do Palpite Futebol Clube</span>
-                        <button onClick={toggle}>
+                        <button onClick={() => toggle()}>
                             <Image src={Close} alt='fechar' width={25} />
                         </button>
                     </div>

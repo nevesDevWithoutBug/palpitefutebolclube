@@ -1,21 +1,17 @@
 import Logo from "../../../public/assets/assets/logo_topo.png"
-import PatchPremier from "../../../public/assets/assets/premier.png"
-import PatchSerieA from "../../../public/assets/assets/Serie_A.png"
-import PatchLigue1 from "../../../public/assets/assets/ligue1.svg"
-import PatchBundesliga from "../../../public/assets/assets/bundesliga.svg"
-import PatchBrasileirao from "../../../public/assets/assets/brasileiro.svg"
-import PatchLaliga from "../../../public/assets/assets/laLiga.png"
 import style from "./style.module.css"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import Modal from '../modal'
 import Api from "src/providers/http/api"
 import { userExhibitionType } from "src/types/userExhibitionType"
+import ModalUpdateUser from "../modalUpdateUser"
 
 function HeaderPrincipal() {
 
     const [closeBan, setCloseBan] = useState<boolean>(false)
     const [displayModal, setDisplayModal] = useState(false)
+    const [displayModalUpdate, setDisplayModalUpdate] = useState(false)
     const [open, setOpen] = useState('')
     const [userExibition, setUserExibition] = useState<userExhibitionType>({ name: '' })
 
@@ -23,9 +19,14 @@ function HeaderPrincipal() {
         setDisplayModal(!displayModal)
     }
 
+    const toggleUpdate = () => {
+        setDisplayModalUpdate(!displayModalUpdate)
+    }
+
     useEffect(() => {
         const nameUser = localStorage.getItem('UserPalpite')
-        setUserExibition({ name: !nameUser ? '' : nameUser })
+        setUserExibition({ name: !nameUser ? '' : nameUser }
+        )
     }, [])
 
     async function Sair() {
@@ -53,7 +54,7 @@ function HeaderPrincipal() {
                 <div className={style.containerHeader}>
                     {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('cadastro') }}>Cadastre-se</span>
                         :
-                        <span>Olá {`${userExibition.name.replace(/^\w/, c => c.toUpperCase()).split(' ')[0]}`}</span>}
+                        <span onClick={() => toggleUpdate()}>Olá {`${userExibition.name.replace(/^\w/, c => c.toUpperCase()).split(' ')[0]}`}</span>}
                     <Image src={Logo} height={50} width={500} alt="palpite.com" className={style.imagemLogomarcaHeader} />
                     {!userExibition.name.length ? <span onClick={() => { toggle(); setOpen('login') }}>Login</span>
                         :
@@ -61,6 +62,7 @@ function HeaderPrincipal() {
                 </div>
             </div>
             {displayModal && <Modal toggle={toggle} display={displayModal} open={open} setOpen={setOpen} setUserExibition={setUserExibition} />}
+            {displayModalUpdate && <ModalUpdateUser toggleUpdate={toggleUpdate} displayModalUpdate={displayModalUpdate} />}
         </header>
     )
 }

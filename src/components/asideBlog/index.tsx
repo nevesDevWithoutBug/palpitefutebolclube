@@ -40,7 +40,6 @@ function AsideBlog() {
             const { value } = await Api.get('/api/urlvideo')
             setLinkVideo(value.split('=')[1])
             const res = await Api.get('/api/news')
-            console.log(res);
             const cruzeiro = res.filter((team: any) => team.author.team === 'cruzeiro').sort((a: any, b: any) => b.id - a.id)
             const atletico = res.filter((team: any) => team.author.team === 'atletico').sort((a: any, b: any) => b.id - a.id)
             setNewsCruzeiro({
