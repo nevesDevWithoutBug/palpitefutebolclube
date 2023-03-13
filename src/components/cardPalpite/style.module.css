@@ -307,3 +307,9 @@
         width: 16rem;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .ulPalpiteMult {
+        height: 73%;
+    }
+}
