@@ -49,9 +49,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
             const voteDb :VoteType = await VoteModel.upsert({ id, title })
 
-            if(!voteDb) return res.status(500).json({ message: 'config not created' })
+            if(!voteDb) return res.status(500).json({ message: 'vote not created' })
 
-            return res.status(200).json(voteDb)
+            return res.status(201).json(voteDb)
 
         }
 
