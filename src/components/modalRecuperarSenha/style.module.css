@@ -60,7 +60,7 @@
 .contentModalBlog h6 {
     display: flex;
     width: 100%;
-    justify-content: end;
+    justify-content: flex-end;
     color: black;
     font-size: 14px;
     margin-bottom: 0.5rem;

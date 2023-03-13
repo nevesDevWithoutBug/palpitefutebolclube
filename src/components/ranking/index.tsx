@@ -18,7 +18,6 @@ function Ranking() {
         { name: 'Max', points: 12 },
         { name: 'Alexandre', points: 6 },
         { name: 'Guilherme', points: 3 },
-        { name: 'Gabriel', points: 0 },
         { name: 'Messias', points: 15 },
         { name: 'Dennis DJ', points: 18 },
         { name: 'Ronaldo', points: 6 },
