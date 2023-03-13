@@ -4,6 +4,7 @@ import anuncio from "../../../public/assets/assets/Anuncie-aqui.png"
 import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 import Ranking from "../ranking"
+import Enquete from "../enquete"
 
 function AsideEnquete() {
 
@@ -15,15 +16,7 @@ function AsideEnquete() {
                     Enquetes
                 </div>
                 <section>
-                    <div className={style.contentNoticias}>
-                        <h1>Cristiano Ronaldo</h1>
-                        <article>
-                            Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Minus nisi, voluptatibus
-                            quos atque porro blanditiis totam.
-                        </article>
-                    </div>
-                    <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" />
+                    <Enquete />
                 </section>
             </div>
             <div className={style.cardInfo}>
