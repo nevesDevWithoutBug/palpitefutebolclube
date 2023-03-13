@@ -13,6 +13,7 @@ const ModalUpdateUser = ({ displayModalUpdate, toggleUpdate }: any) => {
 
     const [endereco, setEndereco] = useState<any>({ estado: '', cidade: '', rua: '' })
     const [user, setUser] = useState<UserTypeUpdate>({ name: '', email: '', info: `${endereco.estado},${endereco.cidade},${endereco.rua}`, team: '', document: '', birthday: '', number: '' })
+    const [updUser, setUpdUser] = useState(false)
 
     function handleNomeChange(e: any) {
         setUser({ ...user, name: e.target.value })
@@ -81,14 +82,25 @@ const ModalUpdateUser = ({ displayModalUpdate, toggleUpdate }: any) => {
 
 
     async function updateUser() {
-        const { message, ...response } = await Api.auth('api/auth/user', user)
+        const { message, ...response } = await Api.post('api/auth/user', user)
         console.log(response);
 
 
         if (message) { return toast.error(message) }
+        const end = response && response.info ? response.info.split(',') : [];
+        setUser({
+            name: response.name,
+            birthday: response.birthday,
+            number: response.number,
+            document: response.document,
+            email: response.email,
+            team: response.team,
+            info: `${end[0]},${end[1]},${end[2]}, ${end[3]}`
+        });
+        localStorage.setItem('UserInfos', JSON.stringify(user))
         toggleUpdate()
         // setUserExibition({ name: response.user.name })
-        return toast.success(`Dados atualizados com sucesso ${response.user.name}`)
+        return toast.success(`Dados atualizados com sucesso ${response.name}`)
     }
 
     return createPortal(
@@ -96,7 +108,7 @@ const ModalUpdateUser = ({ displayModalUpdate, toggleUpdate }: any) => {
             <div style={{ display: displayModalUpdate ? 'block' : 'none', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.5)', padding: '50px' }}>
                 <div className={style.contentModal}>
                     <div className={style.fecharModal}>
-                        <span className={style.logoText}>Palpite Futebol Clube</span>
+                        <span className={style.logoText}>Atualizar Perfil</span>
                         <button onClick={() => toggleUpdate()}>
                             <Image src={Close} alt='fechar' width={25} />
                         </button>
