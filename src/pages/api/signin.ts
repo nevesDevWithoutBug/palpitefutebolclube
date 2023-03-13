@@ -25,7 +25,16 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse) 
 
         // if(password !== userDb.password)  return res.status(404).json({ message: 'email ou senha inválidos!' })
 
-        const userLogin = {id:userDb.id, name:userDb.name, email:userDb.email, role:userDb.role};
+        const userLogin = {
+            id:userDb.id, 
+            name:userDb.name, 
+            email:userDb.email, 
+            birthday:userDb.birthday,
+            document:userDb.document,
+            info:userDb.info,
+            number:userDb.number,
+            team:userDb.team
+        };
 
         const accessToken = jwt.sign(userLogin, `${process.env.ACCESS_TOKEN}` as string);
         

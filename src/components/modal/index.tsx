@@ -76,8 +76,6 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
 
 
     async function signup() {
-        console.log(user);
-
         if ((user.email.includes('@')) && (user.password.length >= 6)) {
             const { message, ...response } = await Api.auth('api/signup', user)
             if (message) { return toast.error(message) }
@@ -93,7 +91,18 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
             if (message) { return toast.error(message) }
             toggle()
             setUserExibition({ name: response.user.name })
+            const infoUser = {
+                name: response.user.name,
+                birthday: response.user.birthday,
+                number: response.user.number,
+                document: response.user.document,
+                email: response.user.email,
+                team: response.user.team,
+                info: response.user.info,
+                role: user.role
+            };
             localStorage.setItem('UserPalpite', response.user.name)
+            localStorage.setItem('UserInfos', JSON.stringify(infoUser))
             return toast.success(`Seja bem vindo ${response.user.name}`)
         }
         return toast.error('Confira os dados digitados.')
@@ -105,7 +114,7 @@ const Modal = ({ display, toggle, open, setOpen, setUserExibition }: any) => {
                 <div className={style.contentModal}>
                     <div className={style.fecharModal}>
                         <span className={style.logoText}>Palpite Futebol Clube</span>
-                        <button onClick={toggle}>
+                        <button onClick={() => toggle()}>
                             <Image src={Close} alt='fechar' width={25} />
                         </button>
                     </div>

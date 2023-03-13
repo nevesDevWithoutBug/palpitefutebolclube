@@ -1,6 +1,6 @@
 import Image from "next/image"
 import cruzeiro from "../../../public/assets/assets/cruzeiro.svg"
-import atletico from "../../../public/assets/assets/atletico.svg"
+import anuncio from "../../../public/assets/assets/Anuncie-aqui.png"
 import noticias from "../../../public/assets/assets/noticiasIcon.png"
 import style from "./style.module.css"
 import Ranking from "../ranking"
@@ -25,6 +25,9 @@ function AsideEnquete() {
                     </div>
                     <Image src={cruzeiro} width={70} height={70} alt="Cruzeiro" />
                 </section>
+            </div>
+            <div className={style.cardInfo}>
+                <Image src={anuncio} height={100} style={{ width: '100%' }} alt='anuncie conosco' />
             </div>
             <div className={style.cardInfo}>
                 <div className={style.headerBlog}>
