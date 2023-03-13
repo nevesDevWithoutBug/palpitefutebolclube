@@ -4,6 +4,7 @@ import style from "./style.module.css"
 import CampeonatoCamponent from "../adminCampeonato"
 import NewsComponent from "../adminNews"
 import AdminHomeInfoComponent from "../adminHomeInfo"
+import AdminUserComponent from "../adminUser"
 
 function ContentComponent(props: any) {
     const page = props.page
@@ -11,10 +12,11 @@ function ContentComponent(props: any) {
     return (
         <div className={style.content}>
             {page === 'home' && <AdminHomeInfoComponent />}
-            {page === 'user' && <JogosComponent />}
-            {page === 'jogo' && <RodadaComponent />}
+            {page === 'jogo' && <JogosComponent />}
+            {page === 'rodada' && <RodadaComponent />}
             {page === 'campeonato' && <CampeonatoCamponent />}
             {page === 'news' && <NewsComponent />}
+            {page === 'user' && <AdminUserComponent />}
         </div>
     )
 }

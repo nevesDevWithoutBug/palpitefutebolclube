@@ -1,46 +1,48 @@
 .jogo {
+    background: white;
     height: 100%;
-}
-
-.jogoHeader {
+    width: 100%;
+    padding: 20px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1% 5%;
-    text-align: start;
-    background: white;
+    gap: 30px;
+    flex-direction: column;
 }
 
-.svgHeader {
-    padding-right: 1%;
-    width: 2rem;
-}
-
-.jogoContent {
-    padding: 5px 3rem;
-    margin-top: 1rem;
-    background: white;
-}
-.tituloContent {
+.title {
     display: flex;
-    font-size: 1.3rem;
-    justify-content: center;
-    align-items: center;
-    padding-right: 44px;
     position: relative;
-    height: 50px;
+    width: 100%;
+    justify-content: space-between;
 }
+.title h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.title h3 {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgb(61, 62, 63);
+}
+.title select {
+    font-size: 1.3rem;
+    max-width: 20%;
+    min-width: 200px;
+    background-color: white;
+    border-bottom: black 1px solid;
+    margin-right: 4.5rem;
+}
+
 .newRound {
-    position: absolute;
+    /* position: absolute; */
     right: 0;
     bottom: 5px;
     font-size: 1rem;
 }
 .buttonAdd {
-    background-color: #24a57c;
-    color: white;
+    font-weight: bold;
+    padding: 0.5rem 0.7rem;
     border-radius: 20px;
-    padding: 10px 20px;
+    background: #24a57c;
     color: white;
 }
 .disabled {
@@ -54,8 +56,7 @@
 
 .liPalpite {
     display: flex;
-    border-width: 1px;
-    border-bottom-style: solid;
+    border-width: 0.1px;
     border-image: linear-gradient(to right,rgba(0, 0, 0, 0), rgb(231, 226, 226), rgba(0, 0, 0, 0)) 1;   
 }
 
@@ -64,18 +65,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    padding: 3rem 0;
+    padding: 1rem 0;
     align-items: center;
 }
-
-.inputPalpite {
-    border: 1px solid  rgb(231, 226, 226);
-    width: 3rem;
-    height: 3rem;
-    background-color: #e4e4e4; 
-    text-align: center;
-    font-size: 1.5rem;
+@media(max-width: 500px) {
+    .contentContainer {
+        padding: 3rem 0;
+    }
 }
+
 .spanPalpiteX {
     text-align: center;
     height: 100%;
@@ -91,21 +89,41 @@
     width: 200px;
     flex-direction: column;
     align-items: center;
+    font-size: 0.8rem !important;
+}
+@media(max-width: 500px) {
+    .spanPalpiteTime {
+        font-size: unset !important;
+    }
 }
 .imgPalpite {
     padding-bottom: 5px;
-    height: 4rem;
+    height: 3rem;
     width: auto;
+}
+@media(max-width: 500px) {
+    .imgPalpite {
+        height: 4rem;
+    }
 }
 .acao {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 10px;
 }
 .acaoEditar {
-    height: 1.2rem;
+    height: 1rem;
+}
+
+@media(max-width: 500px) {
+    .acao {
+        gap: 1.5rem;
+    }
+    .acaoEditar {
+        height: 1.3rem;
+    }
 }
 .buttonEditar {
     background-color: yellow;
