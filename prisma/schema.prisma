@@ -134,6 +134,8 @@ model Options {
   id           Int @id @default(autoincrement())
   title        String
 
+  count        Int @default(0)
+
   vote         Votes @relation(fields: [voteId], references: [id])
   voteId       Int
 
