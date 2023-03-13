@@ -1,19 +1,19 @@
 .homeAdmin{
     height: 100vh;
     display: grid;
-    grid-template-rows: 4em 1fr;
+    grid-template-rows: 3.5em 1fr;
     grid-template-columns: 0rem 1fr;
     grid-template-areas:
     "header header"
     "menu content" ;
     transition: grid-template-columns 1s ease;
-    grid-template-columns: 10rem 1fr;
+    grid-template-columns: 8rem 1fr;
 }
 .homeAdminHideMenu {
     height: 100vh;
     display: grid;
-    grid-template-rows: 4rem 1fr;
-    grid-template-columns: 10rem 1fr;
+    grid-template-rows: 3.5rem 1fr;
+    grid-template-columns: 8rem 1fr;
     grid-template-areas:
     "header header"
     "menu content" ;
@@ -25,12 +25,12 @@
 }
 .divIconMenu{
     position: absolute;
-    top: 0.5rem;
-    left: 5%;
+    top: 3px;
+    left: 3%;
     background: #24a57c;
     cursor: pointer;
     transition: all 0.5s 0s ease;   
-    padding: 7px 10px;
+    padding: 5px 8px;
     border-radius: 10%;
 }
 

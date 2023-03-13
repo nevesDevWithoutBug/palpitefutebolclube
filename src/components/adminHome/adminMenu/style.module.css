@@ -9,7 +9,7 @@
 
 .menu a {
         color: #fff;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         text-decoration: none;
         padding-top: 30px;
         padding-bottom: 20px;
@@ -32,7 +32,7 @@
         .menu {
                 position: absolute;
                 bottom: 0;
-                height: calc(100% - 4rem);
+                height: calc(100% - 3rem);
                 width: 10rem;
         }
 }
