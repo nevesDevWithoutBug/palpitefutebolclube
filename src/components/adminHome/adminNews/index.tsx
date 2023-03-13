@@ -109,7 +109,7 @@ function NewsComponent() {
                                     <Image src={String(handlerImage(e.author.team))} alt="" width={80} height={80} />
                                     <div className={style.newsContent}>
                                         <span style={{ fontSize: '1.3rem' }}>{e.title}</span>
-                                        <span style={{ overflow: 'hidden', fontSize: '0.9rem', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '40ch' }}>{e.content}</span>
+                                        <span style={{ overflow: 'hidden', fontSize: '0.9rem', textOverflow: 'ellipsis', maxWidth: '40ch' }}>{e.content}</span>
                                         <h6 style={{ fontSize: '0.9rem' }}><b>Autor: </b> {e.author.name}</h6>
                                     </div>
                                 </div>
